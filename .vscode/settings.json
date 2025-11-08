@@ -1,0 +1,11 @@
+{
+  // ✅ Active ESLint dans le workspace
+  "eslint.enable": true,
+  "eslint.validate": ["typescript", "typescriptreact", "javascript"],
+
+  // ✅ Empêche VS Code d'utiliser un linter global (pour éviter les conflits)
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+
+  // ✅ Affiche ESLint dans la barre de diagnostic
+  "eslint.alwaysShowStatus": true,
+}
