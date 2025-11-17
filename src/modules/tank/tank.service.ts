@@ -7,10 +7,10 @@ import { Tank } from './tank.entity';
 export class TankService {
   constructor (
     @InjectRepository(Tank)
-    private readonly tankRepo: EntityRepository<Tank>,
+    private readonly tankRepository: EntityRepository<Tank>,
   ) {}
 
   getAllTanks (): Promise<Tank[]> {
-    return this.tankRepo.findAll();
+    return this.tankRepository.findAll();
   }
 }

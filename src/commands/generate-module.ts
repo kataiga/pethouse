@@ -25,13 +25,13 @@ fs.mkdirSync(path.join(moduleDir, 'dto'));
 fs.writeFileSync(
   path.join(moduleDir, `${moduleName}.module.ts`),
   `import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ${pascalName}Controller } from './${moduleName}.controller';
+import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { ${pascalName}Service } from './${moduleName}.service';
 import { ${pascalName} } from './${moduleName}.entity';
+import { ${pascalName}Controller } from './${moduleName}.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([${pascalName}])],
+  imports: [MikroOrmModule.forFeature([${pascalName}])],
   controllers: [${pascalName}Controller],
   providers: [${pascalName}Service],
   exports: [${pascalName}Service],
@@ -64,15 +64,15 @@ export class ${pascalName}Controller {
 fs.writeFileSync(
   path.join(moduleDir, `${moduleName}.service.ts`),
   `import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InjectRepository } from '@mikro-orm/nestjs';
+import { EntityRepository } from '@mikro-orm/mysql';
 import { ${pascalName} } from './${moduleName}.entity';
 
 @Injectable()
 export class ${pascalName}Service {
   constructor(
     @InjectRepository(${pascalName})
-    private readonly repo: Repository<${pascalName}>,
+    private readonly ${moduleName}Repository: EntityRepository<${pascalName}>,
   ) {}
 
 }
@@ -84,14 +84,14 @@ fs.writeFileSync(
   path.join(moduleDir, `${moduleName}.entity.ts`),
   `import { 
   Entity, 
-  PrimaryGeneratedColumn, 
-  Column, 
-} from 'typeorm';
+  PrimaryKey, 
+  Property, 
+} from '@mikro-orm/core';
 
 @Entity()
 export class ${pascalName} {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryKey()
+    id: number;
 }
 `,
 );
@@ -100,12 +100,10 @@ export class ${pascalName} {
 fs.writeFileSync(
   path.join(moduleDir, `${moduleName}.repository.ts`),
   `import { EntityRepository } from '@mikro-orm/mysql';
-import { Tank } from './tank.entity';
+import { Injectable } from '@nestjs/common';
+import { ${pascalName} } from './tank.entity';
   
 export class ${pascalName}Repository extends EntityRepository<${pascalName}> {  
-  async getTanks(): Promise<Tank[]> {
-    return [];
-  }
 }
 `,
 );
