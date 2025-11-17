@@ -10,7 +10,7 @@ export class TankController {
   constructor (private tankService: TankService) {}
 
   @Get()
-  getTanks (): Array<Tank> {
-    return this.tankService.getTanks();
+  async getTanks (): Promise<Tank[]> {
+    return this.tankService.getAllTanks();
   }
 }
