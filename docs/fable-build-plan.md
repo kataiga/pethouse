@@ -230,32 +230,44 @@ nobody acts.
 
 ## Phase 5 — Scaffold
 
-The repo is still the unmodified `react-navigation/template` starter. There is nothing to
+`apps/mobile` is still the unmodified `react-navigation/template` starter. There is nothing to
 preserve; there is also no reason to `create-expo-app` from scratch and lose the git history.
 
 **Scope**
 
-- Migrate to **expo-router** (file-based). Delete the starter screens.
+- Migrate to **expo-router** (file-based). Delete the starter screens and its leftover README.
+- **Metro in a monorepo** — this is the one real friction point of the workspace layout. Metro
+  must resolve `@pethouse/api-client` and the hoisted `node_modules` at the repository root:
+  `metro.config.js` needs `watchFolders` pointing at the workspace root and
+  `resolver.nodeModulesPaths` covering both the app's and the root's `node_modules`. Get this
+  working before anything else in the phase — every later step depends on it.
 - Fix `app.json`: add `android.package` and `ios.bundleIdentifier`, correct the deep-link
   scheme (the current prefix is `helloworld://` while the scheme is `pethouse`).
-- `eas.json` with `development`, `preview` and `production` profiles. Android is the priority;
+- `eas.json` with `development`, `preview` and `production` profiles, and the EAS monorepo
+  settings so a build from `apps/mobile` picks up the root lockfile. Android is the priority;
   keep iOS buildable.
-- Tooling the repo has none of: ESLint (flat config, mirroring the API's strictness where it
-  makes sense for RN), Prettier, `typecheck` script, Jest + React Native Testing Library,
-  Maestro for e2e.
+- Tooling the workspace has none of: ESLint (flat config, mirroring the API's strictness where
+  it makes sense for RN), Prettier, Jest + React Native Testing Library, Maestro for e2e. A
+  `typecheck` script already exists.
 - **i18n from day one**, French primary, English maintained alongside. No hard-coded
   user-facing string, ever.
 - Design tokens + a small set of themed primitives. Propose a direction and show it to me
   before building the set — I want an identity, not default React Native grey.
-- Generated API client: `openapi-typescript` + `openapi-fetch` against the API's `/docs-json`,
-  behind an `npm run generate:api` script. Generate with `--default-non-nullable false`.
-  TanStack Query v5 on top, hooks per feature.
+- **Build `packages/api-client`**: `openapi-typescript` + `openapi-fetch` over the spec produced
+  by `npm run openapi:dump --workspace @pethouse/api`, exposed behind
+  `npm run generate --workspace @pethouse/api-client` (reachable as `npm run generate:client`
+  from the root). Generate with `--default-non-nullable false`. **The output is committed.**
+  Then flip `.github/workflows/contract.yml` from `workflow_dispatch` to `pull_request` — it is
+  already written and commented for exactly this moment.
+- TanStack Query v5 on top of the generated client, hooks per feature.
 - Auth flow: register / login / refresh, token storage in `expo-secure-store`, an authenticated
   route group and a public one.
-- GitHub Actions: lint, typecheck, test, and an EAS build job.
+- Make `.github/workflows/mobile.yml` green. It is already committed; do not weaken it.
 
 **Done when:** the app builds and runs on an Android emulator, a user can register and log in
-against the real API, and the language switch changes the whole UI.
+against the real API, the language switch changes the whole UI, and the `contract` workflow
+fails if you deliberately edit a DTO without regenerating the client (verify that — a contract
+check that does not actually catch drift is worse than none).
 
 ---
 
@@ -287,19 +299,27 @@ states on a real emulator, not just the foreground case.
 
 ## Phase 7 — Android delivery
 
-- EAS build profiles finalised, signing configured, versioning strategy.
+- EAS build profiles finalised, signing configured, versioning strategy. Enable the
+  `android-build` job in `.github/workflows/mobile.yml` — it is already written and needs an
+  `EXPO_TOKEN` repository secret, which I have to add.
 - Internal-testing track on Google Play, or a distributed APK — tell me which you need from me.
+- **API image published to GHCR** from a GitHub Actions job (`ghcr.io/<owner>/pethouse-api`),
+  tagged by commit SHA. Never `latest`.
 - API deployed to the k3s homelab: manifests, Sealed Secrets, ArgoCD application, Traefik
-  ingress with TLS. MySQL and Redis on `local-path` storage, **never NFS** (file locking).
-  MinIO for the photo bucket.
-- Crash reporting and a `/health` endpoint wired to real k8s probes.
+  ingress with TLS. MySQL and Redis on `local-path` storage, **never NFS** — file locking
+  breaks on it. MinIO for the photo bucket. `nodeSelector` on every workload (the cluster is
+  mixed amd64 / ARM64).
+- Crash reporting, and the `/health` endpoint from Phase 0 wired to real liveness and readiness
+  probes.
+- The scheduler must stay correct at more than one replica — if the deployment scales, verify no
+  notification is sent twice.
 
 ---
 
 ## Post-V1
 
-- **Back-office**: React Admin against secured admin-role routes on the existing API, for
-  curating the species and plant catalogue.
+- **Back-office**: a React Admin app in `apps/admin`, against secured admin-role routes on the
+  existing API, for curating the animal species and plant catalogues.
 - Public API imports for species and plant data instead of the seeded list.
 - Per-individual tracking (a named animal, with its own history).
 - iOS release once a test device is available.
