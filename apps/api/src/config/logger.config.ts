@@ -1,7 +1,8 @@
 import { registerAs } from '@nestjs/config';
+import { envWithDefault } from './env';
 import { LoggerConfig } from './types';
 
 export default registerAs('logger', (): LoggerConfig => ({
-  level: process.env.LOG_LEVEL ?? 'info',
-  pretty: process.env.NODE_ENV !== 'production',
+  level: envWithDefault('LOG_LEVEL', 'info'),
+  pretty: envWithDefault('NODE_ENV', 'development') !== 'production',
 }));

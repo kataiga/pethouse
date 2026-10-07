@@ -1,12 +1,18 @@
 import {
   DynamicModule, Module,
 } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import {
+  ConfigModule, ConfigType,
+} from '@nestjs/config';
+import { MySqlDriver } from '@mikro-orm/mysql';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { LoggerModule } from '@core/logger/logger.module';
 import { HealthModule } from '@modules/health/health.module';
-import mikroOrmConfig from '@config/mikro-orm.config';
-import configs from '@config';
+import { buildMikroOrmConfig } from '@config/mikro-orm.config';
+import { validateEnvironment } from '@config/environment';
+import configs, {
+  appConfig, databaseConfig,
+} from '@config';
 
 export interface AppModuleOptions {
   /**
@@ -14,10 +20,16 @@ export interface AppModuleOptions {
    * module graph without a database, such as the OpenAPI dump. Defaults to true.
    */
   connectDatabase?: boolean;
+  /**
+   * Env files to load, first match wins; real environment variables always take precedence.
+   * Defaults to `.env.test` then `.env` under NODE_ENV=test, `.env` alone otherwise.
+   */
+  envFiles?: string[];
 }
 
-/** Placeholder satisfying MikroORM's option validation when no database is ever contacted. */
-const DISCONNECTED_DB_NAME = 'disconnected';
+function defaultEnvFiles (): string[] {
+  return process.env.NODE_ENV === 'test' ? ['.env.test', '.env'] : ['.env'];
+}
 
 @Module({})
 export class AppModule {
@@ -29,16 +41,22 @@ export class AppModule {
       imports: [
         ConfigModule.forRoot({
           load: configs,
+          validate: validateEnvironment,
           isGlobal: true,
-          envFilePath: '.env',
+          envFilePath: options.envFiles ?? defaultEnvFiles(),
         }),
-        MikroOrmModule.forRoot(connectDatabase
-          ? mikroOrmConfig
-          : {
-            ...mikroOrmConfig,
-            connect: false,
-            dbName: mikroOrmConfig.dbName ?? DISCONNECTED_DB_NAME,
+        MikroOrmModule.forRootAsync({
+          // Declared here as well as in the config: the Nest module reads it before the factory runs.
+          driver: MySqlDriver,
+          inject: [databaseConfig.KEY, appConfig.KEY],
+          useFactory: (
+            database: ConfigType<typeof databaseConfig>,
+            app: ConfigType<typeof appConfig>,
+          ) => buildMikroOrmConfig(database, {
+            connect: connectDatabase,
+            debug: app.env === 'development',
           }),
+        }),
         LoggerModule,
         HealthModule,
       ],
