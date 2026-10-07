@@ -4,7 +4,8 @@ import { AppService } from './app.service';
 import { TankModule } from './modules/tank/tank.module';
 import { ConfigModule } from '@nestjs/config';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
-import config from './config/mikro-orm.config';
+import { LoggerModule } from './core/logger/logger.module';
+import mikroOrmConfig from './config/mikro-orm.config';
 import configs from './config';
 
 @Module({
@@ -14,7 +15,8 @@ import configs from './config';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    MikroOrmModule.forRoot(config),
+    MikroOrmModule.forRoot(mikroOrmConfig),
+    LoggerModule,
     TankModule,
   ],
   controllers: [
