@@ -23,7 +23,7 @@
     "test:all": "jest",
     "typecheck": "tsc --noEmit",
     "generate:module": "ts-node src/commands/generate-module.ts",
-    "openapi:dump": "ts-node src/commands/dump-openapi.ts",
+    "openapi:dump": "ts-node -r tsconfig-paths/register src/commands/dump-openapi.ts",
     "mikro:generate": "mikro-orm migration:generate",
     "mikro:up": "mikro-orm migration:up",
     "mikro:down": "mikro-orm migration:down"
