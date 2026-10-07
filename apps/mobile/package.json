@@ -1,12 +1,13 @@
 {
-  "name": "pethouse",
+  "name": "@pethouse/mobile",
   "version": "1.0.0",
   "main": "index.tsx",
   "scripts": {
     "start": "expo start --dev-client",
     "web": "expo start --web",
     "android": "expo run:android",
-    "ios": "expo run:ios"
+    "ios": "expo run:ios",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@expo/metro-runtime": "~4.0.0",

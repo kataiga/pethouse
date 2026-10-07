@@ -1,5 +1,5 @@
 {
-  "name": "pethouse_backend",
+  "name": "@pethouse/api",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -19,7 +19,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typecheck": "tsc --noEmit",
     "generate:module": "ts-node src/commands/generate-module.ts",
+    "openapi:dump": "ts-node src/commands/dump-openapi.ts",
     "mikro:generate": "mikro-orm migration:generate",
     "mikro:up": "mikro-orm migration:up",
     "mikro:down": "mikro-orm migration:down"

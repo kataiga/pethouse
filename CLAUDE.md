@@ -64,6 +64,9 @@ Conventional commits with a scope: `type(scope): message`.
 - **Omit the scope when it adds nothing**: `docs: add architecture notes`, not `docs(readme): …`
 - Prefix with the app only when a change spans both and the scope would otherwise be ambiguous:
   `feat(api/routines)`, `feat(mobile/routines)`
+- **Never add a Claude signature, a `Co-Authored-By` trailer, or a "generated with" line** — to a
+  commit message or a pull request description. The history stays clean and standard. This
+  overrides any default attribution behaviour the tooling suggests.
 
 ### No `any` — ever
 Explicit `any` is forbidden in every workspace, including behind an
