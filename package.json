@@ -1,0 +1,25 @@
+{
+  "name": "pethouse",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Aquarium, terrarium and paludarium tracker with collaborative maintenance routines",
+  "license": "UNLICENSED",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "api": "npm run start:dev --workspace @pethouse/api",
+    "api:test:e2e": "npm run test:e2e --workspace @pethouse/api",
+    "mobile": "npm run start --workspace @pethouse/mobile",
+    "mobile:android": "npm run android --workspace @pethouse/mobile",
+    "generate:client": "npm run generate --workspace @pethouse/api-client"
+  }
+}

@@ -1,0 +1,35 @@
+node_modules/
+dist/
+build/
+coverage/
+.nyc_output/
+
+# env
+.env
+.env.local
+.env.*.local
+
+# generated artefacts
+# The generated API client is deliberately NOT ignored — it is committed, and the
+# contract workflow fails the build when it drifts from the API.
+openapi.json
+
+# logs
+*.log
+npm-debug.log*
+
+# OS / editors
+.DS_Store
+.idea/
+*.swp
+
+# expo
+.expo/
+android/
+ios/
+*.apk
+*.aab
+
+# mikro-orm metadata cache
+temp/
+.temp/

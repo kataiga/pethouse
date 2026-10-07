@@ -1,0 +1,79 @@
+name: mobile
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/mobile/**'
+      - 'packages/api-client/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/mobile.yml'
+  pull_request:
+    paths:
+      - 'apps/mobile/**'
+      - 'packages/api-client/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/mobile.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: mobile-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '22'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run lint --workspace @pethouse/mobile
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck --workspace @pethouse/mobile
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run test --workspace @pethouse/mobile
+
+  android-build:
+    # Manual for now. Needs an EXPO_TOKEN repository secret and an EAS project.
+    # Wired up in Phase 7; until then this job is the placeholder that documents what is missing.
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+      - run: npm ci
+      - run: eas build --platform android --profile preview --non-interactive --no-wait
+        working-directory: apps/mobile
