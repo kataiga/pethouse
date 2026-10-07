@@ -81,9 +81,10 @@ feature lands on top of it. No domain work in this phase.
 12. **Make CI green.** `.github/workflows/api.yml` is **already committed** and describes the
     target state: `lint`, `build`, `test`, `test-e2e` against real MySQL and Redis, and an
     `openapi` job that uploads the spec. Do not weaken the workflow to make it pass — make the
-    code satisfy it. Two things it expects that do not exist yet: the `typecheck` script (item 2
-    above) and `src/commands/dump-openapi.ts` backing `npm run openapi:dump`, which must boot
-    the Nest app without listening, write the spec to `apps/api/openapi.json`, and exit 0. Once
+    code satisfy it. One thing it expects that does not exist yet:
+    `src/commands/dump-openapi.ts`, backing the already-declared `npm run openapi:dump` script.
+    It must boot the Nest app without listening, write the spec to `apps/api/openapi.json`, and
+    exit 0 — the `openapi` job fails if the file is absent. Once
     the workflow is green, tell me to enable the branch protection rule on `main` requiring
     these checks — that is a GitHub setting I have to flip, not something you can commit.
 
