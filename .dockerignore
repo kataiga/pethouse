@@ -1,0 +1,19 @@
+# Build context is the repository root (see apps/api/Dockerfile). Keep it small.
+.git
+.github
+docs
+**/node_modules
+**/dist
+**/coverage
+**/.env
+**/.env.*
+!**/.env.exemple
+**/*.md
+**/openapi.json
+**/temp
+
+# Only the manifest of the other workspaces is needed, for the lockfile check in `npm ci`.
+apps/mobile/*
+!apps/mobile/package.json
+packages/api-client/*
+!packages/api-client/package.json
