@@ -14,6 +14,7 @@ import { PlantSpeciesModule } from '@modules/plant-species/plant-species.module'
 import { AuthModule } from '@modules/auth/auth.module';
 import { HealthModule } from '@modules/health/health.module';
 import { HouseholdsModule } from '@modules/households/households.module';
+import { NotificationsModule } from '@modules/notifications/notifications.module';
 import { ParametersModule } from '@modules/parameters/parameters.module';
 import { RoutinesModule } from '@modules/routines/routines.module';
 import { SchedulerModule } from '@modules/scheduler/scheduler.module';
@@ -80,6 +81,7 @@ export class AppModule {
         TanksModule,
         ParametersModule,
         RoutinesModule,
+        NotificationsModule,
         SchedulerModule.forRoot({ connect: connectServices }),
         AuthModule,
       ],

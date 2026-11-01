@@ -8,7 +8,7 @@ import { OccurrenceStatus } from '@modules/routines/entity/occurrence-status.enu
 import { RoutineOccurrenceRepository } from '@modules/routines/repository/routine-occurrence.repository';
 import { RoutineRepository } from '@modules/routines/repository/routine.repository';
 import { RoutineOccurrencesService } from '@modules/routines/service/routine-occurrences.service';
-import { NotificationSender } from '../notification/notification-sender';
+import { NotificationSender } from '@modules/notifications/service/notification-sender';
 
 /** Due occurrences older than this when first seen (downtime) are left to turn MISSED, not pinged. */
 export const DISPATCH_LOOKBACK_MS = 12 * 60 * 60 * 1000;

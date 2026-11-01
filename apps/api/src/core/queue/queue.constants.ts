@@ -7,6 +7,8 @@ export enum RoutineJob {
   DISPATCH = 'dispatch',
   /** One per notification: the due one (attempt 0) and each reminder (attempt 1 to n). */
   NOTIFY = 'notify',
+  /** Recurring: reads Expo Push receipts and revokes the tokens Expo reports as unregistered. */
+  RECEIPTS = 'receipts',
 }
 
 export interface NotifyJobData {

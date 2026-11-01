@@ -12,8 +12,8 @@
           "nullable": false,
           "unique": false,
           "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -26,7 +26,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "unique": false,
+          "unique": true,
           "length": 120,
           "precision": null,
           "scale": null,
@@ -43,7 +43,7 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 12,
           "precision": null,
           "scale": null,
           "default": null,
@@ -82,7 +82,7 @@
           "nullable": true,
           "unique": false,
           "length": null,
-          "precision": null,
+          "precision": 22,
           "scale": null,
           "default": null,
           "comment": null,
@@ -98,7 +98,7 @@
           "nullable": true,
           "unique": false,
           "length": null,
-          "precision": null,
+          "precision": 22,
           "scale": null,
           "default": null,
           "comment": null,
@@ -114,7 +114,7 @@
           "nullable": true,
           "unique": false,
           "length": null,
-          "precision": null,
+          "precision": 22,
           "scale": null,
           "default": null,
           "comment": null,
@@ -130,7 +130,7 @@
           "nullable": true,
           "unique": false,
           "length": null,
-          "precision": null,
+          "precision": 22,
           "scale": null,
           "default": null,
           "comment": null,
@@ -146,7 +146,7 @@
           "nullable": true,
           "unique": false,
           "length": null,
-          "precision": null,
+          "precision": 22,
           "scale": null,
           "default": null,
           "comment": null,
@@ -162,7 +162,7 @@
           "nullable": true,
           "unique": false,
           "length": null,
-          "precision": null,
+          "precision": 22,
           "scale": null,
           "default": null,
           "comment": null,
@@ -177,7 +177,7 @@
           "primary": false,
           "nullable": true,
           "unique": false,
-          "length": null,
+          "length": 15,
           "precision": null,
           "scale": null,
           "default": null,
@@ -197,9 +197,9 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": 1,
-          "precision": null,
-          "scale": null,
+          "length": null,
+          "precision": 3,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -213,7 +213,7 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 0,
           "precision": null,
           "scale": null,
           "default": null,
@@ -228,26 +228,25 @@
           "columnNames": [
             "scientific_name"
           ],
-          "composite": false,
           "keyName": "animal_species_scientific_name_unique",
-          "constraint": true,
+          "unique": true,
           "primary": false,
-          "unique": true
+          "constraint": true
         },
         {
-          "keyName": "PRIMARY",
           "columnNames": [
             "id"
           ],
-          "composite": false,
-          "constraint": true,
+          "keyName": "PRIMARY",
+          "unique": true,
           "primary": true,
-          "unique": true
+          "constraint": true
         }
       ],
       "checks": [],
       "foreignKeys": {},
-      "nativeEnums": {}
+      "nativeEnums": {},
+      "comment": ""
     },
     {
       "columns": {
@@ -260,8 +259,8 @@
           "nullable": false,
           "unique": false,
           "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -274,10 +273,10 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "unique": false,
+          "unique": true,
           "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -291,7 +290,7 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 2,
           "precision": null,
           "scale": null,
           "default": null,
@@ -325,51 +324,50 @@
           "columnNames": [
             "animal_species_id"
           ],
-          "composite": false,
           "keyName": "animal_species_names_animal_species_id_index",
-          "constraint": false,
+          "unique": false,
           "primary": false,
-          "unique": false
+          "constraint": false
         },
         {
-          "keyName": "animal_species_names_animal_species_id_language_unique",
           "columnNames": [
             "animal_species_id",
             "language"
           ],
-          "composite": true,
-          "constraint": true,
+          "keyName": "animal_species_names_animal_species_id_language_unique",
+          "unique": true,
           "primary": false,
-          "unique": true
+          "constraint": true,
+          "composite": true
         },
         {
-          "keyName": "PRIMARY",
           "columnNames": [
             "id"
           ],
-          "composite": false,
-          "constraint": true,
+          "keyName": "PRIMARY",
+          "unique": true,
           "primary": true,
-          "unique": true
+          "constraint": true
         }
       ],
       "checks": [],
       "foreignKeys": {
         "animal_species_names_animal_species_id_foreign": {
-          "constraintName": "animal_species_names_animal_species_id_foreign",
           "columnNames": [
             "animal_species_id"
           ],
+          "constraintName": "animal_species_names_animal_species_id_foreign",
           "localTableName": "animal_species_names",
+          "referencedTableName": "animal_species",
           "referencedColumnNames": [
             "id"
           ],
-          "referencedTableName": "animal_species",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
         }
       },
-      "nativeEnums": {}
+      "nativeEnums": {},
+      "comment": ""
     },
     {
       "columns": {
@@ -382,8 +380,1358 @@
           "nullable": false,
           "unique": false,
           "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "expo_push_token": {
+          "name": "expo_push_token",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": 255,
           "precision": null,
           "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "platform": {
+          "name": "platform",
+          "type": "enum('ANDROID','IOS')",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 7,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [
+            "ANDROID",
+            "IOS"
+          ],
+          "mappedType": "enum"
+        },
+        "last_seen_at": {
+          "name": "last_seen_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "revoked_at": {
+          "name": "revoked_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        }
+      },
+      "name": "device_tokens",
+      "indexes": [
+        {
+          "columnNames": [
+            "expo_push_token"
+          ],
+          "keyName": "device_tokens_expo_push_token_unique",
+          "unique": true,
+          "primary": false,
+          "constraint": true
+        },
+        {
+          "columnNames": [
+            "user_id"
+          ],
+          "keyName": "device_tokens_user_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "keyName": "PRIMARY",
+          "unique": true,
+          "primary": true,
+          "constraint": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "device_tokens_user_id_foreign": {
+          "columnNames": [
+            "user_id"
+          ],
+          "constraintName": "device_tokens_user_id_foreign",
+          "localTableName": "device_tokens",
+          "referencedTableName": "users",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        }
+      },
+      "nativeEnums": {},
+      "comment": ""
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "household_id": {
+          "name": "household_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "code": {
+          "name": "code",
+          "type": "varchar(16)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": 16,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "created_by_id": {
+          "name": "created_by_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "max_uses": {
+          "name": "max_uses",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "use_count": {
+          "name": "use_count",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": "0",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "revoked_at": {
+          "name": "revoked_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        }
+      },
+      "name": "household_invites",
+      "indexes": [
+        {
+          "columnNames": [
+            "code"
+          ],
+          "keyName": "household_invites_code_unique",
+          "unique": true,
+          "primary": false,
+          "constraint": true
+        },
+        {
+          "columnNames": [
+            "created_by_id"
+          ],
+          "keyName": "household_invites_created_by_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "household_id"
+          ],
+          "keyName": "household_invites_household_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "keyName": "PRIMARY",
+          "unique": true,
+          "primary": true,
+          "constraint": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "household_invites_created_by_id_foreign": {
+          "columnNames": [
+            "created_by_id"
+          ],
+          "constraintName": "household_invites_created_by_id_foreign",
+          "localTableName": "household_invites",
+          "referencedTableName": "users",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "no action"
+        },
+        "household_invites_household_id_foreign": {
+          "columnNames": [
+            "household_id"
+          ],
+          "constraintName": "household_invites_household_id_foreign",
+          "localTableName": "household_invites",
+          "referencedTableName": "households",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        }
+      },
+      "nativeEnums": {},
+      "comment": ""
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "household_id": {
+          "name": "household_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "role": {
+          "name": "role",
+          "type": "enum('OWNER','MEMBER')",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [
+            "OWNER",
+            "MEMBER"
+          ],
+          "mappedType": "enum"
+        },
+        "joined_at": {
+          "name": "joined_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        }
+      },
+      "name": "household_members",
+      "indexes": [
+        {
+          "columnNames": [
+            "household_id"
+          ],
+          "keyName": "household_members_household_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "household_id",
+            "user_id"
+          ],
+          "keyName": "household_members_household_id_user_id_unique",
+          "unique": true,
+          "primary": false,
+          "constraint": true,
+          "composite": true
+        },
+        {
+          "columnNames": [
+            "user_id"
+          ],
+          "keyName": "household_members_user_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "keyName": "PRIMARY",
+          "unique": true,
+          "primary": true,
+          "constraint": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "household_members_household_id_foreign": {
+          "columnNames": [
+            "household_id"
+          ],
+          "constraintName": "household_members_household_id_foreign",
+          "localTableName": "household_members",
+          "referencedTableName": "households",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        },
+        "household_members_user_id_foreign": {
+          "columnNames": [
+            "user_id"
+          ],
+          "constraintName": "household_members_user_id_foreign",
+          "localTableName": "household_members",
+          "referencedTableName": "users",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        }
+      },
+      "nativeEnums": {},
+      "comment": ""
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(80)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 80,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "timezone": {
+          "name": "timezone",
+          "type": "varchar(64)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 64,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "created_by_id": {
+          "name": "created_by_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        }
+      },
+      "name": "households",
+      "indexes": [
+        {
+          "columnNames": [
+            "created_by_id"
+          ],
+          "keyName": "households_created_by_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "keyName": "PRIMARY",
+          "unique": true,
+          "primary": true,
+          "constraint": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "households_created_by_id_foreign": {
+          "columnNames": [
+            "created_by_id"
+          ],
+          "constraintName": "households_created_by_id_foreign",
+          "localTableName": "households",
+          "referencedTableName": "users",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "no action"
+        }
+      },
+      "nativeEnums": {},
+      "comment": ""
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "tank_id": {
+          "name": "tank_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "parameter_definition_id": {
+          "name": "parameter_definition_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "value": {
+          "name": "value",
+          "type": "double",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 22,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "double"
+        },
+        "measured_at": {
+          "name": "measured_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "recorded_by_id": {
+          "name": "recorded_by_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "note": {
+          "name": "note",
+          "type": "varchar(500)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": 500,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        }
+      },
+      "name": "measurements",
+      "indexes": [
+        {
+          "columnNames": [
+            "parameter_definition_id"
+          ],
+          "keyName": "measurements_parameter_definition_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "recorded_by_id"
+          ],
+          "keyName": "measurements_recorded_by_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "tank_id"
+          ],
+          "keyName": "measurements_tank_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "tank_id",
+            "parameter_definition_id",
+            "measured_at"
+          ],
+          "keyName": "measurements_tank_id_parameter_definition_id_measured_at_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false,
+          "composite": true
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "keyName": "PRIMARY",
+          "unique": true,
+          "primary": true,
+          "constraint": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "measurements_parameter_definition_id_foreign": {
+          "columnNames": [
+            "parameter_definition_id"
+          ],
+          "constraintName": "measurements_parameter_definition_id_foreign",
+          "localTableName": "measurements",
+          "referencedTableName": "parameter_definitions",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        },
+        "measurements_recorded_by_id_foreign": {
+          "columnNames": [
+            "recorded_by_id"
+          ],
+          "constraintName": "measurements_recorded_by_id_foreign",
+          "localTableName": "measurements",
+          "referencedTableName": "users",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "no action"
+        },
+        "measurements_tank_id_foreign": {
+          "columnNames": [
+            "tank_id"
+          ],
+          "constraintName": "measurements_tank_id_foreign",
+          "localTableName": "measurements",
+          "referencedTableName": "tanks",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        }
+      },
+      "nativeEnums": {},
+      "comment": ""
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "occurrence_id": {
+          "name": "occurrence_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "device_token_id": {
+          "name": "device_token_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "attempt": {
+          "name": "attempt",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "sent_at": {
+          "name": "sent_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "expo_ticket_id": {
+          "name": "expo_ticket_id",
+          "type": "varchar(64)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": 64,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "expo_receipt_status": {
+          "name": "expo_receipt_status",
+          "type": "enum('OK','ERROR','EXPIRED')",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": 7,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [
+            "OK",
+            "ERROR",
+            "EXPIRED"
+          ],
+          "mappedType": "enum"
+        },
+        "error": {
+          "name": "error",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": 255,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        }
+      },
+      "name": "notification_deliveries",
+      "indexes": [
+        {
+          "columnNames": [
+            "device_token_id"
+          ],
+          "keyName": "notification_deliveries_device_token_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "expo_receipt_status",
+            "sent_at"
+          ],
+          "keyName": "notification_deliveries_expo_receipt_status_sent_at_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false,
+          "composite": true
+        },
+        {
+          "columnNames": [
+            "occurrence_id",
+            "device_token_id",
+            "attempt"
+          ],
+          "keyName": "notification_deliveries_occurrence_id_device_token_fbeb7_unique",
+          "unique": true,
+          "primary": false,
+          "constraint": true,
+          "composite": true
+        },
+        {
+          "columnNames": [
+            "occurrence_id"
+          ],
+          "keyName": "notification_deliveries_occurrence_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "user_id"
+          ],
+          "keyName": "notification_deliveries_user_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "keyName": "PRIMARY",
+          "unique": true,
+          "primary": true,
+          "constraint": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "notification_deliveries_device_token_id_foreign": {
+          "columnNames": [
+            "device_token_id"
+          ],
+          "constraintName": "notification_deliveries_device_token_id_foreign",
+          "localTableName": "notification_deliveries",
+          "referencedTableName": "device_tokens",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        },
+        "notification_deliveries_occurrence_id_foreign": {
+          "columnNames": [
+            "occurrence_id"
+          ],
+          "constraintName": "notification_deliveries_occurrence_id_foreign",
+          "localTableName": "notification_deliveries",
+          "referencedTableName": "routine_occurrences",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        },
+        "notification_deliveries_user_id_foreign": {
+          "columnNames": [
+            "user_id"
+          ],
+          "constraintName": "notification_deliveries_user_id_foreign",
+          "localTableName": "notification_deliveries",
+          "referencedTableName": "users",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        }
+      },
+      "nativeEnums": {},
+      "comment": ""
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "slug": {
+          "name": "slug",
+          "type": "varchar(40)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": 40,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(60)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 60,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "unit": {
+          "name": "unit",
+          "type": "varchar(16)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 16,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "decimals": {
+          "name": "decimals",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "is_system": {
+          "name": "is_system",
+          "type": "tinyint(1)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 3,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "boolean"
+        },
+        "household_id": {
+          "name": "household_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        }
+      },
+      "name": "parameter_definitions",
+      "indexes": [
+        {
+          "columnNames": [
+            "household_id"
+          ],
+          "keyName": "parameter_definitions_household_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "slug",
+            "household_id"
+          ],
+          "keyName": "parameter_definitions_slug_household_id_unique",
+          "unique": true,
+          "primary": false,
+          "constraint": true,
+          "composite": true
+        },
+        {
+          "columnNames": [
+            "id"
+          ],
+          "keyName": "PRIMARY",
+          "unique": true,
+          "primary": true,
+          "constraint": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "parameter_definitions_household_id_foreign": {
+          "columnNames": [
+            "household_id"
+          ],
+          "constraintName": "parameter_definitions_household_id_foreign",
+          "localTableName": "parameter_definitions",
+          "referencedTableName": "households",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        }
+      },
+      "nativeEnums": {},
+      "comment": ""
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -396,7 +1744,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "unique": false,
+          "unique": true,
           "length": 120,
           "precision": null,
           "scale": null,
@@ -429,7 +1777,7 @@
           "primary": false,
           "nullable": true,
           "unique": false,
-          "length": null,
+          "length": 6,
           "precision": null,
           "scale": null,
           "default": null,
@@ -449,7 +1797,7 @@
           "primary": false,
           "nullable": true,
           "unique": false,
-          "length": null,
+          "length": 6,
           "precision": null,
           "scale": null,
           "default": null,
@@ -469,9 +1817,9 @@
           "primary": false,
           "nullable": true,
           "unique": false,
-          "length": 1,
-          "precision": null,
-          "scale": null,
+          "length": null,
+          "precision": 3,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -485,7 +1833,7 @@
           "primary": false,
           "nullable": true,
           "unique": false,
-          "length": null,
+          "length": 10,
           "precision": null,
           "scale": null,
           "default": null,
@@ -508,7 +1856,7 @@
           "nullable": true,
           "unique": false,
           "length": null,
-          "precision": null,
+          "precision": 22,
           "scale": null,
           "default": null,
           "comment": null,
@@ -524,7 +1872,7 @@
           "nullable": true,
           "unique": false,
           "length": null,
-          "precision": null,
+          "precision": 22,
           "scale": null,
           "default": null,
           "comment": null,
@@ -540,7 +1888,7 @@
           "nullable": true,
           "unique": false,
           "length": null,
-          "precision": null,
+          "precision": 22,
           "scale": null,
           "default": null,
           "comment": null,
@@ -556,7 +1904,7 @@
           "nullable": true,
           "unique": false,
           "length": null,
-          "precision": null,
+          "precision": 22,
           "scale": null,
           "default": null,
           "comment": null,
@@ -571,9 +1919,9 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": 1,
-          "precision": null,
-          "scale": null,
+          "length": null,
+          "precision": 3,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -587,7 +1935,7 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 0,
           "precision": null,
           "scale": null,
           "default": null,
@@ -602,26 +1950,25 @@
           "columnNames": [
             "scientific_name"
           ],
-          "composite": false,
           "keyName": "plant_species_scientific_name_unique",
-          "constraint": true,
+          "unique": true,
           "primary": false,
-          "unique": true
+          "constraint": true
         },
         {
-          "keyName": "PRIMARY",
           "columnNames": [
             "id"
           ],
-          "composite": false,
-          "constraint": true,
+          "keyName": "PRIMARY",
+          "unique": true,
           "primary": true,
-          "unique": true
+          "constraint": true
         }
       ],
       "checks": [],
       "foreignKeys": {},
-      "nativeEnums": {}
+      "nativeEnums": {},
+      "comment": ""
     },
     {
       "columns": {
@@ -634,8 +1981,8 @@
           "nullable": false,
           "unique": false,
           "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -648,10 +1995,10 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "unique": false,
+          "unique": true,
           "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -665,7 +2012,7 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 2,
           "precision": null,
           "scale": null,
           "default": null,
@@ -699,51 +2046,50 @@
           "columnNames": [
             "plant_species_id"
           ],
-          "composite": false,
           "keyName": "plant_species_names_plant_species_id_index",
-          "constraint": false,
+          "unique": false,
           "primary": false,
-          "unique": false
+          "constraint": false
         },
         {
-          "keyName": "plant_species_names_plant_species_id_language_unique",
           "columnNames": [
             "plant_species_id",
             "language"
           ],
-          "composite": true,
-          "constraint": true,
+          "keyName": "plant_species_names_plant_species_id_language_unique",
+          "unique": true,
           "primary": false,
-          "unique": true
+          "constraint": true,
+          "composite": true
         },
         {
-          "keyName": "PRIMARY",
           "columnNames": [
             "id"
           ],
-          "composite": false,
-          "constraint": true,
+          "keyName": "PRIMARY",
+          "unique": true,
           "primary": true,
-          "unique": true
+          "constraint": true
         }
       ],
       "checks": [],
       "foreignKeys": {
         "plant_species_names_plant_species_id_foreign": {
-          "constraintName": "plant_species_names_plant_species_id_foreign",
           "columnNames": [
             "plant_species_id"
           ],
+          "constraintName": "plant_species_names_plant_species_id_foreign",
           "localTableName": "plant_species_names",
+          "referencedTableName": "plant_species",
           "referencedColumnNames": [
             "id"
           ],
-          "referencedTableName": "plant_species",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
         }
       },
-      "nativeEnums": {}
+      "nativeEnums": {},
+      "comment": ""
     },
     {
       "columns": {
@@ -756,8 +2102,376 @@
           "nullable": false,
           "unique": false,
           "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "token_hash": {
+          "name": "token_hash",
+          "type": "varchar(64)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": 64,
           "precision": null,
           "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "revoked_at": {
+          "name": "revoked_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        }
+      },
+      "name": "refresh_tokens",
+      "indexes": [
+        {
+          "columnNames": [
+            "id"
+          ],
+          "keyName": "PRIMARY",
+          "unique": true,
+          "primary": true,
+          "constraint": true
+        },
+        {
+          "columnNames": [
+            "token_hash"
+          ],
+          "keyName": "refresh_tokens_token_hash_unique",
+          "unique": true,
+          "primary": false,
+          "constraint": true
+        },
+        {
+          "columnNames": [
+            "user_id"
+          ],
+          "keyName": "refresh_tokens_user_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "refresh_tokens_user_id_foreign": {
+          "columnNames": [
+            "user_id"
+          ],
+          "constraintName": "refresh_tokens_user_id_foreign",
+          "localTableName": "refresh_tokens",
+          "referencedTableName": "users",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        }
+      },
+      "nativeEnums": {},
+      "comment": ""
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "routine_id": {
+          "name": "routine_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "scheduled_for": {
+          "name": "scheduled_for",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "status": {
+          "name": "status",
+          "type": "enum('PENDING','DONE','SKIPPED','MISSED')",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 7,
+          "precision": null,
+          "scale": null,
+          "default": "'PENDING'",
+          "comment": null,
+          "enumItems": [
+            "PENDING",
+            "DONE",
+            "SKIPPED",
+            "MISSED"
+          ],
+          "mappedType": "enum"
+        },
+        "completed_at": {
+          "name": "completed_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "completed_by_id": {
+          "name": "completed_by_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "reminders_sent": {
+          "name": "reminders_sent",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": "0",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "notified_at": {
+          "name": "notified_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        }
+      },
+      "name": "routine_occurrences",
+      "indexes": [
+        {
+          "columnNames": [
+            "id"
+          ],
+          "keyName": "PRIMARY",
+          "unique": true,
+          "primary": true,
+          "constraint": true
+        },
+        {
+          "columnNames": [
+            "completed_by_id"
+          ],
+          "keyName": "routine_occurrences_completed_by_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "routine_id"
+          ],
+          "keyName": "routine_occurrences_routine_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "routine_id",
+            "scheduled_for"
+          ],
+          "keyName": "routine_occurrences_routine_id_scheduled_for_unique",
+          "unique": true,
+          "primary": false,
+          "constraint": true,
+          "composite": true
+        },
+        {
+          "columnNames": [
+            "status",
+            "scheduled_for"
+          ],
+          "keyName": "routine_occurrences_status_scheduled_for_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false,
+          "composite": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "routine_occurrences_completed_by_id_foreign": {
+          "columnNames": [
+            "completed_by_id"
+          ],
+          "constraintName": "routine_occurrences_completed_by_id_foreign",
+          "localTableName": "routine_occurrences",
+          "referencedTableName": "users",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "set null"
+        },
+        "routine_occurrences_routine_id_foreign": {
+          "columnNames": [
+            "routine_id"
+          ],
+          "constraintName": "routine_occurrences_routine_id_foreign",
+          "localTableName": "routine_occurrences",
+          "referencedTableName": "routines",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        }
+      },
+      "nativeEnums": {},
+      "comment": ""
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -770,8 +2484,8 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "unique": false,
-          "length": null,
+          "unique": true,
+          "length": 10,
           "precision": null,
           "scale": null,
           "default": null,
@@ -839,9 +2553,9 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": 1,
-          "precision": null,
-          "scale": null,
+          "length": null,
+          "precision": 3,
+          "scale": 0,
           "default": "true",
           "comment": null,
           "enumItems": [],
@@ -856,8 +2570,8 @@
           "nullable": false,
           "unique": false,
           "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": "0",
           "comment": null,
           "enumItems": [],
@@ -867,30 +2581,30 @@
       "name": "routine_templates",
       "indexes": [
         {
-          "keyName": "routine_templates_tank_type_name_key_unique",
+          "columnNames": [
+            "id"
+          ],
+          "keyName": "PRIMARY",
+          "unique": true,
+          "primary": true,
+          "constraint": true
+        },
+        {
           "columnNames": [
             "tank_type",
             "name_key"
           ],
-          "composite": true,
-          "constraint": true,
+          "keyName": "routine_templates_tank_type_name_key_unique",
+          "unique": true,
           "primary": false,
-          "unique": true
-        },
-        {
-          "keyName": "PRIMARY",
-          "columnNames": [
-            "id"
-          ],
-          "composite": false,
           "constraint": true,
-          "primary": true,
-          "unique": true
+          "composite": true
         }
       ],
       "checks": [],
       "foreignKeys": {},
-      "nativeEnums": {}
+      "nativeEnums": {},
+      "comment": ""
     },
     {
       "columns": {
@@ -903,948 +2617,8 @@
           "nullable": false,
           "unique": false,
           "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "email": {
-          "name": "email",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": 255,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "string"
-        },
-        "password_hash": {
-          "name": "password_hash",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": 255,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "string"
-        },
-        "display_name": {
-          "name": "display_name",
-          "type": "varchar(80)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": 80,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "string"
-        },
-        "preferred_language": {
-          "name": "preferred_language",
-          "type": "enum('fr','en')",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": "'fr'",
-          "comment": null,
-          "enumItems": [
-            "fr",
-            "en"
-          ],
-          "mappedType": "enum"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "datetime",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "datetime",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        }
-      },
-      "name": "users",
-      "indexes": [
-        {
-          "columnNames": [
-            "email"
-          ],
-          "composite": false,
-          "keyName": "users_email_unique",
-          "constraint": true,
-          "primary": false,
-          "unique": true
-        },
-        {
-          "keyName": "PRIMARY",
-          "columnNames": [
-            "id"
-          ],
-          "composite": false,
-          "constraint": true,
-          "primary": true,
-          "unique": true
-        }
-      ],
-      "checks": [],
-      "foreignKeys": {},
-      "nativeEnums": {}
-    },
-    {
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": true,
-          "primary": true,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "token_hash": {
-          "name": "token_hash",
-          "type": "varchar(64)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": 64,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "string"
-        },
-        "expires_at": {
-          "name": "expires_at",
-          "type": "datetime",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        },
-        "revoked_at": {
-          "name": "revoked_at",
-          "type": "datetime",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "datetime",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        }
-      },
-      "name": "refresh_tokens",
-      "indexes": [
-        {
-          "columnNames": [
-            "user_id"
-          ],
-          "composite": false,
-          "keyName": "refresh_tokens_user_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "columnNames": [
-            "token_hash"
-          ],
-          "composite": false,
-          "keyName": "refresh_tokens_token_hash_unique",
-          "constraint": true,
-          "primary": false,
-          "unique": true
-        },
-        {
-          "keyName": "PRIMARY",
-          "columnNames": [
-            "id"
-          ],
-          "composite": false,
-          "constraint": true,
-          "primary": true,
-          "unique": true
-        }
-      ],
-      "checks": [],
-      "foreignKeys": {
-        "refresh_tokens_user_id_foreign": {
-          "constraintName": "refresh_tokens_user_id_foreign",
-          "columnNames": [
-            "user_id"
-          ],
-          "localTableName": "refresh_tokens",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "users",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
-        }
-      },
-      "nativeEnums": {}
-    },
-    {
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": true,
-          "primary": true,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar(80)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": 80,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "string"
-        },
-        "timezone": {
-          "name": "timezone",
-          "type": "varchar(64)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": 64,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "string"
-        },
-        "created_by_id": {
-          "name": "created_by_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "datetime",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "datetime",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        }
-      },
-      "name": "households",
-      "indexes": [
-        {
-          "columnNames": [
-            "created_by_id"
-          ],
-          "composite": false,
-          "keyName": "households_created_by_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "keyName": "PRIMARY",
-          "columnNames": [
-            "id"
-          ],
-          "composite": false,
-          "constraint": true,
-          "primary": true,
-          "unique": true
-        }
-      ],
-      "checks": [],
-      "foreignKeys": {
-        "households_created_by_id_foreign": {
-          "constraintName": "households_created_by_id_foreign",
-          "columnNames": [
-            "created_by_id"
-          ],
-          "localTableName": "households",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "users",
-          "updateRule": "cascade"
-        }
-      },
-      "nativeEnums": {}
-    },
-    {
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": true,
-          "primary": true,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "tank_type": {
-          "name": "tank_type",
-          "type": "enum('AQUARIUM','TERRARIUM','PALUDARIUM')",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [
-            "AQUARIUM",
-            "TERRARIUM",
-            "PALUDARIUM"
-          ],
-          "mappedType": "enum"
-        },
-        "slug": {
-          "name": "slug",
-          "type": "varchar(40)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": 40,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "string"
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar(60)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": 60,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "string"
-        },
-        "is_system": {
-          "name": "is_system",
-          "type": "tinyint(1)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": 1,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "boolean"
-        },
-        "household_id": {
-          "name": "household_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "datetime",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        }
-      },
-      "name": "tank_subtypes",
-      "indexes": [
-        {
-          "columnNames": [
-            "household_id"
-          ],
-          "composite": false,
-          "keyName": "tank_subtypes_household_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "keyName": "tank_subtypes_tank_type_slug_household_id_unique",
-          "columnNames": [
-            "tank_type",
-            "slug",
-            "household_id"
-          ],
-          "composite": true,
-          "constraint": true,
-          "primary": false,
-          "unique": true
-        },
-        {
-          "keyName": "PRIMARY",
-          "columnNames": [
-            "id"
-          ],
-          "composite": false,
-          "constraint": true,
-          "primary": true,
-          "unique": true
-        }
-      ],
-      "checks": [],
-      "foreignKeys": {
-        "tank_subtypes_household_id_foreign": {
-          "constraintName": "tank_subtypes_household_id_foreign",
-          "columnNames": [
-            "household_id"
-          ],
-          "localTableName": "tank_subtypes",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "households",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
-        }
-      },
-      "nativeEnums": {}
-    },
-    {
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": true,
-          "primary": true,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "household_id": {
-          "name": "household_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar(80)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": 80,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "string"
-        },
-        "tank_type": {
-          "name": "tank_type",
-          "type": "enum('AQUARIUM','TERRARIUM','PALUDARIUM')",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [
-            "AQUARIUM",
-            "TERRARIUM",
-            "PALUDARIUM"
-          ],
-          "mappedType": "enum"
-        },
-        "subtype_id": {
-          "name": "subtype_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "volume_liters": {
-          "name": "volume_liters",
-          "type": "double",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "double"
-        },
-        "width_cm": {
-          "name": "width_cm",
-          "type": "double",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "double"
-        },
-        "height_cm": {
-          "name": "height_cm",
-          "type": "double",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "double"
-        },
-        "depth_cm": {
-          "name": "depth_cm",
-          "type": "double",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "double"
-        },
-        "substrate": {
-          "name": "substrate",
-          "type": "varchar(120)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": 120,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "string"
-        },
-        "started_at": {
-          "name": "started_at",
-          "type": "date",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "date"
-        },
-        "description": {
-          "name": "description",
-          "type": "text",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "text"
-        },
-        "cover_photo_id": {
-          "name": "cover_photo_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "datetime",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "datetime",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        }
-      },
-      "name": "tanks",
-      "indexes": [
-        {
-          "columnNames": [
-            "household_id"
-          ],
-          "composite": false,
-          "keyName": "tanks_household_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "columnNames": [
-            "subtype_id"
-          ],
-          "composite": false,
-          "keyName": "tanks_subtype_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "columnNames": [
-            "cover_photo_id"
-          ],
-          "composite": false,
-          "keyName": "tanks_cover_photo_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "keyName": "PRIMARY",
-          "columnNames": [
-            "id"
-          ],
-          "composite": false,
-          "constraint": true,
-          "primary": true,
-          "unique": true
-        }
-      ],
-      "checks": [],
-      "foreignKeys": {
-        "tanks_household_id_foreign": {
-          "constraintName": "tanks_household_id_foreign",
-          "columnNames": [
-            "household_id"
-          ],
-          "localTableName": "tanks",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "households",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
-        },
-        "tanks_subtype_id_foreign": {
-          "constraintName": "tanks_subtype_id_foreign",
-          "columnNames": [
-            "subtype_id"
-          ],
-          "localTableName": "tanks",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "tank_subtypes",
-          "deleteRule": "set null",
-          "updateRule": "cascade"
-        },
-        "tanks_cover_photo_id_foreign": {
-          "constraintName": "tanks_cover_photo_id_foreign",
-          "columnNames": [
-            "cover_photo_id"
-          ],
-          "localTableName": "tanks",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "tank_photos",
-          "deleteRule": "set null",
-          "updateRule": "cascade"
-        }
-      },
-      "nativeEnums": {}
-    },
-    {
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": true,
-          "primary": true,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -1859,616 +2633,8 @@
           "nullable": false,
           "unique": false,
           "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "plant_species_id": {
-          "name": "plant_species_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "quantity": {
-          "name": "quantity",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "added_at": {
-          "name": "added_at",
-          "type": "date",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "date"
-        },
-        "removed_at": {
-          "name": "removed_at",
-          "type": "date",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "date"
-        },
-        "notes": {
-          "name": "notes",
-          "type": "varchar(500)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": 500,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "string"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "datetime",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        }
-      },
-      "name": "tank_plants",
-      "indexes": [
-        {
-          "columnNames": [
-            "tank_id"
-          ],
-          "composite": false,
-          "keyName": "tank_plants_tank_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "columnNames": [
-            "plant_species_id"
-          ],
-          "composite": false,
-          "keyName": "tank_plants_plant_species_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "keyName": "PRIMARY",
-          "columnNames": [
-            "id"
-          ],
-          "composite": false,
-          "constraint": true,
-          "primary": true,
-          "unique": true
-        }
-      ],
-      "checks": [],
-      "foreignKeys": {
-        "tank_plants_tank_id_foreign": {
-          "constraintName": "tank_plants_tank_id_foreign",
-          "columnNames": [
-            "tank_id"
-          ],
-          "localTableName": "tank_plants",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "tanks",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
-        },
-        "tank_plants_plant_species_id_foreign": {
-          "constraintName": "tank_plants_plant_species_id_foreign",
-          "columnNames": [
-            "plant_species_id"
-          ],
-          "localTableName": "tank_plants",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "plant_species",
-          "updateRule": "cascade"
-        }
-      },
-      "nativeEnums": {}
-    },
-    {
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": true,
-          "primary": true,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "tank_id": {
-          "name": "tank_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "storage_key": {
-          "name": "storage_key",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": 255,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "string"
-        },
-        "content_type": {
-          "name": "content_type",
-          "type": "varchar(100)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": 100,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "string"
-        },
-        "size_bytes": {
-          "name": "size_bytes",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "caption": {
-          "name": "caption",
-          "type": "varchar(200)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": 200,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "string"
-        },
-        "taken_at": {
-          "name": "taken_at",
-          "type": "datetime",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        },
-        "uploaded_by_id": {
-          "name": "uploaded_by_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "datetime",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        }
-      },
-      "name": "tank_photos",
-      "indexes": [
-        {
-          "columnNames": [
-            "tank_id"
-          ],
-          "composite": false,
-          "keyName": "tank_photos_tank_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "columnNames": [
-            "storage_key"
-          ],
-          "composite": false,
-          "keyName": "tank_photos_storage_key_unique",
-          "constraint": true,
-          "primary": false,
-          "unique": true
-        },
-        {
-          "columnNames": [
-            "uploaded_by_id"
-          ],
-          "composite": false,
-          "keyName": "tank_photos_uploaded_by_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "keyName": "PRIMARY",
-          "columnNames": [
-            "id"
-          ],
-          "composite": false,
-          "constraint": true,
-          "primary": true,
-          "unique": true
-        }
-      ],
-      "checks": [],
-      "foreignKeys": {
-        "tank_photos_tank_id_foreign": {
-          "constraintName": "tank_photos_tank_id_foreign",
-          "columnNames": [
-            "tank_id"
-          ],
-          "localTableName": "tank_photos",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "tanks",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
-        },
-        "tank_photos_uploaded_by_id_foreign": {
-          "constraintName": "tank_photos_uploaded_by_id_foreign",
-          "columnNames": [
-            "uploaded_by_id"
-          ],
-          "localTableName": "tank_photos",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "users",
-          "updateRule": "cascade"
-        }
-      },
-      "nativeEnums": {}
-    },
-    {
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": true,
-          "primary": true,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "tank_id": {
-          "name": "tank_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "animal_species_id": {
-          "name": "animal_species_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "quantity": {
-          "name": "quantity",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "added_at": {
-          "name": "added_at",
-          "type": "date",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "date"
-        },
-        "removed_at": {
-          "name": "removed_at",
-          "type": "date",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "date"
-        },
-        "notes": {
-          "name": "notes",
-          "type": "varchar(500)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": 500,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "string"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "datetime",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        }
-      },
-      "name": "tank_animals",
-      "indexes": [
-        {
-          "columnNames": [
-            "tank_id"
-          ],
-          "composite": false,
-          "keyName": "tank_animals_tank_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "columnNames": [
-            "animal_species_id"
-          ],
-          "composite": false,
-          "keyName": "tank_animals_animal_species_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "keyName": "PRIMARY",
-          "columnNames": [
-            "id"
-          ],
-          "composite": false,
-          "constraint": true,
-          "primary": true,
-          "unique": true
-        }
-      ],
-      "checks": [],
-      "foreignKeys": {
-        "tank_animals_tank_id_foreign": {
-          "constraintName": "tank_animals_tank_id_foreign",
-          "columnNames": [
-            "tank_id"
-          ],
-          "localTableName": "tank_animals",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "tanks",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
-        },
-        "tank_animals_animal_species_id_foreign": {
-          "constraintName": "tank_animals_animal_species_id_foreign",
-          "columnNames": [
-            "animal_species_id"
-          ],
-          "localTableName": "tank_animals",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "animal_species",
-          "updateRule": "cascade"
-        }
-      },
-      "nativeEnums": {}
-    },
-    {
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": true,
-          "primary": true,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "tank_id": {
-          "name": "tank_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -2546,9 +2712,9 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": 1,
-          "precision": null,
-          "scale": null,
+          "length": null,
+          "precision": 3,
+          "scale": 0,
           "default": "true",
           "comment": null,
           "enumItems": [],
@@ -2563,8 +2729,8 @@
           "nullable": false,
           "unique": false,
           "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -2579,8 +2745,8 @@
           "nullable": true,
           "unique": false,
           "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -2595,8 +2761,8 @@
           "nullable": false,
           "unique": false,
           "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": "0",
           "comment": null,
           "enumItems": [],
@@ -2610,7 +2776,7 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 0,
           "precision": null,
           "scale": null,
           "default": null,
@@ -2626,7 +2792,7 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 0,
           "precision": null,
           "scale": null,
           "default": null,
@@ -2639,64 +2805,63 @@
       "indexes": [
         {
           "columnNames": [
-            "tank_id"
+            "id"
           ],
-          "composite": false,
-          "keyName": "routines_tank_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
+          "keyName": "PRIMARY",
+          "unique": true,
+          "primary": true,
+          "constraint": true
         },
         {
           "columnNames": [
             "created_by_id"
           ],
-          "composite": false,
           "keyName": "routines_created_by_id_index",
-          "constraint": false,
+          "unique": false,
           "primary": false,
-          "unique": false
+          "constraint": false
         },
         {
-          "keyName": "PRIMARY",
           "columnNames": [
-            "id"
+            "tank_id"
           ],
-          "composite": false,
-          "constraint": true,
-          "primary": true,
-          "unique": true
+          "keyName": "routines_tank_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
         }
       ],
       "checks": [],
       "foreignKeys": {
-        "routines_tank_id_foreign": {
-          "constraintName": "routines_tank_id_foreign",
-          "columnNames": [
-            "tank_id"
-          ],
-          "localTableName": "routines",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "tanks",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
-        },
         "routines_created_by_id_foreign": {
-          "constraintName": "routines_created_by_id_foreign",
           "columnNames": [
             "created_by_id"
           ],
+          "constraintName": "routines_created_by_id_foreign",
           "localTableName": "routines",
+          "referencedTableName": "users",
           "referencedColumnNames": [
             "id"
           ],
-          "referencedTableName": "users",
-          "updateRule": "cascade"
+          "updateRule": "cascade",
+          "deleteRule": "no action"
+        },
+        "routines_tank_id_foreign": {
+          "columnNames": [
+            "tank_id"
+          ],
+          "constraintName": "routines_tank_id_foreign",
+          "localTableName": "routines",
+          "referencedTableName": "tanks",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
         }
       },
-      "nativeEnums": {}
+      "nativeEnums": {},
+      "comment": ""
     },
     {
       "columns": {
@@ -2709,15 +2874,15 @@
           "nullable": false,
           "unique": false,
           "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
           "mappedType": "integer"
         },
-        "routine_id": {
-          "name": "routine_id",
+        "tank_id": {
+          "name": "tank_id",
           "type": "int",
           "unsigned": true,
           "autoincrement": false,
@@ -2725,16 +2890,48 @@
           "nullable": false,
           "unique": false,
           "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
           "mappedType": "integer"
         },
-        "scheduled_for": {
-          "name": "scheduled_for",
-          "type": "datetime",
+        "animal_species_id": {
+          "name": "animal_species_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "added_at": {
+          "name": "added_at",
+          "type": "date",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
@@ -2746,32 +2943,11 @@
           "default": null,
           "comment": null,
           "enumItems": [],
-          "mappedType": "datetime"
+          "mappedType": "date"
         },
-        "status": {
-          "name": "status",
-          "type": "enum('PENDING','DONE','SKIPPED','MISSED')",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": "'PENDING'",
-          "comment": null,
-          "enumItems": [
-            "PENDING",
-            "DONE",
-            "SKIPPED",
-            "MISSED"
-          ],
-          "mappedType": "enum"
-        },
-        "completed_at": {
-          "name": "completed_at",
-          "type": "datetime",
+        "removed_at": {
+          "name": "removed_at",
+          "type": "date",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
@@ -2783,142 +2959,102 @@
           "default": null,
           "comment": null,
           "enumItems": [],
-          "mappedType": "datetime"
+          "mappedType": "date"
         },
-        "completed_by_id": {
-          "name": "completed_by_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "notified_at": {
-          "name": "notified_at",
-          "type": "datetime",
+        "notes": {
+          "name": "notes",
+          "type": "varchar(500)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
           "unique": false,
-          "length": null,
+          "length": 500,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
           "enumItems": [],
           "mappedType": "datetime"
-        },
-        "reminders_sent": {
-          "name": "reminders_sent",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": "0",
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
         }
       },
-      "name": "routine_occurrences",
+      "name": "tank_animals",
       "indexes": [
         {
           "columnNames": [
-            "routine_id"
-          ],
-          "composite": false,
-          "keyName": "routine_occurrences_routine_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "columnNames": [
-            "completed_by_id"
-          ],
-          "composite": false,
-          "keyName": "routine_occurrences_completed_by_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "keyName": "routine_occurrences_status_scheduled_for_index",
-          "columnNames": [
-            "status",
-            "scheduled_for"
-          ],
-          "composite": true,
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "keyName": "routine_occurrences_routine_id_scheduled_for_unique",
-          "columnNames": [
-            "routine_id",
-            "scheduled_for"
-          ],
-          "composite": true,
-          "constraint": true,
-          "primary": false,
-          "unique": true
-        },
-        {
-          "keyName": "PRIMARY",
-          "columnNames": [
             "id"
           ],
-          "composite": false,
-          "constraint": true,
+          "keyName": "PRIMARY",
+          "unique": true,
           "primary": true,
-          "unique": true
+          "constraint": true
+        },
+        {
+          "columnNames": [
+            "animal_species_id"
+          ],
+          "keyName": "tank_animals_animal_species_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "tank_id"
+          ],
+          "keyName": "tank_animals_tank_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
         }
       ],
       "checks": [],
       "foreignKeys": {
-        "routine_occurrences_routine_id_foreign": {
-          "constraintName": "routine_occurrences_routine_id_foreign",
+        "tank_animals_animal_species_id_foreign": {
           "columnNames": [
-            "routine_id"
+            "animal_species_id"
           ],
-          "localTableName": "routine_occurrences",
+          "constraintName": "tank_animals_animal_species_id_foreign",
+          "localTableName": "tank_animals",
+          "referencedTableName": "animal_species",
           "referencedColumnNames": [
             "id"
           ],
-          "referencedTableName": "routines",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
+          "updateRule": "cascade",
+          "deleteRule": "no action"
         },
-        "routine_occurrences_completed_by_id_foreign": {
-          "constraintName": "routine_occurrences_completed_by_id_foreign",
+        "tank_animals_tank_id_foreign": {
           "columnNames": [
-            "completed_by_id"
+            "tank_id"
           ],
-          "localTableName": "routine_occurrences",
+          "constraintName": "tank_animals_tank_id_foreign",
+          "localTableName": "tank_animals",
+          "referencedTableName": "tanks",
           "referencedColumnNames": [
             "id"
           ],
-          "referencedTableName": "users",
-          "deleteRule": "set null",
-          "updateRule": "cascade"
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
         }
       },
-      "nativeEnums": {}
+      "nativeEnums": {},
+      "comment": ""
     },
     {
       "columns": {
@@ -2931,12 +3067,615 @@
           "nullable": false,
           "unique": false,
           "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "tank_id": {
+          "name": "tank_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "parameter_definition_id": {
+          "name": "parameter_definition_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "enabled": {
+          "name": "enabled",
+          "type": "tinyint(1)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": null,
+          "precision": 3,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "boolean"
+        },
+        "min_threshold": {
+          "name": "min_threshold",
+          "type": "double",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": null,
+          "precision": 22,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "double"
+        },
+        "max_threshold": {
+          "name": "max_threshold",
+          "type": "double",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": null,
+          "precision": 22,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "double"
+        }
+      },
+      "name": "tank_parameter_overrides",
+      "indexes": [
+        {
+          "columnNames": [
+            "id"
+          ],
+          "keyName": "PRIMARY",
+          "unique": true,
+          "primary": true,
+          "constraint": true
+        },
+        {
+          "columnNames": [
+            "parameter_definition_id"
+          ],
+          "keyName": "tank_parameter_overrides_parameter_definition_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "tank_id"
+          ],
+          "keyName": "tank_parameter_overrides_tank_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "tank_id",
+            "parameter_definition_id"
+          ],
+          "keyName": "tank_parameter_overrides_tank_id_parameter_definition_id_unique",
+          "unique": true,
+          "primary": false,
+          "constraint": true,
+          "composite": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "tank_parameter_overrides_parameter_definition_id_foreign": {
+          "columnNames": [
+            "parameter_definition_id"
+          ],
+          "constraintName": "tank_parameter_overrides_parameter_definition_id_foreign",
+          "localTableName": "tank_parameter_overrides",
+          "referencedTableName": "parameter_definitions",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        },
+        "tank_parameter_overrides_tank_id_foreign": {
+          "columnNames": [
+            "tank_id"
+          ],
+          "constraintName": "tank_parameter_overrides_tank_id_foreign",
+          "localTableName": "tank_parameter_overrides",
+          "referencedTableName": "tanks",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        }
+      },
+      "nativeEnums": {},
+      "comment": ""
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "tank_id": {
+          "name": "tank_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "storage_key": {
+          "name": "storage_key",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": 255,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
           "enumItems": [],
+          "mappedType": "string"
+        },
+        "content_type": {
+          "name": "content_type",
+          "type": "varchar(100)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 100,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "size_bytes": {
+          "name": "size_bytes",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
           "mappedType": "integer"
+        },
+        "caption": {
+          "name": "caption",
+          "type": "varchar(200)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": 200,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "taken_at": {
+          "name": "taken_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "uploaded_by_id": {
+          "name": "uploaded_by_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        }
+      },
+      "name": "tank_photos",
+      "indexes": [
+        {
+          "columnNames": [
+            "id"
+          ],
+          "keyName": "PRIMARY",
+          "unique": true,
+          "primary": true,
+          "constraint": true
+        },
+        {
+          "columnNames": [
+            "storage_key"
+          ],
+          "keyName": "tank_photos_storage_key_unique",
+          "unique": true,
+          "primary": false,
+          "constraint": true
+        },
+        {
+          "columnNames": [
+            "tank_id"
+          ],
+          "keyName": "tank_photos_tank_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "uploaded_by_id"
+          ],
+          "keyName": "tank_photos_uploaded_by_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "tank_photos_tank_id_foreign": {
+          "columnNames": [
+            "tank_id"
+          ],
+          "constraintName": "tank_photos_tank_id_foreign",
+          "localTableName": "tank_photos",
+          "referencedTableName": "tanks",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        },
+        "tank_photos_uploaded_by_id_foreign": {
+          "columnNames": [
+            "uploaded_by_id"
+          ],
+          "constraintName": "tank_photos_uploaded_by_id_foreign",
+          "localTableName": "tank_photos",
+          "referencedTableName": "users",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "no action"
+        }
+      },
+      "nativeEnums": {},
+      "comment": ""
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "tank_id": {
+          "name": "tank_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "plant_species_id": {
+          "name": "plant_species_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "added_at": {
+          "name": "added_at",
+          "type": "date",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "date"
+        },
+        "removed_at": {
+          "name": "removed_at",
+          "type": "date",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "date"
+        },
+        "notes": {
+          "name": "notes",
+          "type": "varchar(500)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": 500,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        }
+      },
+      "name": "tank_plants",
+      "indexes": [
+        {
+          "columnNames": [
+            "id"
+          ],
+          "keyName": "PRIMARY",
+          "unique": true,
+          "primary": true,
+          "constraint": true
+        },
+        {
+          "columnNames": [
+            "plant_species_id"
+          ],
+          "keyName": "tank_plants_plant_species_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
+          "columnNames": [
+            "tank_id"
+          ],
+          "keyName": "tank_plants_tank_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "tank_plants_plant_species_id_foreign": {
+          "columnNames": [
+            "plant_species_id"
+          ],
+          "constraintName": "tank_plants_plant_species_id_foreign",
+          "localTableName": "tank_plants",
+          "referencedTableName": "plant_species",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "no action"
+        },
+        "tank_plants_tank_id_foreign": {
+          "columnNames": [
+            "tank_id"
+          ],
+          "constraintName": "tank_plants_tank_id_foreign",
+          "localTableName": "tank_plants",
+          "referencedTableName": "tanks",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        }
+      },
+      "nativeEnums": {},
+      "comment": ""
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "tank_type": {
+          "name": "tank_type",
+          "type": "enum('AQUARIUM','TERRARIUM','PALUDARIUM')",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": 10,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [
+            "AQUARIUM",
+            "TERRARIUM",
+            "PALUDARIUM"
+          ],
+          "mappedType": "enum"
         },
         "slug": {
           "name": "slug",
@@ -2970,38 +3709,6 @@
           "enumItems": [],
           "mappedType": "string"
         },
-        "unit": {
-          "name": "unit",
-          "type": "varchar(16)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": 16,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "string"
-        },
-        "decimals": {
-          "name": "decimals",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
         "is_system": {
           "name": "is_system",
           "type": "tinyint(1)",
@@ -3010,9 +3717,9 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": 1,
-          "precision": null,
-          "scale": null,
+          "length": null,
+          "precision": 3,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -3027,8 +3734,8 @@
           "nullable": true,
           "unique": false,
           "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -3042,7 +3749,7 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 0,
           "precision": null,
           "scale": null,
           "default": null,
@@ -3051,57 +3758,57 @@
           "mappedType": "datetime"
         }
       },
-      "name": "parameter_definitions",
+      "name": "tank_subtypes",
       "indexes": [
+        {
+          "columnNames": [
+            "id"
+          ],
+          "keyName": "PRIMARY",
+          "unique": true,
+          "primary": true,
+          "constraint": true
+        },
         {
           "columnNames": [
             "household_id"
           ],
-          "composite": false,
-          "keyName": "parameter_definitions_household_id_index",
-          "constraint": false,
+          "keyName": "tank_subtypes_household_id_index",
+          "unique": false,
           "primary": false,
-          "unique": false
+          "constraint": false
         },
         {
-          "keyName": "parameter_definitions_slug_household_id_unique",
           "columnNames": [
+            "tank_type",
             "slug",
             "household_id"
           ],
-          "composite": true,
-          "constraint": true,
+          "keyName": "tank_subtypes_tank_type_slug_household_id_unique",
+          "unique": true,
           "primary": false,
-          "unique": true
-        },
-        {
-          "keyName": "PRIMARY",
-          "columnNames": [
-            "id"
-          ],
-          "composite": false,
           "constraint": true,
-          "primary": true,
-          "unique": true
+          "composite": true
         }
       ],
       "checks": [],
       "foreignKeys": {
-        "parameter_definitions_household_id_foreign": {
-          "constraintName": "parameter_definitions_household_id_foreign",
+        "tank_subtypes_household_id_foreign": {
           "columnNames": [
             "household_id"
           ],
-          "localTableName": "parameter_definitions",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "constraintName": "tank_subtypes_household_id_foreign",
+          "localTableName": "tank_subtypes",
           "referencedTableName": "households",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
         }
       },
-      "nativeEnums": {}
+      "nativeEnums": {},
+      "comment": ""
     },
     {
       "columns": {
@@ -3114,15 +3821,15 @@
           "nullable": false,
           "unique": false,
           "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
           "mappedType": "integer"
         },
-        "tank_id": {
-          "name": "tank_id",
+        "household_id": {
+          "name": "household_id",
           "type": "int",
           "unsigned": true,
           "autoincrement": false,
@@ -3130,260 +3837,22 @@
           "nullable": false,
           "unique": false,
           "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
           "mappedType": "integer"
         },
-        "parameter_definition_id": {
-          "name": "parameter_definition_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "enabled": {
-          "name": "enabled",
-          "type": "tinyint(1)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": 1,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "boolean"
-        },
-        "min_threshold": {
-          "name": "min_threshold",
-          "type": "double",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "double"
-        },
-        "max_threshold": {
-          "name": "max_threshold",
-          "type": "double",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "double"
-        }
-      },
-      "name": "tank_parameter_overrides",
-      "indexes": [
-        {
-          "columnNames": [
-            "tank_id"
-          ],
-          "composite": false,
-          "keyName": "tank_parameter_overrides_tank_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "columnNames": [
-            "parameter_definition_id"
-          ],
-          "composite": false,
-          "keyName": "tank_parameter_overrides_parameter_definition_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "keyName": "tank_parameter_overrides_tank_id_parameter_definition_id_unique",
-          "columnNames": [
-            "tank_id",
-            "parameter_definition_id"
-          ],
-          "composite": true,
-          "constraint": true,
-          "primary": false,
-          "unique": true
-        },
-        {
-          "keyName": "PRIMARY",
-          "columnNames": [
-            "id"
-          ],
-          "composite": false,
-          "constraint": true,
-          "primary": true,
-          "unique": true
-        }
-      ],
-      "checks": [],
-      "foreignKeys": {
-        "tank_parameter_overrides_tank_id_foreign": {
-          "constraintName": "tank_parameter_overrides_tank_id_foreign",
-          "columnNames": [
-            "tank_id"
-          ],
-          "localTableName": "tank_parameter_overrides",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "tanks",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
-        },
-        "tank_parameter_overrides_parameter_definition_id_foreign": {
-          "constraintName": "tank_parameter_overrides_parameter_definition_id_foreign",
-          "columnNames": [
-            "parameter_definition_id"
-          ],
-          "localTableName": "tank_parameter_overrides",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "parameter_definitions",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
-        }
-      },
-      "nativeEnums": {}
-    },
-    {
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": true,
-          "primary": true,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "tank_id": {
-          "name": "tank_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "parameter_definition_id": {
-          "name": "parameter_definition_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "value": {
-          "name": "value",
-          "type": "double",
+        "name": {
+          "name": "name",
+          "type": "varchar(80)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "double"
-        },
-        "measured_at": {
-          "name": "measured_at",
-          "type": "datetime",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        },
-        "recorded_by_id": {
-          "name": "recorded_by_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "note": {
-          "name": "note",
-          "type": "varchar(500)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": 500,
+          "length": 80,
           "precision": null,
           "scale": null,
           "default": null,
@@ -3391,325 +3860,115 @@
           "enumItems": [],
           "mappedType": "string"
         },
-        "created_at": {
-          "name": "created_at",
-          "type": "datetime",
+        "tank_type": {
+          "name": "tank_type",
+          "type": "enum('AQUARIUM','TERRARIUM','PALUDARIUM')",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        }
-      },
-      "name": "measurements",
-      "indexes": [
-        {
-          "columnNames": [
-            "tank_id"
-          ],
-          "composite": false,
-          "keyName": "measurements_tank_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "columnNames": [
-            "parameter_definition_id"
-          ],
-          "composite": false,
-          "keyName": "measurements_parameter_definition_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "columnNames": [
-            "recorded_by_id"
-          ],
-          "composite": false,
-          "keyName": "measurements_recorded_by_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "keyName": "measurements_tank_id_parameter_definition_id_measured_at_index",
-          "columnNames": [
-            "tank_id",
-            "parameter_definition_id",
-            "measured_at"
-          ],
-          "composite": true,
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "keyName": "PRIMARY",
-          "columnNames": [
-            "id"
-          ],
-          "composite": false,
-          "constraint": true,
-          "primary": true,
-          "unique": true
-        }
-      ],
-      "checks": [],
-      "foreignKeys": {
-        "measurements_tank_id_foreign": {
-          "constraintName": "measurements_tank_id_foreign",
-          "columnNames": [
-            "tank_id"
-          ],
-          "localTableName": "measurements",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "tanks",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
-        },
-        "measurements_parameter_definition_id_foreign": {
-          "constraintName": "measurements_parameter_definition_id_foreign",
-          "columnNames": [
-            "parameter_definition_id"
-          ],
-          "localTableName": "measurements",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "parameter_definitions",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
-        },
-        "measurements_recorded_by_id_foreign": {
-          "constraintName": "measurements_recorded_by_id_foreign",
-          "columnNames": [
-            "recorded_by_id"
-          ],
-          "localTableName": "measurements",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "users",
-          "updateRule": "cascade"
-        }
-      },
-      "nativeEnums": {}
-    },
-    {
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": true,
-          "primary": true,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "household_id": {
-          "name": "household_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "role": {
-          "name": "role",
-          "type": "enum('OWNER','MEMBER')",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
+          "length": 10,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
           "enumItems": [
-            "OWNER",
-            "MEMBER"
+            "AQUARIUM",
+            "TERRARIUM",
+            "PALUDARIUM"
           ],
           "mappedType": "enum"
         },
-        "joined_at": {
-          "name": "joined_at",
-          "type": "datetime",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        }
-      },
-      "name": "household_members",
-      "indexes": [
-        {
-          "columnNames": [
-            "household_id"
-          ],
-          "composite": false,
-          "keyName": "household_members_household_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "columnNames": [
-            "user_id"
-          ],
-          "composite": false,
-          "keyName": "household_members_user_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "keyName": "household_members_household_id_user_id_unique",
-          "columnNames": [
-            "household_id",
-            "user_id"
-          ],
-          "composite": true,
-          "constraint": true,
-          "primary": false,
-          "unique": true
-        },
-        {
-          "keyName": "PRIMARY",
-          "columnNames": [
-            "id"
-          ],
-          "composite": false,
-          "constraint": true,
-          "primary": true,
-          "unique": true
-        }
-      ],
-      "checks": [],
-      "foreignKeys": {
-        "household_members_household_id_foreign": {
-          "constraintName": "household_members_household_id_foreign",
-          "columnNames": [
-            "household_id"
-          ],
-          "localTableName": "household_members",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "households",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
-        },
-        "household_members_user_id_foreign": {
-          "constraintName": "household_members_user_id_foreign",
-          "columnNames": [
-            "user_id"
-          ],
-          "localTableName": "household_members",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "users",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
-        }
-      },
-      "nativeEnums": {}
-    },
-    {
-      "columns": {
-        "id": {
-          "name": "id",
+        "subtype_id": {
+          "name": "subtype_id",
           "type": "int",
           "unsigned": true,
-          "autoincrement": true,
-          "primary": true,
-          "nullable": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
           "unique": false,
           "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
           "mappedType": "integer"
         },
-        "household_id": {
-          "name": "household_id",
-          "type": "int",
-          "unsigned": true,
+        "volume_liters": {
+          "name": "volume_liters",
+          "type": "double",
+          "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
           "unique": false,
           "length": null,
-          "precision": null,
+          "precision": 22,
           "scale": null,
           "default": null,
           "comment": null,
           "enumItems": [],
-          "mappedType": "integer"
+          "mappedType": "double"
         },
-        "code": {
-          "name": "code",
-          "type": "varchar(16)",
+        "width_cm": {
+          "name": "width_cm",
+          "type": "double",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
           "unique": false,
-          "length": 16,
+          "length": null,
+          "precision": 22,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "double"
+        },
+        "height_cm": {
+          "name": "height_cm",
+          "type": "double",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": null,
+          "precision": 22,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "double"
+        },
+        "depth_cm": {
+          "name": "depth_cm",
+          "type": "double",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": null,
+          "precision": 22,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "double"
+        },
+        "substrate": {
+          "name": "substrate",
+          "type": "varchar(120)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": 120,
           "precision": null,
           "scale": null,
           "default": null,
@@ -3717,73 +3976,9 @@
           "enumItems": [],
           "mappedType": "string"
         },
-        "created_by_id": {
-          "name": "created_by_id",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "expires_at": {
-          "name": "expires_at",
-          "type": "datetime",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "datetime"
-        },
-        "max_uses": {
-          "name": "max_uses",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "use_count": {
-          "name": "use_count",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": "0",
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
-        "revoked_at": {
-          "name": "revoked_at",
-          "type": "datetime",
+        "started_at": {
+          "name": "started_at",
+          "type": "date",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
@@ -3795,7 +3990,23 @@
           "default": null,
           "comment": null,
           "enumItems": [],
-          "mappedType": "datetime"
+          "mappedType": "date"
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": 65535,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "text"
         },
         "created_at": {
           "name": "created_at",
@@ -3805,87 +4016,130 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 0,
           "precision": null,
           "scale": null,
           "default": null,
           "comment": null,
           "enumItems": [],
           "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "cover_photo_id": {
+          "name": "cover_photo_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
         }
       },
-      "name": "household_invites",
+      "name": "tanks",
       "indexes": [
+        {
+          "columnNames": [
+            "id"
+          ],
+          "keyName": "PRIMARY",
+          "unique": true,
+          "primary": true,
+          "constraint": true
+        },
+        {
+          "columnNames": [
+            "cover_photo_id"
+          ],
+          "keyName": "tanks_cover_photo_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
         {
           "columnNames": [
             "household_id"
           ],
-          "composite": false,
-          "keyName": "household_invites_household_id_index",
-          "constraint": false,
+          "keyName": "tanks_household_id_index",
+          "unique": false,
           "primary": false,
-          "unique": false
+          "constraint": false
         },
         {
           "columnNames": [
-            "code"
+            "subtype_id"
           ],
-          "composite": false,
-          "keyName": "household_invites_code_unique",
-          "constraint": true,
+          "keyName": "tanks_subtype_id_index",
+          "unique": false,
           "primary": false,
-          "unique": true
-        },
-        {
-          "columnNames": [
-            "created_by_id"
-          ],
-          "composite": false,
-          "keyName": "household_invites_created_by_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "keyName": "PRIMARY",
-          "columnNames": [
-            "id"
-          ],
-          "composite": false,
-          "constraint": true,
-          "primary": true,
-          "unique": true
+          "constraint": false
         }
       ],
       "checks": [],
       "foreignKeys": {
-        "household_invites_household_id_foreign": {
-          "constraintName": "household_invites_household_id_foreign",
+        "tanks_cover_photo_id_foreign": {
+          "columnNames": [
+            "cover_photo_id"
+          ],
+          "constraintName": "tanks_cover_photo_id_foreign",
+          "localTableName": "tanks",
+          "referencedTableName": "tank_photos",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "set null"
+        },
+        "tanks_household_id_foreign": {
           "columnNames": [
             "household_id"
           ],
-          "localTableName": "household_invites",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "constraintName": "tanks_household_id_foreign",
+          "localTableName": "tanks",
           "referencedTableName": "households",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
-        },
-        "household_invites_created_by_id_foreign": {
-          "constraintName": "household_invites_created_by_id_foreign",
-          "columnNames": [
-            "created_by_id"
-          ],
-          "localTableName": "household_invites",
           "referencedColumnNames": [
             "id"
           ],
-          "referencedTableName": "users",
-          "updateRule": "cascade"
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        },
+        "tanks_subtype_id_foreign": {
+          "columnNames": [
+            "subtype_id"
+          ],
+          "constraintName": "tanks_subtype_id_foreign",
+          "localTableName": "tanks",
+          "referencedTableName": "tank_subtypes",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "set null"
         }
       },
-      "nativeEnums": {}
+      "nativeEnums": {},
+      "comment": ""
     },
     {
       "columns": {
@@ -3898,8 +4152,8 @@
           "nullable": false,
           "unique": false,
           "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -3912,10 +4166,10 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "unique": false,
+          "unique": true,
           "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -3929,7 +4183,7 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": null,
+          "length": 10,
           "precision": null,
           "scale": null,
           "default": null,
@@ -3950,8 +4204,8 @@
           "nullable": false,
           "unique": false,
           "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -3965,9 +4219,9 @@
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": 1,
-          "precision": null,
-          "scale": null,
+          "length": null,
+          "precision": 3,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -3982,8 +4236,8 @@
           "nullable": false,
           "unique": false,
           "length": null,
-          "precision": null,
-          "scale": null,
+          "precision": 10,
+          "scale": 0,
           "default": null,
           "comment": null,
           "enumItems": [],
@@ -3998,7 +4252,7 @@
           "nullable": true,
           "unique": false,
           "length": null,
-          "precision": null,
+          "precision": 22,
           "scale": null,
           "default": null,
           "comment": null,
@@ -4014,7 +4268,7 @@
           "nullable": true,
           "unique": false,
           "length": null,
-          "precision": null,
+          "precision": 22,
           "scale": null,
           "default": null,
           "comment": null,
@@ -4026,77 +4280,219 @@
       "indexes": [
         {
           "columnNames": [
-            "user_id"
+            "id"
           ],
-          "composite": false,
-          "keyName": "user_parameter_settings_user_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
+          "keyName": "PRIMARY",
+          "unique": true,
+          "primary": true,
+          "constraint": true
         },
         {
           "columnNames": [
             "parameter_definition_id"
           ],
-          "composite": false,
           "keyName": "user_parameter_settings_parameter_definition_id_index",
-          "constraint": false,
+          "unique": false,
           "primary": false,
-          "unique": false
+          "constraint": false
         },
         {
-          "keyName": "user_parameter_settings_user_id_tank_type_paramete_130ab_unique",
+          "columnNames": [
+            "user_id"
+          ],
+          "keyName": "user_parameter_settings_user_id_index",
+          "unique": false,
+          "primary": false,
+          "constraint": false
+        },
+        {
           "columnNames": [
             "user_id",
             "tank_type",
             "parameter_definition_id"
           ],
-          "composite": true,
-          "constraint": true,
+          "keyName": "user_parameter_settings_user_id_tank_type_paramete_130ab_unique",
+          "unique": true,
           "primary": false,
-          "unique": true
-        },
-        {
-          "keyName": "PRIMARY",
-          "columnNames": [
-            "id"
-          ],
-          "composite": false,
           "constraint": true,
-          "primary": true,
-          "unique": true
+          "composite": true
         }
       ],
       "checks": [],
       "foreignKeys": {
-        "user_parameter_settings_user_id_foreign": {
-          "constraintName": "user_parameter_settings_user_id_foreign",
-          "columnNames": [
-            "user_id"
-          ],
-          "localTableName": "user_parameter_settings",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "users",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
-        },
         "user_parameter_settings_parameter_definition_id_foreign": {
-          "constraintName": "user_parameter_settings_parameter_definition_id_foreign",
           "columnNames": [
             "parameter_definition_id"
           ],
+          "constraintName": "user_parameter_settings_parameter_definition_id_foreign",
           "localTableName": "user_parameter_settings",
+          "referencedTableName": "parameter_definitions",
           "referencedColumnNames": [
             "id"
           ],
-          "referencedTableName": "parameter_definitions",
-          "deleteRule": "cascade",
-          "updateRule": "cascade"
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        },
+        "user_parameter_settings_user_id_foreign": {
+          "columnNames": [
+            "user_id"
+          ],
+          "constraintName": "user_parameter_settings_user_id_foreign",
+          "localTableName": "user_parameter_settings",
+          "referencedTableName": "users",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
         }
       },
-      "nativeEnums": {}
+      "nativeEnums": {},
+      "comment": ""
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": 10,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": true,
+          "length": 255,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "password_hash": {
+          "name": "password_hash",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 255,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "display_name": {
+          "name": "display_name",
+          "type": "varchar(80)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 80,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "preferred_language": {
+          "name": "preferred_language",
+          "type": "enum('fr','en')",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 2,
+          "precision": null,
+          "scale": null,
+          "default": "'fr'",
+          "comment": null,
+          "enumItems": [
+            "fr",
+            "en"
+          ],
+          "mappedType": "enum"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 0,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "datetime"
+        }
+      },
+      "name": "users",
+      "indexes": [
+        {
+          "columnNames": [
+            "id"
+          ],
+          "keyName": "PRIMARY",
+          "unique": true,
+          "primary": true,
+          "constraint": true
+        },
+        {
+          "columnNames": [
+            "email"
+          ],
+          "keyName": "users_email_unique",
+          "unique": true,
+          "primary": false,
+          "constraint": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {},
+      "nativeEnums": {},
+      "comment": ""
     }
   ],
   "nativeEnums": {}

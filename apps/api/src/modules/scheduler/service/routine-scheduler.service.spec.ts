@@ -8,7 +8,7 @@ import { RoutineOccurrenceRepository } from '@modules/routines/repository/routin
 import { RoutineRepository } from '@modules/routines/repository/routine.repository';
 import { RoutineOccurrencesService } from '@modules/routines/service/routine-occurrences.service';
 import { Tank } from '@modules/tanks/entity/tank.entity';
-import { NotificationSender } from '../notification/notification-sender';
+import { NotificationSender } from '@modules/notifications/service/notification-sender';
 import {
   DISPATCH_LOOKBACK_MS, RoutineSchedulerService,
 } from './routine-scheduler.service';

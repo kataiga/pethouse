@@ -57,4 +57,6 @@ export interface S3Config {
 export interface PushConfig {
   /** Optional Expo access token; Expo Push accepts unauthenticated requests at a lower rate. */
   expoAccessToken?: string;
+  /** Base URL of the Expo Push API; overridden only to point tests at a fake. */
+  expoApiUrl: string;
 }
