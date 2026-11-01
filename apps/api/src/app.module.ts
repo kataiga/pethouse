@@ -8,6 +8,7 @@ import { MySqlDriver } from '@mikro-orm/mysql';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { LoggerModule } from '@core/logger/logger.module';
 import { StorageModule } from '@core/storage/storage.module';
+import { QueueModule } from '@core/queue/queue.module';
 import { AnimalSpeciesModule } from '@modules/animal-species/animal-species.module';
 import { PlantSpeciesModule } from '@modules/plant-species/plant-species.module';
 import { AuthModule } from '@modules/auth/auth.module';
@@ -15,6 +16,7 @@ import { HealthModule } from '@modules/health/health.module';
 import { HouseholdsModule } from '@modules/households/households.module';
 import { ParametersModule } from '@modules/parameters/parameters.module';
 import { RoutinesModule } from '@modules/routines/routines.module';
+import { SchedulerModule } from '@modules/scheduler/scheduler.module';
 import { TanksModule } from '@modules/tanks/tanks.module';
 import { UsersModule } from '@modules/users/users.module';
 import { buildMikroOrmConfig } from '@config/mikro-orm.config';
@@ -69,6 +71,7 @@ export class AppModule {
         }),
         LoggerModule,
         StorageModule.forRoot({ ensureBucket: connectServices }),
+        QueueModule.forRoot({ connect: connectServices }),
         HealthModule,
         UsersModule,
         HouseholdsModule,
@@ -77,6 +80,7 @@ export class AppModule {
         TanksModule,
         ParametersModule,
         RoutinesModule,
+        SchedulerModule.forRoot({ connect: connectServices }),
         AuthModule,
       ],
     };

@@ -12,6 +12,18 @@ export class RoutineRepository extends EntityRepository<Routine> {
     });
   }
 
+  /** Active routines by ascending id, for the scheduler's paged sweep. */
+  findActivePage (afterId: number, limit: number): Promise<Routine[]> {
+    return this.find({
+      isActive: true,
+      id: { $gt: afterId },
+    }, {
+      populate: ['tank.household'],
+      orderBy: { id: 'asc' },
+      limit,
+    });
+  }
+
   findInTank (tankId: number, id: number): Promise<Routine | null> {
     return this.findOne({
       id,

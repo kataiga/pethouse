@@ -38,6 +38,11 @@ export class RoutineOccurrence {
   @ManyToOne(() => User, { nullable: true })
   completedBy?: User | null = null;
 
+  /** When the due notification was claimed for sending; set once, atomically, by one replica. */
+  @Property({ nullable: true })
+  notifiedAt?: Date | null = null;
+
+  /** Reminders sent after the due notification; each one is claimed atomically as well. */
   @Property({ unsigned: true })
   remindersSent: number & Opt = 0;
 }
