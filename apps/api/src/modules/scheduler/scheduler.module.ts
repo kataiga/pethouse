@@ -2,8 +2,7 @@ import {
   DynamicModule, Module,
 } from '@nestjs/common';
 import { RoutinesModule } from '@modules/routines/routines.module';
-import { LoggingNotificationSender } from './notification/logging-notification-sender';
-import { NotificationSender } from './notification/notification-sender';
+import { NotificationsModule } from '@modules/notifications/notifications.module';
 import { RoutineJobsProcessor } from './processor/routine-jobs.processor';
 import { RoutineSchedulerService } from './service/routine-scheduler.service';
 
@@ -17,16 +16,12 @@ export class SchedulerModule {
   static forRoot (options: SchedulerModuleOptions): DynamicModule {
     return {
       module: SchedulerModule,
-      imports: [RoutinesModule],
+      imports: [RoutinesModule, NotificationsModule],
       providers: [
         RoutineSchedulerService,
-        {
-          provide: NotificationSender,
-          useClass: LoggingNotificationSender,
-        },
         ...options.connect ? [RoutineJobsProcessor] : [],
       ],
-      exports: [RoutineSchedulerService, NotificationSender],
+      exports: [RoutineSchedulerService],
     };
   }
 }

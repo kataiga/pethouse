@@ -12,11 +12,14 @@ import { schedulerConfig } from '@config';
 import {
   NotifyJobData, ROUTINE_QUEUE, RoutineJob,
 } from '@core/queue/queue.constants';
+import { PushReceiptsService } from '@modules/notifications/service/push-receipts.service';
 import { RoutineSchedulerService } from '../service/routine-scheduler.service';
 
 export const DISPATCH_EVERY_MS = 60 * 1000;
 
 export const MATERIALISE_EVERY_MS = 60 * 60 * 1000;
+
+export const RECEIPTS_EVERY_MS = 15 * 60 * 1000;
 
 function isNotifyData (data: unknown): data is NotifyJobData {
   return typeof data === 'object' && data !== null
@@ -26,7 +29,7 @@ function isNotifyData (data: unknown): data is NotifyJobData {
 
 /**
  * Worker of the routines queue. It starts only when SCHEDULER_ENABLED is on; it then also
- * upserts the two recurring jobs, which BullMQ keeps unique per id across every replica.
+ * upserts the recurring jobs, which BullMQ keeps unique per id across every replica.
  */
 @Processor(ROUTINE_QUEUE, { autorun: false })
 export class RoutineJobsProcessor extends WorkerHost implements OnApplicationBootstrap {
@@ -34,6 +37,7 @@ export class RoutineJobsProcessor extends WorkerHost implements OnApplicationBoo
 
   constructor (
     private readonly scheduler: RoutineSchedulerService,
+    private readonly receipts: PushReceiptsService,
     @InjectQueue(ROUTINE_QUEUE) private readonly queue: Queue,
     @Inject(schedulerConfig.KEY) private readonly config: ConfigType<typeof schedulerConfig>,
   ) {
@@ -52,6 +56,9 @@ export class RoutineJobsProcessor extends WorkerHost implements OnApplicationBoo
       every: MATERIALISE_EVERY_MS,
       immediately: true,
     }, { name: RoutineJob.MATERIALISE });
+    await this.queue.upsertJobScheduler(RoutineJob.RECEIPTS, {
+      every: RECEIPTS_EVERY_MS,
+    }, { name: RoutineJob.RECEIPTS });
     this.worker.run().catch((error: unknown) => {
       this.logger.error(`Routine worker stopped: ${String(error)}`);
     });
@@ -63,6 +70,8 @@ export class RoutineJobsProcessor extends WorkerHost implements OnApplicationBoo
         return this.scheduler.dispatchDue();
       case RoutineJob.MATERIALISE:
         return this.scheduler.materialiseAll();
+      case RoutineJob.RECEIPTS:
+        return this.receipts.poll();
       case RoutineJob.NOTIFY:
         if (!isNotifyData(job.data)) {
           throw new Error(`Malformed ${job.name} job ${job.id ?? ''}`);

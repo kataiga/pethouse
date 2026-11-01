@@ -1,9 +1,10 @@
 import { Job } from 'bullmq';
 import { Queue } from 'bullmq';
 import { RoutineJob } from '@core/queue/queue.constants';
+import { PushReceiptsService } from '@modules/notifications/service/push-receipts.service';
 import { RoutineSchedulerService } from '../service/routine-scheduler.service';
 import {
-  DISPATCH_EVERY_MS, MATERIALISE_EVERY_MS, RoutineJobsProcessor,
+  DISPATCH_EVERY_MS, MATERIALISE_EVERY_MS, RECEIPTS_EVERY_MS, RoutineJobsProcessor,
 } from './routine-jobs.processor';
 
 describe('RoutineJobsProcessor', () => {
@@ -12,11 +13,13 @@ describe('RoutineJobsProcessor', () => {
     materialiseAll: jest.fn(),
     deliver: jest.fn(),
   };
+  const receipts = { poll: jest.fn() };
   const queue = { upsertJobScheduler: jest.fn() };
 
   function processor (enabled: boolean): RoutineJobsProcessor {
     return new RoutineJobsProcessor(
       scheduler as unknown as RoutineSchedulerService,
+      receipts as unknown as PushReceiptsService,
       queue as unknown as Queue,
       { enabled },
     );
@@ -39,6 +42,7 @@ describe('RoutineJobsProcessor', () => {
 
     await worker.process(job(RoutineJob.DISPATCH));
     await worker.process(job(RoutineJob.MATERIALISE));
+    await worker.process(job(RoutineJob.RECEIPTS));
     await worker.process(job(RoutineJob.NOTIFY, {
       occurrenceId: 31,
       attempt: 1,
@@ -46,6 +50,7 @@ describe('RoutineJobsProcessor', () => {
 
     expect(scheduler.dispatchDue).toHaveBeenCalled();
     expect(scheduler.materialiseAll).toHaveBeenCalled();
+    expect(receipts.poll).toHaveBeenCalled();
     expect(scheduler.deliver).toHaveBeenCalledWith(31, 1);
   });
 
@@ -62,7 +67,7 @@ describe('RoutineJobsProcessor', () => {
     expect(queue.upsertJobScheduler).not.toHaveBeenCalled();
   });
 
-  it('upserts both recurring jobs when enabled', async () => {
+  it('upserts the recurring jobs when enabled', async () => {
     const worker = processor(true);
     const run = jest.fn().mockResolvedValue(undefined);
     jest.spyOn(worker, 'worker', 'get').mockReturnValue({ run } as unknown as RoutineJobsProcessor['worker']);
@@ -76,6 +81,9 @@ describe('RoutineJobsProcessor', () => {
       every: MATERIALISE_EVERY_MS,
       immediately: true,
     }, { name: RoutineJob.MATERIALISE });
+    expect(queue.upsertJobScheduler).toHaveBeenCalledWith(RoutineJob.RECEIPTS, { every: RECEIPTS_EVERY_MS }, {
+      name: RoutineJob.RECEIPTS,
+    });
     expect(run).toHaveBeenCalled();
   });
 });

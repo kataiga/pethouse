@@ -159,6 +159,13 @@ export class EnvironmentVariables {
   @IsOptional()
   @IsString()
   EXPO_ACCESS_TOKEN?: string;
+
+  @IsOptional()
+  @IsUrl({
+    require_tld: false,
+    require_protocol: true,
+  })
+  EXPO_PUSH_URL?: string;
 }
 
 /** Hook for `ConfigModule.forRoot({ validate })`. Throws with every violation listed. */
