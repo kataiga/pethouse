@@ -3,10 +3,6 @@
 Typed client for the Pethouse API, **generated** from the API's OpenAPI spec. Consumed by
 `apps/mobile`.
 
-> **Not implemented yet.** This package is a declared workspace with no contents; it is built in
-> Phase 5 of `docs/fable-build-plan.md`, once the API exposes typed response DTOs. The structure
-> below is the target.
-
 ## How it works
 
 1. `apps/api` serves its OpenAPI spec on `/docs-json` and can dump it to a file with
@@ -14,6 +10,16 @@ Typed client for the Pethouse API, **generated** from the API's OpenAPI spec. Co
 2. This package runs `openapi-typescript` over that spec to produce `src/generated/schema.ts`,
    and wraps it with `openapi-fetch` in `src/index.ts`.
 3. `apps/mobile` imports from `@pethouse/api-client` and never declares an API type of its own.
+
+```ts
+import { createApiClient, type Schemas } from '@pethouse/api-client';
+
+const api = createApiClient({ baseUrl: 'https://api.example.com' });
+const { data, error } = await api.GET('/api/tanks/{tankId}/routines', {
+  params: { path: { tankId: 42 } },
+});
+// data: Schemas['RoutineResponseDto'][] | undefined
+```
 
 Regenerate with, from the repository root:
 
