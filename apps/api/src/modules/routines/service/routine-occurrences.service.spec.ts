@@ -1,6 +1,7 @@
 import {
   BadRequestException, ConflictException,
 } from '@nestjs/common';
+import { RoutineQueue } from '@core/queue/routine-queue';
 import { User } from '@modules/users/entity/user.entity';
 import { OccurrenceStatus } from '../entity/occurrence-status.enum';
 import { RoutineOccurrence } from '../entity/routine-occurrence.entity';
@@ -16,6 +17,10 @@ describe('RoutineOccurrencesService', () => {
     findForRoutine: jest.fn(),
     findHistory: jest.fn(),
     getEntityManager: () => em,
+  };
+  const queue = {
+    enqueueNotification: jest.fn(),
+    cancelNotification: jest.fn(),
   };
   const alex = Object.assign(new User(), {
     id: 1,
@@ -42,6 +47,7 @@ describe('RoutineOccurrencesService', () => {
     return Object.assign(new RoutineOccurrence(), {
       id: 31,
       status,
+      remindersSent: 1,
       completedBy,
       completedAt: completedBy ? new Date('2026-10-31T20:00:00Z') : null,
     });
@@ -49,7 +55,10 @@ describe('RoutineOccurrencesService', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    service = new RoutineOccurrencesService(occurrences as unknown as RoutineOccurrenceRepository);
+    service = new RoutineOccurrencesService(
+      occurrences as unknown as RoutineOccurrenceRepository,
+      queue as unknown as RoutineQueue,
+    );
   });
 
   describe('reconcile', () => {
@@ -91,6 +100,12 @@ describe('RoutineOccurrencesService', () => {
       expect(em.flush).toHaveBeenCalled();
     });
 
+    it('cancels the reminder waiting after the ones already sent', async () => {
+      await service.complete(occurrence(OccurrenceStatus.PENDING), sam, now);
+
+      expect(queue.cancelNotification).toHaveBeenCalledWith(31, 2);
+    });
+
     it('accepts a late completion of a missed occurrence', async () => {
       const result = await service.complete(occurrence(OccurrenceStatus.MISSED), sam, now);
 
@@ -102,6 +117,7 @@ describe('RoutineOccurrencesService', () => {
 
       expect(result.completedBy).toBe(alex);
       expect(em.flush).not.toHaveBeenCalled();
+      expect(queue.cancelNotification).not.toHaveBeenCalled();
     });
 
     it('refuses to complete a skipped occurrence and to skip a done one', async () => {

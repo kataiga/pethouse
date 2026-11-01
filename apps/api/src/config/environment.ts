@@ -97,6 +97,15 @@ export class EnvironmentVariables {
   @IsString()
   REDIS_PASSWORD?: string;
 
+  @IsOptional()
+  @Matches(/^[\w-]+$/)
+  REDIS_PREFIX?: string;
+
+  @IsOptional()
+  @Transform(toBoolean)
+  @IsBoolean()
+  SCHEDULER_ENABLED?: boolean;
+
   @IsString()
   @MinLength(MIN_SECRET_LENGTH)
   JWT_ACCESS_SECRET!: string;

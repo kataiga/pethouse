@@ -5,6 +5,7 @@ import loggerConfig from './logger.config';
 import pushConfig from './push.config';
 import redisConfig from './redis.config';
 import s3Config from './s3.config';
+import schedulerConfig from './scheduler.config';
 
 export default [
   appConfig,
@@ -14,6 +15,7 @@ export default [
   redisConfig,
   s3Config,
   pushConfig,
+  schedulerConfig,
 ];
 
 export {
@@ -24,4 +26,5 @@ export {
   redisConfig,
   s3Config,
   pushConfig,
+  schedulerConfig,
 };

@@ -32,6 +32,6 @@ import { RoutinesService } from './service/routines.service';
     RoutineOccurrencesService,
     OccurrenceAccessGuard,
   ],
-  exports: [RoutineOccurrencesService],
+  exports: [RoutineOccurrencesService, MikroOrmModule],
 })
 export class RoutinesModule {}

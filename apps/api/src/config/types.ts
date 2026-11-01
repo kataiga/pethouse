@@ -32,6 +32,13 @@ export interface RedisConfig {
   host: string;
   port: number;
   password?: string;
+  /** Key prefix of the BullMQ queues, so test runs never share jobs with a dev instance. */
+  prefix: string;
+}
+
+export interface SchedulerConfig {
+  /** Run the BullMQ workers and register the recurring jobs in this process. */
+  enabled: boolean;
 }
 
 export interface S3Config {

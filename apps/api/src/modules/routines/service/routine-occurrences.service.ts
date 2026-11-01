@@ -2,6 +2,7 @@ import {
   BadRequestException, ConflictException, Injectable,
 } from '@nestjs/common';
 import { Page } from '@common/dto/paginated-response.dto';
+import { RoutineQueue } from '@core/queue/routine-queue';
 import { Tank } from '@modules/tanks/entity/tank.entity';
 import { User } from '@modules/users/entity/user.entity';
 import { OccurrenceStatus } from '../entity/occurrence-status.enum';
@@ -21,7 +22,10 @@ const MAX_LIST_DAYS = 92;
 
 @Injectable()
 export class RoutineOccurrencesService {
-  constructor (private readonly occurrences: RoutineOccurrenceRepository) {}
+  constructor (
+    private readonly occurrences: RoutineOccurrenceRepository,
+    private readonly queue: RoutineQueue,
+  ) {}
 
   /**
    * Makes the rows of the coming window match the schedule: missing occurrences are inserted,
@@ -113,6 +117,8 @@ export class RoutineOccurrencesService {
     occurrence.completedAt = now;
     occurrence.completedBy = user;
     await this.occurrences.getEntityManager().flush();
+    // The only reminder that can be waiting is the next one; a running one re-checks the status.
+    await this.queue.cancelNotification(occurrence.id, occurrence.remindersSent + 1);
 
     return occurrence;
   }
