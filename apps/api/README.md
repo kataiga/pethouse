@@ -11,6 +11,7 @@ From this directory:
 cp .env.exemple .env          # dev values matching docker-compose.yml
 docker compose up -d          # MySQL 8.4, Redis 7.4, MinIO
 npm run mikro:up              # migrations
+npm run mikro:seed            # system lists (tank subtypes, catalogue)
 npm run start:dev             # http://localhost:3000/api, docs on http://localhost:3000/docs
 ```
 
@@ -34,6 +35,7 @@ problems.
 | `npm run openapi:dump` | Writes `openapi.json` from the decorators, no database needed |
 | `npm run generate:module <kebab-name>` | Scaffolds a feature module following the conventions |
 | `npm run mikro:generate` / `mikro:up` / `mikro:down` | MikroORM migrations |
+| `npm run mikro:seed` | Upserts the system lists (idempotent, re-runnable) |
 
 Tests run under `NODE_ENV=test` (Jest sets it) and read the committed `.env.test`; variables
 already present in the environment take precedence, which is how CI points at its own services.
