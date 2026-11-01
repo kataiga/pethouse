@@ -113,21 +113,42 @@ Every schema change ships with a MikroORM migration in the same pull request. Ne
 
 ## Known state of the repo
 
-Bootstrap-stage debt to clear before feature work (see the Phase 0 prompt in
-`gestion/prompts/fable-build-plan.md`):
+Phase 0 of `/docs/fable-build-plan.md` is done: the toolchain, bootstrap, configuration and Docker
+setup below are in place. No domain module exists yet; the first one lands in Phase 1.
 
-- `npm run lint` **is broken** — ESLint 9 is installed but the config is legacy `.eslintrc.js`.
-  Needs migration to flat config (`eslint.config.js`). `eslint-plugin-nestjs` is unmaintained
-  since 2019 and will not survive the migration as-is.
-- `npm test` **fails** — `tank.controller.spec.ts` does not provide `TankService`. The whole
-  `src/modules/tank/` directory is scaffolding placeholder used to exercise the module
-  generator, not the real Tank module: delete it in Phase 0 and build the real one in Phase 2
-  from the validated schema. `app.controller` / `app.service` ("Hello World!") go the same way,
-  replaced by a `/health` endpoint.
-- `tsconfig.json` is loose: `strictNullChecks: false`, `noImplicitAny: false`,
-  `forceConsistentCasingInFileNames: false`. All must be enabled.
-- `@nestjs/typeorm` is an unused dependency alongside MikroORM — remove it.
-- `mikro-orm.config.ts` points at `src/migrations` and `src/seeders`, neither of which exists.
-- The `generate:module` repository template imports `'./tank.entity'` hard-coded, and the
-  generated repository is never registered in the module.
-- No `ValidationPipe`, no DTOs, no `class-validator`, no Swagger, no auth, no Docker, no CI.
+### What is in place
+
+- **Tooling.** ESLint 9 flat config (`eslint.config.mjs`, style rules from `@stylistic`), strict
+  TypeScript, path aliases (`@core`, `@common`, `@modules`, `@config`), Jest split into `unit`,
+  `integration` (`*.int-spec.ts`, real database, no HTTP) and `e2e` projects in `jest.config.ts`.
+- **Bootstrap.** `src/bootstrap/create-app.ts` is the single HTTP pipeline: `/api` prefix,
+  `ValidationPipe` (`whitelist`, `forbidNonWhitelisted`, `transform`), the global
+  `HttpExceptionFilter` producing `ErrorResponseDto` for every error, CORS from `CORS_ORIGINS`,
+  Swagger on `/docs` and `/docs-json`. `main.ts`, the OpenAPI dump and the e2e suite all use it.
+- **`AppModule.forRoot(options)`.** The root module is dynamic so tooling can boot the module
+  graph without a database (`connectDatabase: false`) or with specific env files (`envFiles`).
+- **Health.** `GET /api/health` on `@nestjs/terminus`, same `HealthResponseDto` body on 200 and 503.
+- **Configuration.** One `registerAs` family per concern in `src/config/` (`app`, `logger`,
+  `database`, `jwt`, `redis`, `s3`, `push`), every variable validated at boot by
+  `src/config/environment.ts`. `.env.exemple` documents them; `.env.test` is committed and loaded
+  under `NODE_ENV=test`, real environment variables always win. MikroORM is configured by
+  `buildMikroOrmConfig()` after validation, and the CLI gets the same config through a factory.
+- **OpenAPI dump.** `npm run openapi:dump` writes `openapi.json` without a database, which is what
+  the CI `openapi` job and the `contract` workflow run.
+- **Docker.** `Dockerfile` (multi-stage, non-root, built from the repository root) and
+  `docker-compose.yml` with MySQL, Redis and MinIO for local development.
+
+### Conventions settled in Phase 0
+
+- **Response DTOs take their values through a constructor** (and a `fromEntity` / `fromResult`
+  factory). They never need a definite-assignment marker.
+- **Framework-hydrated classes** (MikroORM entities, class-validator input DTOs, the environment
+  schema) declare their fields with the definite-assignment marker (`id!: number`): the framework
+  assigns them, and that is what the marker states. It is not the non-null assertion `value!`
+  on an expression, which stays forbidden.
+- `discovery.warnWhenNoEntities` is `false` in `buildMikroOrmConfig()` only because no entity
+  exists yet. **Remove it with the first entity** in Phase 1.
+- MikroORM metadata cache lives under the OS temp directory, never in the working tree.
+- Migrations in the runtime image are not solved yet: `@mikro-orm/cli` is a devDependency and
+  the image has no migration step. Decide the strategy in Phase 7 (init container, job, or
+  startup step) rather than ad hoc.

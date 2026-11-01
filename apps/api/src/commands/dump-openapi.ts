@@ -2,7 +2,8 @@
 
 /**
  * Writes the OpenAPI spec to `apps/api/openapi.json` without listening and without a database:
- * the spec is derived from decorators alone, and the CI `openapi` job provides no MySQL.
+ * the spec is derived from decorators alone, and the CI `openapi` job provides no MySQL and no
+ * environment variables. The committed `.env.test` satisfies the boot-time validation.
  */
 
 import { writeFileSync } from 'fs';
@@ -13,7 +14,10 @@ import { buildOpenApiDocument } from '../bootstrap/openapi';
 const OUTPUT_PATH = resolve(__dirname, '../../openapi.json');
 
 async function main (): Promise<void> {
-  const app = await createApp({ connectDatabase: false });
+  const app = await createApp({
+    connectDatabase: false,
+    envFiles: ['.env.test'],
+  });
   await app.init();
 
   const document = buildOpenApiDocument(app);
