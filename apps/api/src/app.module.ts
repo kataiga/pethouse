@@ -13,6 +13,7 @@ import { PlantSpeciesModule } from '@modules/plant-species/plant-species.module'
 import { AuthModule } from '@modules/auth/auth.module';
 import { HealthModule } from '@modules/health/health.module';
 import { HouseholdsModule } from '@modules/households/households.module';
+import { ParametersModule } from '@modules/parameters/parameters.module';
 import { TanksModule } from '@modules/tanks/tanks.module';
 import { UsersModule } from '@modules/users/users.module';
 import { buildMikroOrmConfig } from '@config/mikro-orm.config';
@@ -73,6 +74,7 @@ export class AppModule {
         AnimalSpeciesModule,
         PlantSpeciesModule,
         TanksModule,
+        ParametersModule,
         AuthModule,
       ],
     };
