@@ -1,5 +1,5 @@
 import {
-  Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, UseGuards,
+  Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -15,7 +15,7 @@ import {
 import { CurrentUser } from '@common/decorators/current-user.decorator';
 import { ErrorResponseDto } from '@common/dto/error-response.dto';
 import { CurrentMembership } from '@core/households/current-membership.decorator';
-import { HouseholdMemberGuard } from '@core/households/household-member.guard';
+import { HouseholdScoped } from '@core/households/household-scoped.decorator';
 import { HouseholdMember } from '@modules/households/entity/household-member.entity';
 import { HouseholdsService } from '@modules/households/service/households.service';
 import { User } from '@modules/users/entity/user.entity';
@@ -44,7 +44,7 @@ export class ParameterDefinitionsController {
   }
 
   @Post('households/:householdId/parameter-definitions')
-  @UseGuards(HouseholdMemberGuard)
+  @HouseholdScoped()
   @ApiOperation({ summary: 'Add a custom parameter to a household. Any member may.' })
   @ApiCreatedResponse({ type: ParameterDefinitionResponseDto })
   @ApiNotFoundResponse({ type: ErrorResponseDto })
@@ -63,7 +63,7 @@ export class ParameterDefinitionsController {
 
   @Delete('households/:householdId/parameter-definitions/:definitionId')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @UseGuards(HouseholdMemberGuard)
+  @HouseholdScoped()
   @ApiOperation({ summary: 'Remove a custom parameter with its settings, overrides and measurements.' })
   @ApiNoContentResponse()
   @ApiNotFoundResponse({ type: ErrorResponseDto })

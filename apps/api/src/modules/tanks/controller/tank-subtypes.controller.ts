@@ -1,5 +1,5 @@
 import {
-  Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Query, UseGuards,
+  Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Query,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -15,7 +15,7 @@ import {
 import { CurrentUser } from '@common/decorators/current-user.decorator';
 import { ErrorResponseDto } from '@common/dto/error-response.dto';
 import { CurrentMembership } from '@core/households/current-membership.decorator';
-import { HouseholdMemberGuard } from '@core/households/household-member.guard';
+import { HouseholdScoped } from '@core/households/household-scoped.decorator';
 import { HouseholdMember } from '@modules/households/entity/household-member.entity';
 import { HouseholdsService } from '@modules/households/service/households.service';
 import { User } from '@modules/users/entity/user.entity';
@@ -48,7 +48,7 @@ export class TankSubtypesController {
   }
 
   @Post('households/:householdId/subtypes')
-  @UseGuards(HouseholdMemberGuard)
+  @HouseholdScoped()
   @ApiOperation({ summary: 'Add a custom subtype to a household. Any member may.' })
   @ApiCreatedResponse({ type: TankSubtypeResponseDto })
   @ApiNotFoundResponse({ type: ErrorResponseDto })
@@ -65,7 +65,7 @@ export class TankSubtypesController {
 
   @Delete('households/:householdId/subtypes/:subtypeId')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @UseGuards(HouseholdMemberGuard)
+  @HouseholdScoped()
   @ApiOperation({ summary: 'Remove a custom subtype; tanks using it keep no subtype. System ones cannot go.' })
   @ApiNoContentResponse()
   @ApiNotFoundResponse({ type: ErrorResponseDto })

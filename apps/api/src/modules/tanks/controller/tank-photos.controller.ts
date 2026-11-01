@@ -1,5 +1,5 @@
 import {
-  Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, UseGuards,
+  Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -16,7 +16,7 @@ import {
 import { CurrentUser } from '@common/decorators/current-user.decorator';
 import { ErrorResponseDto } from '@common/dto/error-response.dto';
 import { CurrentTank } from '@core/tanks/current-tank.decorator';
-import { TankAccessGuard } from '@core/tanks/tank-access.guard';
+import { TankScoped } from '@core/tanks/tank-scoped.decorator';
 import { User } from '@modules/users/entity/user.entity';
 import { PhotoUploadResponseDto } from '../dto/photo-upload-response.dto';
 import { RegisterPhotoDto } from '../dto/register-photo.dto';
@@ -33,7 +33,7 @@ import { TankPhotosService } from '../service/tank-photos.service';
   type: ErrorResponseDto,
   description: 'Unknown tank or photo, or the caller is not a member of the household.',
 })
-@UseGuards(TankAccessGuard)
+@TankScoped()
 @Controller('tanks/:tankId/photos')
 export class TankPhotosController {
   constructor (private readonly tankPhotosService: TankPhotosService) {}
