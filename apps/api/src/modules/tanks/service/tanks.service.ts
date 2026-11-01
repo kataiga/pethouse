@@ -2,12 +2,15 @@ import {
   BadRequestException, Injectable,
 } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
+import { StorageService } from '@core/storage/storage.service';
 import { Household } from '@modules/households/entity/household.entity';
 import { CreateTankDto } from '../dto/create-tank.dto';
+import { TankResponseDto } from '../dto/tank-response.dto';
 import { UpdateTankDto } from '../dto/update-tank.dto';
 import { TankSubtype } from '../entity/tank-subtype.entity';
 import { Tank } from '../entity/tank.entity';
 import { TankRepository } from '../repository/tank.repository';
+import { TankPhotosService } from './tank-photos.service';
 import { TankSubtypesService } from './tank-subtypes.service';
 
 export const SUBTYPE_MISMATCH = 'The subtype does not exist for this household or does not match the tank type';
@@ -18,7 +21,16 @@ export class TanksService {
     @InjectRepository(Tank)
     private readonly tanks: TankRepository,
     private readonly subtypesService: TankSubtypesService,
+    private readonly photosService: TankPhotosService,
+    private readonly storage: StorageService,
   ) {}
+
+  /** The public shape, with the cover photo URL resolved. */
+  present (tank: Tank): TankResponseDto {
+    const coverUrl = tank.coverPhoto ? this.storage.publicUrl(tank.coverPhoto.storageKey) : null;
+
+    return TankResponseDto.fromEntity(tank, coverUrl);
+  }
 
   listForHousehold (household: Household): Promise<Tank[]> {
     return this.tanks.findAllForHousehold(household.id);
@@ -72,6 +84,11 @@ export class TanksService {
       if (dto[key] !== undefined) {
         tank[key] = dto[key];
       }
+    }
+
+    if (dto.coverPhotoId !== undefined) {
+      // `require` answers 404 for a photo of another tank: the id reveals nothing.
+      tank.coverPhoto = dto.coverPhotoId === null ? null : await this.photosService.require(tank, dto.coverPhotoId);
     }
 
     await this.tanks.getEntityManager().flush();

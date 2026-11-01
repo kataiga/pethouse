@@ -112,4 +112,15 @@ export class UpdateTankDto {
   @IsString()
   @MaxLength(2000)
   description?: string | null;
+
+  @ApiPropertyOptional({
+    example: 7,
+    nullable: true,
+    type: Number,
+    description: 'One of the tank\'s own photos. Null clears the cover.',
+  })
+  @Nullable()
+  @IsInt()
+  @IsPositive()
+  coverPhotoId?: number | null;
 }

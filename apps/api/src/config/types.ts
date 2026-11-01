@@ -35,7 +35,10 @@ export interface RedisConfig {
 }
 
 export interface S3Config {
+  /** Endpoint the API talks to; inside the cluster this is the internal MinIO service. */
   endpoint: string;
+  /** Base URL clients read objects from: the public ingress. Defaults to `endpoint`. */
+  publicUrl: string;
   region: string;
   accessKey: string;
   secretKey: string;

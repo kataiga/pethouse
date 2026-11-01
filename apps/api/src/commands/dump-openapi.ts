@@ -15,7 +15,7 @@ const OUTPUT_PATH = resolve(__dirname, '../../openapi.json');
 
 async function main (): Promise<void> {
   const app = await createApp({
-    connectDatabase: false,
+    connectServices: false,
     envFiles: ['.env.test'],
   });
   await app.init();

@@ -60,8 +60,10 @@ jobs:
   test-e2e:
     runs-on: ubuntu-latest
 
-    # MinIO is added here in Phase 2, when photo upload lands. Pin the image tag —
-    # `latest` is not acceptable, in CI or anywhere else.
+    # MinIO runs as a step below rather than a service, so the host-side curl can wait for it.
+    # The image is the Bitnami build: MinIO stopped publishing its own image publicly in 2025
+    # (Docker Hub repository gone, Quay tags unauthorized). Pin the tag — `latest` is not
+    # acceptable, in CI or anywhere else.
     services:
       mysql:
         image: mysql:8.4
@@ -100,6 +102,19 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
       - run: npm ci
+      - name: Start MinIO
+        # Credentials match apps/api/.env.test and docker-compose.yml.
+        run: |
+          docker run -d --name minio -p 9000:9000 \
+            -e MINIO_ROOT_USER=pethouse -e MINIO_ROOT_PASSWORD=pethouse-dev-secret \
+            bitnamilegacy/minio:2025.7.23-debian-12-r5
+          for i in $(seq 1 30); do
+            curl -sf http://127.0.0.1:9000/minio/health/live && exit 0
+            sleep 2
+          done
+          echo "::error::MinIO did not become healthy"
+          docker logs minio
+          exit 1
       - run: npm run mikro:up --workspace @pethouse/api
       - run: npm run test:e2e --workspace @pethouse/api
 

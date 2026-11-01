@@ -4,8 +4,13 @@ import {
 } from './env';
 import { S3Config } from './types';
 
+function stripTrailingSlash (url: string): string {
+  return url.replace(/\/+$/, '');
+}
+
 export default registerAs('s3', (): S3Config => ({
-  endpoint: requireEnv('S3_ENDPOINT'),
+  endpoint: stripTrailingSlash(requireEnv('S3_ENDPOINT')),
+  publicUrl: stripTrailingSlash(envWithDefault('S3_PUBLIC_URL', requireEnv('S3_ENDPOINT'))),
   region: envWithDefault('S3_REGION', 'us-east-1'),
   accessKey: requireEnv('S3_ACCESS_KEY'),
   secretKey: requireEnv('S3_SECRET_KEY'),

@@ -3,6 +3,7 @@ import {
 } from '@nestjs/swagger';
 import { TankType } from '@common/enums/tank-type.enum';
 import { Tank } from '../entity/tank.entity';
+import { CoverPhotoDto } from './cover-photo.dto';
 import { TankSubtypeResponseDto } from './tank-subtype-response.dto';
 
 export class TankResponseDto {
@@ -73,13 +74,20 @@ export class TankResponseDto {
   })
   readonly description: string | null;
 
+  @ApiPropertyOptional({
+    type: () => CoverPhotoDto,
+    nullable: true,
+  })
+  readonly coverPhoto: CoverPhotoDto | null;
+
   @ApiProperty({ example: '2026-01-01T09:00:00.000Z' })
   readonly createdAt: string;
 
   @ApiProperty({ example: '2026-01-01T09:00:00.000Z' })
   readonly updatedAt: string;
 
-  constructor (tank: Tank) {
+  /** `coverPhotoUrl` is resolved by the caller: the DTO does not know the storage base URL. */
+  constructor (tank: Tank, coverPhotoUrl: string | null) {
     this.id = tank.id;
     this.householdId = tank.household.id;
     this.name = tank.name;
@@ -92,11 +100,12 @@ export class TankResponseDto {
     this.substrate = tank.substrate ?? null;
     this.startedAt = tank.startedAt ?? null;
     this.description = tank.description ?? null;
+    this.coverPhoto = tank.coverPhoto && coverPhotoUrl ? new CoverPhotoDto(tank.coverPhoto.id, coverPhotoUrl) : null;
     this.createdAt = tank.createdAt.toISOString();
     this.updatedAt = tank.updatedAt.toISOString();
   }
 
-  static fromEntity (tank: Tank): TankResponseDto {
-    return new TankResponseDto(tank);
+  static fromEntity (tank: Tank, coverPhotoUrl: string | null): TankResponseDto {
+    return new TankResponseDto(tank, coverPhotoUrl);
   }
 }

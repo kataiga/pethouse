@@ -7,6 +7,7 @@ import {
 import { MySqlDriver } from '@mikro-orm/mysql';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { LoggerModule } from '@core/logger/logger.module';
+import { StorageModule } from '@core/storage/storage.module';
 import { AnimalSpeciesModule } from '@modules/animal-species/animal-species.module';
 import { PlantSpeciesModule } from '@modules/plant-species/plant-species.module';
 import { AuthModule } from '@modules/auth/auth.module';
@@ -22,10 +23,11 @@ import configs, {
 
 export interface AppModuleOptions {
   /**
-   * Whether MikroORM opens its connection pool at boot. Disabled only by tooling that needs the
-   * module graph without a database, such as the OpenAPI dump. Defaults to true.
+   * Whether the backing services are contacted at boot: MikroORM opens its connection pool and
+   * the storage module ensures the photo bucket. Disabled only by tooling that needs the module
+   * graph without infrastructure, such as the OpenAPI dump. Defaults to true.
    */
-  connectDatabase?: boolean;
+  connectServices?: boolean;
   /**
    * Env files to load, first match wins; real environment variables always take precedence.
    * Defaults to `.env.test` then `.env` under NODE_ENV=test, `.env` alone otherwise.
@@ -40,7 +42,7 @@ function defaultEnvFiles (): string[] {
 @Module({})
 export class AppModule {
   static forRoot (options: AppModuleOptions = {}): DynamicModule {
-    const connectDatabase = options.connectDatabase ?? true;
+    const connectServices = options.connectServices ?? true;
 
     return {
       module: AppModule,
@@ -59,11 +61,12 @@ export class AppModule {
             database: ConfigType<typeof databaseConfig>,
             app: ConfigType<typeof appConfig>,
           ) => buildMikroOrmConfig(database, {
-            connect: connectDatabase,
+            connect: connectServices,
             debug: app.env === 'development',
           }),
         }),
         LoggerModule,
+        StorageModule.forRoot({ ensureBucket: connectServices }),
         HealthModule,
         UsersModule,
         HouseholdsModule,

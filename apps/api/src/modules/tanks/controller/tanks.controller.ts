@@ -35,7 +35,7 @@ export class TanksController {
   @ApiOperation({ summary: 'One tank.' })
   @ApiOkResponse({ type: TankResponseDto })
   get (@CurrentTank() tank: Tank): TankResponseDto {
-    return TankResponseDto.fromEntity(tank);
+    return this.tanksService.present(tank);
   }
 
   @Patch()
@@ -43,7 +43,7 @@ export class TanksController {
   @ApiOkResponse({ type: TankResponseDto })
   @ApiBadRequestResponse({ type: ErrorResponseDto })
   async update (@CurrentTank() tank: Tank, @Body() dto: UpdateTankDto): Promise<TankResponseDto> {
-    return TankResponseDto.fromEntity(await this.tanksService.update(tank, dto));
+    return this.tanksService.present(await this.tanksService.update(tank, dto));
   }
 
   @Delete()

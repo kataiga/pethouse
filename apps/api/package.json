@@ -30,6 +30,8 @@
     "mikro:seed": "mikro-orm seeder:run"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1161.0",
+    "@aws-sdk/s3-request-presigner": "^3.1161.0",
     "@mikro-orm/core": "^6.6.0",
     "@mikro-orm/migrations": "^6.6.0",
     "@mikro-orm/mysql": "^6.6.0",
