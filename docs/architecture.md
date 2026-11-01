@@ -160,7 +160,7 @@ routines              id, tank_id, name, description, rrule, dtstart,
                       reminder_repeat_minutes (nullable), reminder_max_repeats
 routine_occurrences   id, routine_id, scheduled_for,
                       status (PENDING|DONE|SKIPPED|MISSED),
-                      completed_at, completed_by_id, reminders_sent
+                      completed_at, completed_by_id, notified_at, reminders_sent
                       UNIQUE (routine_id, scheduled_for)
 ```
 
@@ -185,9 +185,14 @@ Rules:
 ```
 device_tokens             id, user_id, expo_push_token, platform (ANDROID|IOS),
                           last_seen_at, revoked_at
-notification_deliveries   id, occurrence_id, user_id, device_token_id, sent_at,
+notification_deliveries   id, occurrence_id, user_id, device_token_id, attempt, sent_at,
                           expo_ticket_id, expo_receipt_status, error
+                          UNIQUE (occurrence_id, device_token_id, attempt)
 ```
+
+`notified_at` and `reminders_sent` are claimed with conditional updates, so several replicas never
+send the same notification twice. `attempt` is 0 for the due notification and n for the n-th
+reminder; the unique key lets a retried job skip the devices it already reached.
 
 `notification_deliveries` exists because Expo Push is a two-step protocol: the send returns a
 *ticket*, and receipts must be polled afterwards to detect `DeviceNotRegistered` and prune
