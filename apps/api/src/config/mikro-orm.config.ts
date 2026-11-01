@@ -43,6 +43,8 @@ export function buildMikroOrmConfig (database: DatabaseConfig, overrides: MikroO
       path: 'dist/migrations',
       pathTs: 'src/migrations',
       glob: '!(*.d).{js,ts}',
+      // The schema snapshot is committed next to the migrations; keep its name database-agnostic.
+      snapshotName: '.snapshot',
     },
 
     seeder: {
