@@ -5,6 +5,7 @@ import { Tank } from '@modules/tanks/entity/tank.entity';
 import { User } from '@modules/users/entity/user.entity';
 import { ParameterDefinition } from '../entity/parameter-definition.entity';
 import { TankParameterOverride } from '../entity/tank-parameter-override.entity';
+import { MeasurementRepository } from '../repository/measurement.repository';
 import { ParameterDefinitionsService } from './parameter-definitions.service';
 import { ParameterSettingsService } from './parameter-settings.service';
 import { TankParametersService } from './tank-parameters.service';
@@ -39,6 +40,7 @@ describe('TankParametersService', () => {
     create: jest.fn((data: Partial<TankParameterOverride>) => Object.assign(new TankParameterOverride(), data)),
     getEntityManager: () => em,
   };
+  const measurements = { latestPerDefinition: jest.fn(async () => new Map()) };
   const settingsService = { effectiveFor: jest.fn() };
   const definitionsService = { findUsable: jest.fn() };
   let service: TankParametersService;
@@ -65,6 +67,7 @@ describe('TankParametersService', () => {
     ]);
     service = new TankParametersService(
       overrides as unknown as EntityRepository<TankParameterOverride>,
+      measurements as unknown as MeasurementRepository,
       settingsService as unknown as ParameterSettingsService,
       definitionsService as unknown as ParameterDefinitionsService,
     );
