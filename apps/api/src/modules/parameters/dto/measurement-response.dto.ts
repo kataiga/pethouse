@@ -1,6 +1,4 @@
-import {
-  ApiProperty, ApiPropertyOptional,
-} from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { PhotoUploaderDto } from '@modules/tanks/dto/photo-uploader.dto';
 import { Measurement } from '../entity/measurement.entity';
 import { ParameterDefinitionResponseDto } from './parameter-definition-response.dto';
@@ -24,7 +22,7 @@ export class MeasurementResponseDto {
   @ApiProperty({ type: () => PhotoUploaderDto })
   readonly recordedBy: PhotoUploaderDto;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: String,
   })

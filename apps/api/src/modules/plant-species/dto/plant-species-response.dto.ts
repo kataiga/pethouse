@@ -1,6 +1,4 @@
-import {
-  ApiProperty, ApiPropertyOptional,
-} from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { Language } from '@common/enums/language.enum';
 import { PlantSpecies } from '../entity/plant-species.entity';
 import {
@@ -24,53 +22,53 @@ export class PlantSpeciesResponseDto {
   @ApiProperty({ type: () => LocalizedNamesDto })
   readonly commonNames: LocalizedNamesDto;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     enum: LightRequirement,
   })
   readonly lightRequirement: LightRequirement | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     enum: GrowthRate,
   })
   readonly growthRate: GrowthRate | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: Boolean,
     example: false,
   })
   readonly co2Required: boolean | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     enum: PlantPlacement,
   })
   readonly placement: PlantPlacement | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: Number,
     example: 22,
   })
   readonly minTemperatureC: number | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: Number,
     example: 28,
   })
   readonly maxTemperatureC: number | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: Number,
     example: 6,
   })
   readonly minPh: number | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: Number,
     example: 7.5,

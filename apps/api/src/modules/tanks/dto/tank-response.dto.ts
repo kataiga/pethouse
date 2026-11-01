@@ -1,6 +1,4 @@
-import {
-  ApiProperty, ApiPropertyOptional,
-} from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { TankType } from '@common/enums/tank-type.enum';
 import { Tank } from '../entity/tank.entity';
 import { CoverPhotoDto } from './cover-photo.dto';
@@ -19,48 +17,48 @@ export class TankResponseDto {
   @ApiProperty({ enum: TankType })
   readonly tankType: TankType;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     type: () => TankSubtypeResponseDto,
     nullable: true,
   })
   readonly subtype: TankSubtypeResponseDto | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     example: 120,
     nullable: true,
     type: Number,
   })
   readonly volumeLiters: number | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     example: 100,
     nullable: true,
     type: Number,
   })
   readonly widthCm: number | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     example: 40,
     nullable: true,
     type: Number,
   })
   readonly heightCm: number | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     example: 30,
     nullable: true,
     type: Number,
   })
   readonly depthCm: number | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     example: 'Aquasoil',
     nullable: true,
     type: String,
   })
   readonly substrate: string | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     example: '2026-01-15',
     nullable: true,
     type: String,
@@ -68,13 +66,13 @@ export class TankResponseDto {
   })
   readonly startedAt: string | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: String,
   })
   readonly description: string | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     type: () => CoverPhotoDto,
     nullable: true,
   })

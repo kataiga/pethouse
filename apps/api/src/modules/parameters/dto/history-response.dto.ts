@@ -1,6 +1,4 @@
-import {
-  ApiProperty, ApiPropertyOptional,
-} from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { HistoryPoint } from '../repository/measurement.repository';
 import { HistoryPointDto } from './history-point.dto';
 import { ParameterDefinitionResponseDto } from './parameter-definition-response.dto';
@@ -23,14 +21,14 @@ export class HistoryResponseDto {
   @ApiProperty({ example: '2026-03-01T00:00:00.000Z' })
   readonly to: string;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: Number,
     example: 6.5,
   })
   readonly minThreshold: number | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: Number,
     example: 7.5,

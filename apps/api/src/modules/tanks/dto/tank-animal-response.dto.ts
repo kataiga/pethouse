@@ -1,6 +1,4 @@
-import {
-  ApiProperty, ApiPropertyOptional,
-} from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { Language } from '@common/enums/language.enum';
 import { TankAnimal } from '../entity/tank-animal.entity';
 import { AnimalSpeciesSummaryDto } from './animal-species-summary.dto';
@@ -18,14 +16,14 @@ export class TankAnimalResponseDto {
   @ApiProperty({ example: '2026-03-01' })
   readonly addedAt: string;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: String,
     example: null,
   })
   readonly removedAt: string | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: String,
   })

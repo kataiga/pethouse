@@ -1,6 +1,4 @@
-import {
-  ApiProperty, ApiPropertyOptional,
-} from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { Language } from '@common/enums/language.enum';
 import { PlantPlacement } from '@modules/plant-species/entity/plant-traits.enum';
 import { PlantSpecies } from '@modules/plant-species/entity/plant-species.entity';
@@ -16,7 +14,7 @@ export class PlantSpeciesSummaryDto {
   @ApiProperty({ example: 'Anubias nain' })
   readonly commonName: string;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     enum: PlantPlacement,
   })
