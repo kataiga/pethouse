@@ -120,6 +120,13 @@ export class EnvironmentVariables {
   S3_ENDPOINT!: string;
 
   @IsOptional()
+  @IsUrl({
+    require_tld: false,
+    require_protocol: true,
+  })
+  S3_PUBLIC_URL?: string;
+
+  @IsOptional()
   @IsString()
   S3_REGION?: string;
 

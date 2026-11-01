@@ -4,6 +4,7 @@ import {
 import { TankType } from '@common/enums/tank-type.enum';
 import { Household } from '@modules/households/entity/household.entity';
 import { TankRepository } from '../repository/tank.repository';
+import { TankPhoto } from './tank-photo.entity';
 import { TankSubtype } from './tank-subtype.entity';
 
 @Entity({
@@ -73,6 +74,13 @@ export class Tank {
     nullable: true,
   })
   description?: string | null = null;
+
+  /** One of the tank's own photos; cleared automatically when that photo is deleted. */
+  @ManyToOne(() => TankPhoto, {
+    nullable: true,
+    deleteRule: 'set null',
+  })
+  coverPhoto?: TankPhoto | null = null;
 
   @Property({ onCreate: () => new Date() })
   createdAt: Date & Opt = new Date();

@@ -37,7 +37,7 @@ export class HouseholdTanksController {
   async list (@CurrentMembership() membership: HouseholdMember): Promise<TankResponseDto[]> {
     const tanks = await this.tanksService.listForHousehold(membership.household);
 
-    return tanks.map(TankResponseDto.fromEntity);
+    return tanks.map((tank) => this.tanksService.present(tank));
   }
 
   @Post()
@@ -51,6 +51,6 @@ export class HouseholdTanksController {
     @CurrentMembership() membership: HouseholdMember,
     @Body() dto: CreateTankDto,
   ): Promise<TankResponseDto> {
-    return TankResponseDto.fromEntity(await this.tanksService.create(membership.household, dto));
+    return this.tanksService.present(await this.tanksService.create(membership.household, dto));
   }
 }

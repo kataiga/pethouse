@@ -93,6 +93,7 @@ describe('Tanks (e2e)', () => {
       substrate: null,
       startedAt: '2026-01-15',
       description: null,
+      coverPhoto: null,
       createdAt: expect.any(String),
       updatedAt: expect.any(String),
     });
