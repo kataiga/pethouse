@@ -7,6 +7,7 @@ export interface TestAccount {
   password: string;
   displayName: string;
   preferredLanguage?: Language;
+  timezone?: string;
 }
 
 export interface TestSession {

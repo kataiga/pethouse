@@ -5,6 +5,7 @@ import { PassportModule } from '@nestjs/passport';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { JwtAuthGuard } from '@core/auth/jwt-auth.guard';
 import { JwtStrategy } from '@core/auth/jwt.strategy';
+import { HouseholdsModule } from '@modules/households/households.module';
 import { UsersModule } from '@modules/users/users.module';
 import { AuthController } from './controller/auth.controller';
 import { RefreshToken } from './entity/refresh-token.entity';
@@ -18,6 +19,7 @@ import { PasswordService } from './service/password.service';
     // Secrets and lifetimes are passed per call: access and refresh tokens use different ones.
     JwtModule.register({}),
     UsersModule,
+    HouseholdsModule,
   ],
   controllers: [AuthController],
   providers: [
