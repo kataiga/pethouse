@@ -65,7 +65,7 @@ export class ${n.pascal}Module {}
 
 function entityTemplate (n: ModuleNames): string {
   return `import {
-  Entity, EntityRepositoryType, PrimaryKey, Property,
+  Entity, EntityRepositoryType, Opt, PrimaryKey, Property,
 } from '@mikro-orm/core';
 import { ${n.pascal}Repository } from '../repository/${n.kebab}.repository';
 
@@ -79,11 +79,14 @@ export class ${n.pascal} {
   @PrimaryKey()
   id!: number;
 
-  @Property()
-  createdAt: Date = new Date();
+  @Property({ onCreate: () => new Date() })
+  createdAt: Date & Opt = new Date();
 
-  @Property({ onUpdate: () => new Date() })
-  updatedAt: Date = new Date();
+  @Property({
+    onCreate: () => new Date(),
+    onUpdate: () => new Date(),
+  })
+  updatedAt: Date & Opt = new Date();
 }
 `;
 }

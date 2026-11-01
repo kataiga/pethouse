@@ -7,7 +7,9 @@ import {
 import { MySqlDriver } from '@mikro-orm/mysql';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { LoggerModule } from '@core/logger/logger.module';
+import { AuthModule } from '@modules/auth/auth.module';
 import { HealthModule } from '@modules/health/health.module';
+import { UsersModule } from '@modules/users/users.module';
 import { buildMikroOrmConfig } from '@config/mikro-orm.config';
 import { validateEnvironment } from '@config/environment';
 import configs, {
@@ -59,6 +61,8 @@ export class AppModule {
         }),
         LoggerModule,
         HealthModule,
+        UsersModule,
+        AuthModule,
       ],
     };
   }

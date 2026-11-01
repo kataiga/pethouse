@@ -1,9 +1,11 @@
 import {
   Body, Controller, Get, NotFoundException, Post,
 } from '@nestjs/common';
+import { Public } from '../../src/common/decorators/public.decorator';
 import { ProbeDto } from './probe.dto';
 
-/** Test-only routes exercising the global pipe and filter end to end. */
+/** Test-only routes exercising the global pipe and filter end to end. Authentication has its own suite. */
+@Public()
 @Controller('probe')
 export class ProbeController {
   @Post()

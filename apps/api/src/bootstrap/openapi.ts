@@ -14,6 +14,7 @@ export function buildOpenApiDocument (app: INestApplication): OpenAPIObject {
     .setTitle('Pethouse API')
     .setDescription('Aquarium, terrarium and paludarium tracker with collaborative maintenance routines.')
     .setVersion(API_VERSION)
+    .addBearerAuth()
     .build();
 
   // The error shape is produced by the global filter for every route, so it is always part of

@@ -22,10 +22,10 @@ export interface DatabaseConfig {
 
 export interface JwtConfig {
   accessSecret: string;
-  /** Lifetime in the `<number><unit>` form accepted by the JWT library, e.g. `15m`. */
-  accessTtl: string;
+  /** Lifetimes in seconds, parsed from the `15m` / `30d` form of the environment. */
+  accessTtlSeconds: number;
   refreshSecret: string;
-  refreshTtl: string;
+  refreshTtlSeconds: number;
 }
 
 export interface RedisConfig {

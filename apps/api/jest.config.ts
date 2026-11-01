@@ -40,6 +40,7 @@ const config: Config = {
       displayName: 'e2e',
       rootDir: '.',
       testMatch: ['<rootDir>/test/**/*.e2e-spec.ts'],
+      globalSetup: '<rootDir>/test/support/global-setup.ts',
     },
   ],
   collectCoverageFrom: ['src/**/*.ts'],
