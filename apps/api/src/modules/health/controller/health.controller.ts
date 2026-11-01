@@ -8,6 +8,7 @@ import {
   HealthCheckResult, HealthCheckService, MikroOrmHealthIndicator,
 } from '@nestjs/terminus';
 import type { Response } from 'express';
+import { Public } from '@common/decorators/public.decorator';
 import { HealthIndicatorDto } from '../dto/health-indicator.dto';
 import { HealthResponseDto } from '../dto/health-response.dto';
 
@@ -19,6 +20,7 @@ function isHealthCheckResult (value: unknown): value is HealthCheckResult {
 
 @ApiTags('health')
 @ApiExtraModels(HealthIndicatorDto)
+@Public()
 @Controller('health')
 export class HealthController {
   constructor (

@@ -37,15 +37,14 @@ export function buildMikroOrmConfig (database: DatabaseConfig, overrides: MikroO
     // The reflection provider caches parsed metadata on disk; keep it out of the working directory,
     // which is read-only for the non-root user inside the container.
     metadataCache: { options: { cacheDir: join(tmpdir(), 'pethouse-mikro-orm') } },
-    // No entity exists until Phase 1 lands the first one; MikroORM refuses to boot on an empty
-    // discovery by default. Remove this override together with the first entity.
-    discovery: { warnWhenNoEntities: false },
 
     migrations: {
       tableName: 'mikro_orm_migrations',
       path: 'dist/migrations',
       pathTs: 'src/migrations',
       glob: '!(*.d).{js,ts}',
+      // The schema snapshot is committed next to the migrations; keep its name database-agnostic.
+      snapshotName: '.snapshot',
     },
 
     seeder: {
