@@ -7,8 +7,10 @@ import { Tank } from '@modules/tanks/entity/tank.entity';
 import { User } from '@modules/users/entity/user.entity';
 import { ResolvedParameter } from '../dto/resolved-parameter-response.dto';
 import { TankParameterOverrideInputDto } from '../dto/tank-parameter-override-input.dto';
+import { Measurement } from '../entity/measurement.entity';
 import { ParameterDefinition } from '../entity/parameter-definition.entity';
 import { TankParameterOverride } from '../entity/tank-parameter-override.entity';
+import { MeasurementRepository } from '../repository/measurement.repository';
 import { ParameterDefinitionsService } from './parameter-definitions.service';
 import {
   assertThresholds, ParameterSettingsService,
@@ -24,14 +26,17 @@ export class TankParametersService {
   constructor (
     @InjectRepository(TankParameterOverride)
     private readonly overrides: EntityRepository<TankParameterOverride>,
+    @InjectRepository(Measurement)
+    private readonly measurements: MeasurementRepository,
     private readonly settingsService: ParameterSettingsService,
     private readonly definitionsService: ParameterDefinitionsService,
   ) {}
 
   async resolveFor (tank: Tank, user: User): Promise<ResolvedParameter[]> {
-    const [effective, overrideRows] = await Promise.all([
+    const [effective, overrideRows, latest] = await Promise.all([
       this.settingsService.effectiveFor(user, tank.tankType, [tank.household.id]),
       this.overrides.find({ tank }, { populate: ['definition'] }),
+      this.measurements.latestPerDefinition(tank.id),
     ]);
     const overrides = new Map(overrideRows.map((row) => [row.definition.id, row]));
 
@@ -47,6 +52,7 @@ export class TankParametersService {
         maxThreshold: override?.maxThreshold ?? setting.maxThreshold,
         source: enabledFromTank !== null ? 'tank' : setting.customised ? 'account' : 'default',
         overridden: override !== undefined,
+        latest: latest.get(setting.definition.id) ?? null,
       };
     });
   }
@@ -107,13 +113,20 @@ export class TankParametersService {
     return definition;
   }
 
-  /** Guard for callers that need a definition the tank can record values for. */
-  async requireEnabled (tank: Tank, user: User, definitionId: number): Promise<ResolvedParameter> {
+  /** A parameter the tank can see, enabled or not: history stays readable after a parameter is disabled. */
+  async requireKnown (tank: Tank, user: User, definitionId: number): Promise<ResolvedParameter> {
     const resolved = (await this.resolveFor(tank, user)).find((parameter) => parameter.definition.id === definitionId);
 
     if (!resolved) {
       throw new NotFoundException('Parameter definition not found');
     }
+
+    return resolved;
+  }
+
+  /** Guard for callers that need a definition the tank can record values for. */
+  async requireEnabled (tank: Tank, user: User, definitionId: number): Promise<ResolvedParameter> {
+    const resolved = await this.requireKnown(tank, user, definitionId);
 
     if (!resolved.enabled) {
       throw new BadRequestException('This parameter is not tracked on this tank');
