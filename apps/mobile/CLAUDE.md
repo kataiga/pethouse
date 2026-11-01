@@ -125,14 +125,17 @@ A component only moves up into `components/ui/` on **real duplication**, not on 
 
 ## Known state of the repo
 
-This is still the unmodified `react-navigation/template` starter. Every screen renders
-`<Text>X Screen</Text>`. Things that must be fixed as part of the first phase (see
-`gestion/prompts/fable-build-plan.md`):
+Phase 5 scaffold is in place:
 
-- No `android.package` in `app.json` → EAS Android build is impossible as-is
-- No `eas.json`, no EAS project configured
-- Deep-link prefix in `src/App.tsx` is still `helloworld://` while the scheme is `pethouse`
-- `expo-notifications` is absent — the core feature has no foundation
-- No ESLint, no Prettier, no tests, no test runner, no typecheck script
-- No API client, no state management, no i18n, no design system
-- README is still the starter template's
+- expo-router with `app/` routes, Metro configured for the workspace (`metro.config.js`), and
+  `@pethouse/api-client` consumed from source.
+- `app.json` has `android.package` and `ios.bundleIdentifier` (`com.pethouse.app`) and the
+  `pethouse` scheme; `eas.json` has `development`, `preview` and `production` profiles.
+- ESLint (flat config, same style rules as the API, no JSX string literals), Jest with
+  `jest-expo` and React Native Testing Library, a first Maestro flow in `.maestro/`.
+- i18n with `i18next`: `fr` is the reference catalogue and `en` is typed against it, so a key
+  missing in English does not compile.
+- TanStack Query client and the generated API client in `src/lib/api/`.
+
+Still missing: design tokens and themed primitives (direction to validate first), the auth
+flow with `expo-secure-store`, `expo-notifications`, and every feature screen.

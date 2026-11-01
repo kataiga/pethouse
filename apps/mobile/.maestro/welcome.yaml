@@ -1,0 +1,13 @@
+# Smoke flow: the app starts in French, switches the whole screen to English and back.
+# Run against a dev or preview build on an emulator: `maestro test .maestro`.
+appId: com.pethouse.app
+---
+- launchApp:
+    clearState: true
+- assertVisible: "Pethouse"
+- tapOn:
+    id: "language-en"
+- assertVisible: "Aquariums, terrariums and paludariums, looked after together."
+- tapOn:
+    id: "language-fr"
+- assertVisible: "Aquariums, terrariums et paludariums, entretenus à plusieurs."
