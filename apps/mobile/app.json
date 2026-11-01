@@ -9,18 +9,23 @@
     "newArchEnabled": true,
     "scheme": "pethouse",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.pethouse.app"
     },
     "android": {
+      "package": "com.pethouse.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
     },
     "plugins": [
+      "expo-router",
+      "expo-localization",
       "expo-asset",
       [
         "expo-splash-screen",
@@ -30,6 +35,10 @@
         }
       ],
       "react-native-edge-to-edge"
-    ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "tsconfigPaths": true
+    }
   }
 }
