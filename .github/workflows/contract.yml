@@ -59,6 +59,9 @@ jobs:
       - name: Regenerate the typed client
         run: npm run generate --workspace @pethouse/api-client
 
+      - name: Typecheck the client and its contract checks
+        run: npm run typecheck --workspace @pethouse/api-client
+
       - name: Fail if the committed client is stale
         run: |
           if ! git diff --exit-code -- packages/api-client; then

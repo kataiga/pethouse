@@ -1957,7 +1957,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Household id; 404 when the caller is not a member. */
+                householdId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -1993,7 +1996,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Household id; 404 when the caller is not a member. */
+                householdId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -2034,7 +2040,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Household id; 404 when the caller is not a member. */
+                householdId: number;
+            };
             cookie?: never;
         };
         requestBody: {
@@ -2081,7 +2090,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Household id; 404 when the caller is not a member. */
+                householdId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -2118,6 +2130,8 @@ export interface operations {
             header?: never;
             path: {
                 userId: number;
+                /** @description Household id; 404 when the caller is not a member. */
+                householdId: number;
             };
             cookie?: never;
         };
@@ -2171,6 +2185,8 @@ export interface operations {
             header?: never;
             path: {
                 userId: number;
+                /** @description Household id; 404 when the caller is not a member. */
+                householdId: number;
             };
             cookie?: never;
         };
@@ -2227,7 +2243,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Household id; 404 when the caller is not a member. */
+                householdId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -2270,7 +2289,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Household id; 404 when the caller is not a member. */
+                householdId: number;
+            };
             cookie?: never;
         };
         requestBody: {
@@ -2319,6 +2341,8 @@ export interface operations {
             header?: never;
             path: {
                 inviteId: number;
+                /** @description Household id; 404 when the caller is not a member. */
+                householdId: number;
             };
             cookie?: never;
         };
@@ -2569,7 +2593,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Household id; 404 when the caller is not a member. */
+                householdId: number;
+            };
             cookie?: never;
         };
         requestBody: {
@@ -2619,6 +2646,8 @@ export interface operations {
             header?: never;
             path: {
                 subtypeId: number;
+                /** @description Household id; 404 when the caller is not a member. */
+                householdId: number;
             };
             cookie?: never;
         };
@@ -2652,7 +2681,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Household id; 404 when the caller is not a member. */
+                householdId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -2688,7 +2720,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Household id; 404 when the caller is not a member. */
+                householdId: number;
+            };
             cookie?: never;
         };
         requestBody: {
@@ -2737,7 +2772,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -2773,7 +2811,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -2807,7 +2848,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
+            };
             cookie?: never;
         };
         requestBody: {
@@ -2858,7 +2902,10 @@ export interface operations {
                 includeRemoved?: boolean;
             };
             header?: never;
-            path?: never;
+            path: {
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -2894,7 +2941,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
+            };
             cookie?: never;
         };
         requestBody: {
@@ -2944,6 +2994,8 @@ export interface operations {
             header?: never;
             path: {
                 entryId: number;
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
             };
             cookie?: never;
         };
@@ -2980,6 +3032,8 @@ export interface operations {
             header?: never;
             path: {
                 entryId: number;
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
             };
             cookie?: never;
         };
@@ -3031,7 +3085,10 @@ export interface operations {
                 includeRemoved?: boolean;
             };
             header?: never;
-            path?: never;
+            path: {
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -3067,7 +3124,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
+            };
             cookie?: never;
         };
         requestBody: {
@@ -3117,6 +3177,8 @@ export interface operations {
             header?: never;
             path: {
                 entryId: number;
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
             };
             cookie?: never;
         };
@@ -3153,6 +3215,8 @@ export interface operations {
             header?: never;
             path: {
                 entryId: number;
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
             };
             cookie?: never;
         };
@@ -3201,7 +3265,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
+            };
             cookie?: never;
         };
         requestBody: {
@@ -3249,7 +3316,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -3285,7 +3355,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
+            };
             cookie?: never;
         };
         requestBody: {
@@ -3344,6 +3417,8 @@ export interface operations {
             header?: never;
             path: {
                 photoId: number;
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
             };
             cookie?: never;
         };
@@ -3380,6 +3455,8 @@ export interface operations {
             header?: never;
             path: {
                 photoId: number;
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
             };
             cookie?: never;
         };
@@ -3447,7 +3524,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Household id; 404 when the caller is not a member. */
+                householdId: number;
+            };
             cookie?: never;
         };
         requestBody: {
@@ -3497,6 +3577,8 @@ export interface operations {
             header?: never;
             path: {
                 definitionId: number;
+                /** @description Household id; 404 when the caller is not a member. */
+                householdId: number;
             };
             cookie?: never;
         };
@@ -3608,7 +3690,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -3646,6 +3731,8 @@ export interface operations {
             header?: never;
             path: {
                 definitionId: number;
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
             };
             cookie?: never;
         };
@@ -3696,6 +3783,8 @@ export interface operations {
             header?: never;
             path: {
                 definitionId: number;
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
             };
             cookie?: never;
         };
@@ -3737,7 +3826,10 @@ export interface operations {
                 to?: string;
             };
             header?: never;
-            path?: never;
+            path: {
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -3773,7 +3865,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
+            };
             cookie?: never;
         };
         requestBody: {
@@ -3829,7 +3924,10 @@ export interface operations {
                 bucket?: "hour" | "day" | "week";
             };
             header?: never;
-            path?: never;
+            path: {
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -3875,6 +3973,8 @@ export interface operations {
             header?: never;
             path: {
                 measurementId: number;
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
             };
             cookie?: never;
         };
@@ -3911,6 +4011,8 @@ export interface operations {
             header?: never;
             path: {
                 measurementId: number;
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
             };
             cookie?: never;
         };
@@ -3980,7 +4082,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -4016,7 +4121,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
+            };
             cookie?: never;
         };
         requestBody: {
@@ -4064,7 +4172,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
+            };
             cookie?: never;
         };
         requestBody: {
@@ -4114,6 +4225,8 @@ export interface operations {
             header?: never;
             path: {
                 routineId: number;
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
             };
             cookie?: never;
         };
@@ -4152,6 +4265,8 @@ export interface operations {
             header?: never;
             path: {
                 routineId: number;
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
             };
             cookie?: never;
         };
@@ -4188,6 +4303,8 @@ export interface operations {
             header?: never;
             path: {
                 routineId: number;
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
             };
             cookie?: never;
         };
@@ -4243,6 +4360,8 @@ export interface operations {
             header?: never;
             path: {
                 routineId: number;
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
             };
             cookie?: never;
         };
@@ -4292,7 +4411,10 @@ export interface operations {
                 routineId?: number;
             };
             header?: never;
-            path?: never;
+            path: {
+                /** @description Tank id; 404 when unknown or outside the caller's households. */
+                tankId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -4328,7 +4450,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Occurrence id; 404 when unknown or outside the caller's households. */
+                occurrenceId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -4373,7 +4498,10 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Occurrence id; 404 when unknown or outside the caller's households. */
+                occurrenceId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
