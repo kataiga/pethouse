@@ -26,7 +26,8 @@
     "openapi:dump": "ts-node -r tsconfig-paths/register src/commands/dump-openapi.ts",
     "mikro:generate": "mikro-orm migration:generate",
     "mikro:up": "mikro-orm migration:up",
-    "mikro:down": "mikro-orm migration:down"
+    "mikro:down": "mikro-orm migration:down",
+    "mikro:seed": "mikro-orm seeder:run"
   },
   "dependencies": {
     "@mikro-orm/core": "^6.6.0",
