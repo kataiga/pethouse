@@ -1,6 +1,4 @@
-import {
-  ApiProperty, ApiPropertyOptional,
-} from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { Language } from '@common/enums/language.enum';
 import {
   AnimalGroup, Temperament,
@@ -27,49 +25,49 @@ export class AnimalSpeciesResponseDto {
   @ApiProperty({ enum: AnimalGroup })
   readonly animalGroup: AnimalGroup;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: Number,
     example: 24,
   })
   readonly minTemperatureC: number | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: Number,
     example: 30,
   })
   readonly maxTemperatureC: number | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: Number,
     example: 6,
   })
   readonly minPh: number | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: Number,
     example: 7.5,
   })
   readonly maxPh: number | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: Number,
     example: 7,
   })
   readonly adultSizeCm: number | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: Number,
     example: 20,
   })
   readonly minTankVolumeL: number | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     enum: Temperament,
   })

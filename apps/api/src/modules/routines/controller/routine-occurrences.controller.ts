@@ -1,5 +1,5 @@
 import {
-  Controller, HttpCode, HttpStatus, Post, UseGuards,
+  Controller, HttpCode, HttpStatus, Post,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -13,7 +13,7 @@ import {
 import { CurrentUser } from '@common/decorators/current-user.decorator';
 import { ErrorResponseDto } from '@common/dto/error-response.dto';
 import { CurrentOccurrence } from '@core/routines/current-occurrence.decorator';
-import { OccurrenceAccessGuard } from '@core/routines/occurrence-access.guard';
+import { OccurrenceScoped } from '@core/routines/occurrence-scoped.decorator';
 import { User } from '@modules/users/entity/user.entity';
 import { OccurrenceResponseDto } from '../dto/occurrence-response.dto';
 import { RoutineOccurrence } from '../entity/routine-occurrence.entity';
@@ -26,7 +26,7 @@ import { RoutineOccurrencesService } from '../service/routine-occurrences.servic
   type: ErrorResponseDto,
   description: 'Unknown occurrence, or the caller is not a member of its household.',
 })
-@UseGuards(OccurrenceAccessGuard)
+@OccurrenceScoped()
 @Controller('routine-occurrences/:occurrenceId')
 export class RoutineOccurrencesController {
   constructor (private readonly occurrencesService: RoutineOccurrencesService) {}

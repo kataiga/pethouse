@@ -1,6 +1,4 @@
-import {
-  ApiProperty, ApiPropertyOptional,
-} from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { HouseholdInvite } from '../entity/household-invite.entity';
 
 export const INVITE_URL_SCHEME = 'pethouse://invite/';
@@ -27,7 +25,7 @@ export class InviteResponseDto {
   @ApiProperty({ example: 2 })
   readonly useCount: number;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     example: null,
     nullable: true,
     type: String,

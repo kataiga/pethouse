@@ -1,6 +1,4 @@
-import {
-  ApiProperty, ApiPropertyOptional,
-} from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { TankPhoto } from '../entity/tank-photo.entity';
 import { PhotoUploaderDto } from './photo-uploader.dto';
 
@@ -20,13 +18,13 @@ export class TankPhotoResponseDto {
   @ApiProperty({ example: 2_480_112 })
   readonly sizeBytes: number;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: String,
   })
   readonly caption: string | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: String,
   })

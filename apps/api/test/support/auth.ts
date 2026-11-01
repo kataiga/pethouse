@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { Language } from '../../src/common/enums/language.enum';
@@ -23,7 +24,8 @@ export function uniqueAccount (overrides: Partial<TestAccount> = {}): TestAccoun
   counter += 1;
 
   return {
-    email: `user-${Date.now()}-${counter}@example.com`,
+    // Jest workers run in parallel with their own counter: only a UUID keeps emails unique.
+    email: `user-${randomUUID()}@example.com`,
     password: 'correct horse battery staple',
     displayName: `User ${counter}`,
     ...overrides,

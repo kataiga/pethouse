@@ -1,5 +1,5 @@
 import {
-  Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Put, UseGuards,
+  Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Put,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -14,7 +14,7 @@ import {
 import { CurrentUser } from '@common/decorators/current-user.decorator';
 import { ErrorResponseDto } from '@common/dto/error-response.dto';
 import { CurrentTank } from '@core/tanks/current-tank.decorator';
-import { TankAccessGuard } from '@core/tanks/tank-access.guard';
+import { TankScoped } from '@core/tanks/tank-scoped.decorator';
 import { Tank } from '@modules/tanks/entity/tank.entity';
 import { User } from '@modules/users/entity/user.entity';
 import { ResolvedParameterResponseDto } from '../dto/resolved-parameter-response.dto';
@@ -29,7 +29,7 @@ import { TankParametersService } from '../service/tank-parameters.service';
   type: ErrorResponseDto,
   description: 'Unknown tank or definition, or the caller is not a member of the household.',
 })
-@UseGuards(TankAccessGuard)
+@TankScoped()
 @Controller('tanks/:tankId/parameters')
 export class TankParametersController {
   constructor (private readonly tankParametersService: TankParametersService) {}

@@ -6,16 +6,15 @@ name: contract
 # the real API, regenerates the client, and fails if the result differs from what is committed —
 # so a pull request that changes a DTO without regenerating the client cannot merge.
 #
-# Currently manual. Switch the trigger to `pull_request` in Phase 5, once
-# `packages/api-client` actually generates something. Do not weaken the diff check to make it
-# pass; regenerate the client instead.
+# Runs on every pull request touching the API or the client. Do not weaken the diff check to
+# make it pass; regenerate the client instead.
 
 on:
   workflow_dispatch:
-  # pull_request:
-  #   paths:
-  #     - 'apps/api/**'
-  #     - 'packages/api-client/**'
+  pull_request:
+    paths:
+      - 'apps/api/**'
+      - 'packages/api-client/**'
 
 concurrency:
   group: contract-${{ github.ref }}
@@ -59,6 +58,9 @@ jobs:
 
       - name: Regenerate the typed client
         run: npm run generate --workspace @pethouse/api-client
+
+      - name: Typecheck the client and its contract checks
+        run: npm run typecheck --workspace @pethouse/api-client
 
       - name: Fail if the committed client is stale
         run: |

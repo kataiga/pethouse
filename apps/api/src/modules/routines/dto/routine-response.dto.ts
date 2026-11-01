@@ -1,6 +1,4 @@
-import {
-  ApiProperty, ApiPropertyOptional,
-} from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { UserSummaryDto } from '@modules/users/dto/user-summary.dto';
 import type { RoutineView } from '../service/routines.service';
 import {
@@ -14,7 +12,7 @@ export class RoutineResponseDto {
   @ApiProperty({ example: 'Water change' })
   readonly name: string;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: String,
   })
@@ -38,7 +36,7 @@ export class RoutineResponseDto {
   @ApiProperty()
   readonly isActive: boolean;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: Number,
     example: 60,
@@ -48,7 +46,7 @@ export class RoutineResponseDto {
   @ApiProperty({ example: 3 })
   readonly reminderMaxRepeats: number;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: String,
     example: '2026-11-02T18:00:00.000Z',

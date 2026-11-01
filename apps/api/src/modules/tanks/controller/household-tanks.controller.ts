@@ -1,5 +1,5 @@
 import {
-  Body, Controller, Get, Post, UseGuards,
+  Body, Controller, Get, Post,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -13,7 +13,7 @@ import {
 } from '@nestjs/swagger';
 import { ErrorResponseDto } from '@common/dto/error-response.dto';
 import { CurrentMembership } from '@core/households/current-membership.decorator';
-import { HouseholdMemberGuard } from '@core/households/household-member.guard';
+import { HouseholdScoped } from '@core/households/household-scoped.decorator';
 import { HouseholdMember } from '@modules/households/entity/household-member.entity';
 import { CreateTankDto } from '../dto/create-tank.dto';
 import { TankResponseDto } from '../dto/tank-response.dto';
@@ -26,7 +26,7 @@ import { TanksService } from '../service/tanks.service';
   type: ErrorResponseDto,
   description: 'Unknown household, or the caller is not a member.',
 })
-@UseGuards(HouseholdMemberGuard)
+@HouseholdScoped()
 @Controller('households/:householdId/tanks')
 export class HouseholdTanksController {
   constructor (private readonly tanksService: TanksService) {}

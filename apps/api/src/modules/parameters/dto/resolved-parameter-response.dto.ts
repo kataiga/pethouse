@@ -1,6 +1,4 @@
-import {
-  ApiProperty, ApiPropertyOptional,
-} from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { ParameterDefinition } from '../entity/parameter-definition.entity';
 import { LatestReading } from '../repository/measurement.repository';
 import { LatestReadingDto } from './latest-reading.dto';
@@ -32,14 +30,14 @@ export class ResolvedParameterResponseDto {
   @ApiProperty({ example: 30 })
   readonly displayOrder: number;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: Number,
     example: 6.5,
   })
   readonly minThreshold: number | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: Number,
     example: 7.5,
@@ -55,7 +53,7 @@ export class ResolvedParameterResponseDto {
   @ApiProperty({ description: 'True when the tank has an override row for this parameter.' })
   readonly overridden: boolean;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     type: () => LatestReadingDto,
     nullable: true,
     description: 'Most recent reading, so a card can show the value and compare it to the thresholds.',

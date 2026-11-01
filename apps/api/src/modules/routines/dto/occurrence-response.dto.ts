@@ -1,6 +1,4 @@
-import {
-  ApiProperty, ApiPropertyOptional,
-} from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { UserSummaryDto } from '@modules/users/dto/user-summary.dto';
 import { OccurrenceStatus } from '../entity/occurrence-status.enum';
 import { RoutineOccurrence } from '../entity/routine-occurrence.entity';
@@ -25,14 +23,14 @@ export class OccurrenceResponseDto {
   })
   readonly status: OccurrenceStatus;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: String,
     description: 'When it was done or skipped.',
   })
   readonly completedAt: string | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: () => UserSummaryDto,
     description: 'Who did or skipped it.',

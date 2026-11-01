@@ -1,16 +1,5 @@
 import {
-  Body,
-  Controller,
-  Delete,
-  ForbiddenException,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Param,
-  ParseIntPipe,
-  Patch,
-  Post,
-  UseGuards,
+  Body, Controller, Delete, ForbiddenException, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -27,8 +16,8 @@ import {
 import { CurrentUser } from '@common/decorators/current-user.decorator';
 import { ErrorResponseDto } from '@common/dto/error-response.dto';
 import { CurrentMembership } from '@core/households/current-membership.decorator';
-import { HouseholdMemberGuard } from '@core/households/household-member.guard';
 import { RequireHouseholdRole } from '@core/households/household-role.decorator';
+import { HouseholdScoped } from '@core/households/household-scoped.decorator';
 import { User } from '@modules/users/entity/user.entity';
 import { CreateHouseholdDto } from '../dto/create-household.dto';
 import { CreateInviteDto } from '../dto/create-invite.dto';
@@ -72,7 +61,7 @@ export class HouseholdsController {
   }
 
   @Get(':householdId')
-  @UseGuards(HouseholdMemberGuard)
+  @HouseholdScoped()
   @ApiOperation({ summary: 'One household of the authenticated user.' })
   @ApiOkResponse({ type: HouseholdResponseDto })
   @ApiNotFoundResponse({
@@ -84,7 +73,7 @@ export class HouseholdsController {
   }
 
   @Patch(':householdId')
-  @UseGuards(HouseholdMemberGuard)
+  @HouseholdScoped()
   @RequireHouseholdRole(HouseholdRole.OWNER)
   @ApiOperation({ summary: 'Rename a household or change its time zone. Owners only.' })
   @ApiOkResponse({ type: HouseholdResponseDto })
@@ -101,7 +90,7 @@ export class HouseholdsController {
 
   @Delete(':householdId')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @UseGuards(HouseholdMemberGuard)
+  @HouseholdScoped()
   @RequireHouseholdRole(HouseholdRole.OWNER)
   @ApiOperation({ summary: 'Delete a household with its members and invites. Owners only.' })
   @ApiNoContentResponse()
@@ -112,7 +101,7 @@ export class HouseholdsController {
   }
 
   @Get(':householdId/members')
-  @UseGuards(HouseholdMemberGuard)
+  @HouseholdScoped()
   @ApiOperation({ summary: 'Members of a household.' })
   @ApiOkResponse({ type: [HouseholdMemberResponseDto] })
   @ApiNotFoundResponse({ type: ErrorResponseDto })
@@ -123,7 +112,7 @@ export class HouseholdsController {
   }
 
   @Patch(':householdId/members/:userId')
-  @UseGuards(HouseholdMemberGuard)
+  @HouseholdScoped()
   @RequireHouseholdRole(HouseholdRole.OWNER)
   @ApiOperation({ summary: 'Promote a member to owner or demote an owner. Owners only.' })
   @ApiOkResponse({ type: HouseholdMemberResponseDto })
@@ -146,7 +135,7 @@ export class HouseholdsController {
 
   @Delete(':householdId/members/:userId')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @UseGuards(HouseholdMemberGuard)
+  @HouseholdScoped()
   @ApiOperation({ summary: 'Remove a member (owners), or leave the household (own user id).' })
   @ApiNoContentResponse()
   @ApiNotFoundResponse({ type: ErrorResponseDto })
@@ -170,7 +159,7 @@ export class HouseholdsController {
   }
 
   @Post(':householdId/invites')
-  @UseGuards(HouseholdMemberGuard)
+  @HouseholdScoped()
   @RequireHouseholdRole(HouseholdRole.OWNER)
   @ApiOperation({ summary: 'Create an invite code to share as a link. Owners only.' })
   @ApiCreatedResponse({ type: InviteResponseDto })
@@ -185,7 +174,7 @@ export class HouseholdsController {
   }
 
   @Get(':householdId/invites')
-  @UseGuards(HouseholdMemberGuard)
+  @HouseholdScoped()
   @RequireHouseholdRole(HouseholdRole.OWNER)
   @ApiOperation({ summary: 'Invites of a household, newest first. Owners only.' })
   @ApiOkResponse({ type: [InviteResponseDto] })
@@ -198,7 +187,7 @@ export class HouseholdsController {
   }
 
   @Delete(':householdId/invites/:inviteId')
-  @UseGuards(HouseholdMemberGuard)
+  @HouseholdScoped()
   @RequireHouseholdRole(HouseholdRole.OWNER)
   @ApiOperation({ summary: 'Revoke an invite. Owners only. Idempotent.' })
   @ApiOkResponse({ type: InviteResponseDto })

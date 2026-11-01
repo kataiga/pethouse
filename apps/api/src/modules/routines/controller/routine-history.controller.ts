@@ -1,12 +1,12 @@
 import {
-  Controller, Get, Query, UseGuards,
+  Controller, Get, Query,
 } from '@nestjs/common';
 import {
   ApiBearerAuth, ApiExtraModels, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { ErrorResponseDto } from '@common/dto/error-response.dto';
 import { CurrentTank } from '@core/tanks/current-tank.decorator';
-import { TankAccessGuard } from '@core/tanks/tank-access.guard';
+import { TankScoped } from '@core/tanks/tank-scoped.decorator';
 import { Tank } from '@modules/tanks/entity/tank.entity';
 import { OccurrencePageDto } from '../dto/occurrence-page.dto';
 import { OccurrenceResponseDto } from '../dto/occurrence-response.dto';
@@ -21,7 +21,7 @@ import { RoutineOccurrencesService } from '../service/routine-occurrences.servic
   description: 'Unknown tank, or the caller is not a member of the household.',
 })
 @ApiExtraModels(OccurrenceResponseDto)
-@UseGuards(TankAccessGuard)
+@TankScoped()
 @Controller('tanks/:tankId/routine-history')
 export class RoutineHistoryController {
   constructor (private readonly occurrencesService: RoutineOccurrencesService) {}

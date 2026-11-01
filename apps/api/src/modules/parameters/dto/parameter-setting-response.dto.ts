@@ -1,6 +1,4 @@
-import {
-  ApiProperty, ApiPropertyOptional,
-} from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { ParameterDefinition } from '../entity/parameter-definition.entity';
 import { ParameterDefinitionResponseDto } from './parameter-definition-response.dto';
 
@@ -25,14 +23,14 @@ export class ParameterSettingResponseDto {
   @ApiProperty({ example: 30 })
   readonly displayOrder: number;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: Number,
     example: 6.5,
   })
   readonly minThreshold: number | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     nullable: true,
     type: Number,
     example: 7.5,

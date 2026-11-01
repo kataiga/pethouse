@@ -4,5 +4,16 @@
   "private": true,
   "description": "Typed API client generated from the Pethouse API OpenAPI spec",
   "main": "src/index.ts",
-  "types": "src/index.ts"
+  "types": "src/index.ts",
+  "scripts": {
+    "generate": "openapi-typescript ../../apps/api/openapi.json --output src/generated/schema.ts --default-non-nullable false",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "openapi-fetch": "0.17.0"
+  },
+  "devDependencies": {
+    "openapi-typescript": "7.13.0",
+    "typescript": "5.9.3"
+  }
 }
