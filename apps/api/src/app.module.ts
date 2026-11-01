@@ -7,6 +7,8 @@ import {
 import { MySqlDriver } from '@mikro-orm/mysql';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { LoggerModule } from '@core/logger/logger.module';
+import { AnimalSpeciesModule } from '@modules/animal-species/animal-species.module';
+import { PlantSpeciesModule } from '@modules/plant-species/plant-species.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { HealthModule } from '@modules/health/health.module';
 import { HouseholdsModule } from '@modules/households/households.module';
@@ -65,6 +67,8 @@ export class AppModule {
         HealthModule,
         UsersModule,
         HouseholdsModule,
+        AnimalSpeciesModule,
+        PlantSpeciesModule,
         TanksModule,
         AuthModule,
       ],
