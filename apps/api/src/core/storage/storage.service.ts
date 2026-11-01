@@ -1,4 +1,5 @@
 import {
+  BucketAlreadyOwnedByYou,
   CreateBucketCommand,
   DeleteObjectCommand,
   HeadBucketCommand,
@@ -86,8 +87,16 @@ export class StorageService {
         throw error;
       }
 
-      await this.client.send(new CreateBucketCommand({ Bucket: this.bucket }));
-      this.logger.log(`Created bucket ${this.bucket}`);
+      try {
+        await this.client.send(new CreateBucketCommand({ Bucket: this.bucket }));
+        this.logger.log(`Created bucket ${this.bucket}`);
+      } catch (createError: unknown) {
+        // Several instances booting at once (replicas, parallel e2e workers) all see the bucket
+        // missing; the ones losing the race get this answer, which means the bucket is there.
+        if (!(createError instanceof BucketAlreadyOwnedByYou)) {
+          throw createError;
+        }
+      }
     }
 
     await this.client.send(new PutBucketPolicyCommand({
