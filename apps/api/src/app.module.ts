@@ -14,6 +14,7 @@ import { AuthModule } from '@modules/auth/auth.module';
 import { HealthModule } from '@modules/health/health.module';
 import { HouseholdsModule } from '@modules/households/households.module';
 import { ParametersModule } from '@modules/parameters/parameters.module';
+import { RoutinesModule } from '@modules/routines/routines.module';
 import { TanksModule } from '@modules/tanks/tanks.module';
 import { UsersModule } from '@modules/users/users.module';
 import { buildMikroOrmConfig } from '@config/mikro-orm.config';
@@ -75,6 +76,7 @@ export class AppModule {
         PlantSpeciesModule,
         TanksModule,
         ParametersModule,
+        RoutinesModule,
         AuthModule,
       ],
     };

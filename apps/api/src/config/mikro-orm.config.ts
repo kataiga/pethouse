@@ -30,6 +30,9 @@ export function buildMikroOrmConfig (database: DatabaseConfig, overrides: MikroO
     dbName: database.name,
     connect: overrides.connect ?? true,
     debug: overrides.debug ?? false,
+    // Datetimes are UTC instants (routine occurrences above all); never let the process time zone
+    // of a container decide how they are written.
+    forceUtcTimezone: true,
 
     entities: ['dist/modules/**/*.entity.js'],
     entitiesTs: ['src/modules/**/*.entity.ts'],
