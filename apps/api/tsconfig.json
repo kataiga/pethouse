@@ -11,10 +11,18 @@
     "outDir": "./dist",
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "strict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "strictBindCallApply": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@core/*": ["./src/core/*"],
+      "@common/*": ["./src/common/*"],
+      "@modules/*": ["./src/modules/*"],
+      "@config": ["./src/config"],
+      "@config/*": ["./src/config/*"]
+    }
   }
 }

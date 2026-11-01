@@ -12,13 +12,15 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "lint": "eslint './src/**/*.{ts,js}'",
-    "lint:fix": "eslint './src/**/*.{ts,js}' --fix",
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "jest --selectProjects unit",
+    "test:watch": "jest --selectProjects unit --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:integration": "jest --selectProjects integration",
+    "test:e2e": "jest --selectProjects e2e",
+    "test:all": "jest",
     "typecheck": "tsc --noEmit",
     "generate:module": "ts-node src/commands/generate-module.ts",
     "openapi:dump": "ts-node src/commands/dump-openapi.ts",
@@ -37,7 +39,6 @@
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.1.8",
     "@nestjs/platform-express": "^11.1.8",
-    "@nestjs/typeorm": "^11.0.0",
     "nestjs-pino": "^4.5.0",
     "pino": "^10.1.0",
     "pino-pretty": "^13.1.2",
@@ -46,10 +47,12 @@
   },
   "devDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "^4.5.0",
+    "@eslint/js": "^9.39.5",
     "@mikro-orm/cli": "^6.6.0",
     "@nestjs/cli": "^11.0.10",
     "@nestjs/schematics": "^11.0.9",
     "@nestjs/testing": "^11.1.8",
+    "@stylistic/eslint-plugin": "^5.10.0",
     "@types/express": "^5.0.5",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.10.0",
@@ -59,10 +62,10 @@
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-nestjs": "^1.2.3",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-promise": "^7.2.1",
     "eslint-plugin-security-node": "^1.1.4",
+    "globals": "^17.13.0",
     "jest": "^30.2.0",
     "prettier": "^3.6.2",
     "source-map-support": "^0.5.21",
@@ -72,23 +75,6 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
   },
   "mikro-orm": {
     "configPaths": [

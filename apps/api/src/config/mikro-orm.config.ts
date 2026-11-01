@@ -14,6 +14,9 @@ export default defineConfig({
   entitiesTs: ['src/modules/**/*.entity.ts'],
 
   metadataProvider: TsMorphMetadataProvider,
+  // No entity exists until Phase 1 lands the first one; MikroORM refuses to boot on an empty
+  // discovery by default. Remove this override together with the first entity.
+  discovery: { warnWhenNoEntities: false },
   debug: process.env.ENV !== 'production',
 
   migrations: {
