@@ -4,6 +4,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { UniqueConstraintViolationException } from '@mikro-orm/core';
 import { JwtConfig } from '@config/types';
+import { HouseholdsService } from '@modules/households/service/households.service';
 import { User } from '@modules/users/entity/user.entity';
 import { UsersService } from '@modules/users/service/users.service';
 import { RefreshToken } from '../entity/refresh-token.entity';
@@ -66,6 +67,7 @@ describe('AuthService', () => {
     findByEmail: jest.fn(),
     create: jest.fn(),
   };
+  const householdsService = { createDefaultFor: jest.fn() };
   const passwords = {
     hash: jest.fn(async (plain: string) => `hashed:${plain}`),
     verify: jest.fn(),
@@ -78,6 +80,7 @@ describe('AuthService', () => {
       jwt,
       jwtService as unknown as JwtService,
       usersService as unknown as UsersService,
+      householdsService as unknown as HouseholdsService,
       passwords as unknown as PasswordService,
       refreshTokens as unknown as RefreshTokenRepository,
     );
@@ -109,6 +112,7 @@ describe('AuthService', () => {
         email: 'new@example.com',
         passwordHash: 'hashed:password-1',
       }));
+      expect(householdsService.createDefaultFor).toHaveBeenCalledWith(result.user, undefined);
       expect(result.tokens.accessExpiresInSeconds).toBe(900);
       expect(refreshTokens.create).toHaveBeenCalledWith(expect.objectContaining({
         tokenHash: hashToken(result.tokens.refreshToken),

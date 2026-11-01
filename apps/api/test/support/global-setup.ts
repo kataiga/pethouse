@@ -3,8 +3,8 @@ import mikroOrmCliConfig from '../../src/config/mikro-orm.config';
 
 /**
  * Runs once before every e2e worker: empties the database so suites start from a known state
- * without racing each other. `users` is the root of every `ON DELETE CASCADE` chain, so one
- * statement is enough; keep it that way when adding tables.
+ * without racing each other. Households cascade to members and invites, users to refresh tokens;
+ * households go first because they reference their creator.
  */
 export default async function globalSetup (): Promise<void> {
   process.env.NODE_ENV ??= 'test';
@@ -15,5 +15,8 @@ export default async function globalSetup (): Promise<void> {
     entitiesTs: [],
   });
 
-  await orm.em.getConnection().execute('DELETE FROM `users`').finally(() => orm.close(true));
+  const connection = orm.em.getConnection();
+  await connection.execute('DELETE FROM `households`')
+    .then(() => connection.execute('DELETE FROM `users`'))
+    .finally(() => orm.close(true));
 }

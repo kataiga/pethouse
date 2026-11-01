@@ -12,6 +12,7 @@ import { jwtConfig } from '@config';
 import {
   AccessTokenPayload, RefreshTokenPayload,
 } from '@core/auth/jwt-payload';
+import { HouseholdsService } from '@modules/households/service/households.service';
 import { User } from '@modules/users/entity/user.entity';
 import { UsersService } from '@modules/users/service/users.service';
 import { IssuedTokens } from '../dto/auth-tokens-response.dto';
@@ -41,6 +42,7 @@ export class AuthService {
     private readonly jwt: ConfigType<typeof jwtConfig>,
     private readonly jwtService: JwtService,
     private readonly usersService: UsersService,
+    private readonly householdsService: HouseholdsService,
     private readonly passwords: PasswordService,
     @InjectRepository(RefreshToken)
     private readonly refreshTokens: RefreshTokenRepository,
@@ -62,6 +64,8 @@ export class AuthService {
           displayName: dto.displayName,
           preferredLanguage: dto.preferredLanguage,
         });
+        // Every account starts with a household of its own: sharing needs somewhere to share.
+        this.householdsService.createDefaultFor(user, dto.timezone);
         await em.flush();
 
         return {

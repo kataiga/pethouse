@@ -5,6 +5,7 @@ import {
   IsEmail, IsEnum, IsOptional, IsString, Length, MaxLength, MinLength,
 } from 'class-validator';
 import { Language } from '@common/enums/language.enum';
+import { IsIanaTimeZone } from '@common/validators/is-iana-time-zone';
 
 export const PASSWORD_MIN_LENGTH = 8;
 
@@ -42,4 +43,12 @@ export class RegisterDto {
   @IsOptional()
   @IsEnum(Language)
   preferredLanguage?: Language;
+
+  @ApiPropertyOptional({
+    example: 'Europe/Paris',
+    description: 'IANA time zone of the household created with the account. Defaults to Europe/Paris.',
+  })
+  @IsOptional()
+  @IsIanaTimeZone()
+  timezone?: string;
 }
