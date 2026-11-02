@@ -144,6 +144,7 @@ describe('Household', () => {
     });
     mockStore.value = null;
     mockFake.seedSignedIn('Jordan');
+    const jordanHousehold = mockFake.householdOf('Jordan');
     renderRouter('./app', { initialUrl: '/invite/Ab3_x-9kLmNo' });
 
     expect(await screen.findByText('Connexion')).toBeTruthy();
@@ -162,6 +163,8 @@ describe('Household', () => {
     expect(await screen.findByText('Chez Camille')).toBeTruthy();
     expect(await screen.findByText('Jordan (toi)')).toBeTruthy();
     expect(screen.getByText('Camille')).toBeTruthy();
+    // The empty household Jordan got at sign-up is gone.
+    expect(mockFake.households).not.toContain(jordanHousehold);
   });
 
   it('says so when an invite is no longer valid, and reads codes out of pasted links', async () => {

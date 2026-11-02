@@ -377,9 +377,21 @@ export class FakeApi {
         role: 'MEMBER',
         joinedAt: this.tick(),
       });
+      this.dropEmptyHouseholds(account, household);
     }
 
     return json(200, this.householdView(household, account.id));
+  }
+
+  /** Like the API: joining drops the account's other households that hold nothing. */
+  private dropEmptyHouseholds (account: Account, joined: Household): void {
+    const empty = this.households.filter((candidate) => candidate !== joined
+      && candidate.members.length === 1
+      && candidate.members[0]?.userId === account.id);
+
+    for (const household of empty) {
+      this.households.splice(this.households.indexOf(household), 1);
+    }
   }
 
   private addAccount (email: string, password: string, displayName: string): Account {
