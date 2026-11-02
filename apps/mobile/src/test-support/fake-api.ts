@@ -2,6 +2,7 @@ import type { Schemas } from '@pethouse/api-client';
 import {
   error, type Fields, fieldsOf, json,
 } from './fake-http';
+import { FakeParameters } from './fake-parameters';
 import { FakeTanks } from './fake-tanks';
 
 type AuthResponse = Schemas['AuthResponseDto'];
@@ -81,8 +82,22 @@ export class FakeApi {
     },
   });
 
+  /** Parameter definitions, settings, overrides and readings of those tanks. */
+  readonly parameters = new FakeParameters({
+    tank: (tankId) => this.tanks.tanks.find((tank) => tank.id === tankId) ?? null,
+    isMember: (householdId, userId) => this.households.some((household) => household.id === householdId
+      && household.members.some((member) => member.userId === userId)),
+    displayName: (userId) => this.accounts.find((account) => account.id === userId)?.displayName ?? '',
+    nextId: () => {
+      this.counter += 1;
+
+      return this.counter;
+    },
+  });
+
   constructor () {
     this.tanks.reset();
+    this.parameters.reset();
   }
 
   /** Back to an empty server; tests call it first so no account leaks from one to the next. */
@@ -96,6 +111,7 @@ export class FakeApi {
     this.refreshTokens.clear();
     this.accessTokens.clear();
     this.tanks.reset();
+    this.parameters.reset();
   }
 
   /** Seeds an account with its default household; returns a refresh token for it. */
@@ -199,7 +215,8 @@ export class FakeApi {
         .map((household) => this.householdView(household, account.id)));
     }
 
-    const tanks = this.tanks.route(method, path, url.searchParams, fields, account.id);
+    const tanks = this.parameters.route(method, path, url.searchParams, fields, account.id)
+      ?? this.tanks.route(method, path, url.searchParams, fields, account.id);
 
     if (tanks) {
       return tanks;
@@ -381,7 +398,9 @@ export class FakeApi {
       return json(204);
     }
 
-    return this.tanks.routeHousehold(method, householdId, rest, fields) ?? error(404, 'Not found');
+    return this.tanks.routeHousehold(method, householdId, rest, fields)
+      ?? this.parameters.routeHousehold(method, householdId, rest, fields)
+      ?? error(404, 'Not found');
   }
 
   private redeem (code: string, account: Account): Response {

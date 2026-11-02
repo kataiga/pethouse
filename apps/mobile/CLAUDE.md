@@ -156,4 +156,13 @@ Phase 5 scaffold is in place:
   `expo-image-picker` and streamed to the pre-signed URL with `expo-file-system`; dates are
   picked with `@react-native-community/datetimepicker`, mocked globally in `jest.setup.ts`.
 
-Still missing: `expo-notifications`, and the parameters, routines and notifications screens.
+- Parameters: account settings per tank type (`/account/parameters`), per-tank deviations
+  (`/tanks/<id>/parameters`), quick entry (`/tanks/<id>/measure`) and history with a chart
+  (`/tanks/<id>/parameters/<definitionId>`), drawn with `react-native-svg` from the pure
+  geometry in `chart-geometry.ts`. Out-of-range is derived on the client from the resolved set,
+  never notified; the tank card badge loads each tank's resolved parameters.
+- In `waitFor`, assert on a number or a boolean (`getAllByText(x).length`, `queryBy…(x) === null`),
+  never `toHaveLength` / `toBeNull` on elements: every failing poll pretty-prints the matched
+  tree, which turned a sub-second test into ten seconds.
+
+Still missing: `expo-notifications`, and the routines and notifications screens.

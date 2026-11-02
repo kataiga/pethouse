@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Screen } from '@/components/ui/screen';
 import { Surface } from '@/components/ui/surface';
 import { useCurrentHousehold } from '@/features/households/hooks/use-households';
+import { useAlertingTanks } from '@/features/parameters/hooks/use-tank-parameters';
 import {
   space, useTheme,
 } from '@/theme';
@@ -22,6 +23,7 @@ export function TanksScreen (): React.JSX.Element {
   const householdId = current.household?.id ?? null;
   const tanks = useTanks(householdId);
   const sorted = [...(tanks.data ?? [])].sort((a, b) => a.name.localeCompare(b.name));
+  const alerting = useAlertingTanks(sorted.map((tank) => tank.id));
   const failed = current.isError || tanks.isError;
   const loading = current.isPending || (householdId !== null && tanks.isPending);
 
@@ -61,7 +63,12 @@ export function TanksScreen (): React.JSX.Element {
           </Surface>
         ) : null}
         {sorted.map((tank) => (
-          <TankCard key={tank.id} onPress={() => router.push(`/tanks/${tank.id}`)} tank={tank} />
+          <TankCard
+            alerting={alerting.has(tank.id)}
+            key={tank.id}
+            onPress={() => router.push(`/tanks/${tank.id}`)}
+            tank={tank}
+          />
         ))}
         {householdId !== null && !failed ? (
           <Button label={t('tanks.add')} onPress={() => router.push('/tanks/new')} testID="tanks-add" />

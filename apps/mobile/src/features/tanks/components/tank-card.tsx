@@ -15,11 +15,13 @@ import { formatDecimal } from '../tank-form';
 
 export interface TankCardProps {
   tank: Tank;
+  /** Its latest reading of some parameter is out of range. */
+  alerting: boolean;
   onPress: () => void;
 }
 
 /** A tank in the list: its cover (or its type's icon), its name and what it is. */
-export function TankCard ({ tank, onPress }: TankCardProps): React.JSX.Element {
+export function TankCard ({ tank, alerting, onPress }: TankCardProps): React.JSX.Element {
   const { t, i18n } = useTranslation();
   const { colors } = useTheme();
   const kind = [t(`tanks.types.${tank.tankType}`), tank.subtype ? subtypeLabel(tank.subtype, t) : null]
@@ -50,6 +52,16 @@ export function TankCard ({ tank, onPress }: TankCardProps): React.JSX.Element {
           </AppText>
         ) : null}
       </View>
+      {alerting ? (
+        <View
+          accessibilityLabel={t('parameters.tank.alertBadge')}
+          accessible
+          style={[styles.badge, { backgroundColor: colors.ambreVeil }]}
+          testID={`tank-${tank.id}-alert`}
+        >
+          <Ionicons color={colors.ambre} name="warning" size={18} />
+        </View>
+      ) : null}
       <Ionicons color={colors.inkSoft} name="chevron-forward" size={20} />
     </Pressable>
   );
@@ -76,5 +88,12 @@ const styles = StyleSheet.create({
   text: {
     flex: 1,
     gap: space.xs,
+  },
+  badge: {
+    width: 32,
+    height: 32,
+    borderRadius: radius.pill,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
