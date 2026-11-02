@@ -5,6 +5,7 @@ export class PhotoUploadResponseDto {
   readonly uploadUrl: string;
 
   @ApiProperty({
+    enum: ['PUT'],
     example: 'PUT',
     description: 'HTTP method to use on uploadUrl.',
   })
