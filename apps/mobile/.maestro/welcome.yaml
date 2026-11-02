@@ -1,10 +1,10 @@
-# Smoke flow: the app starts in French, switches the whole screen to English and back.
-# Run against a dev or preview build on an emulator: `maestro test .maestro`.
+# Smoke flow: the app starts on sign-in in French and switches the whole screen to English and back.
+# Run against a dev or preview build on an emulator: `maestro test .maestro/welcome.yaml`.
 appId: fr.kataiga.pethouse
 ---
 - launchApp:
     clearState: true
-- assertVisible: "Pethouse"
+- assertVisible: "Connexion"
 - tapOn:
     id: "language-en"
 - assertVisible: "Aquariums, terrariums and paludariums, looked after together."

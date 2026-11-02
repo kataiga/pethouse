@@ -1,0 +1,33 @@
+# Sign up, sign out, sign back in, against a running API reachable from the emulator.
+# Run with `maestro test .maestro/auth.yaml -e EMAIL=someone-$(date +%s)@example.com`.
+appId: fr.kataiga.pethouse
+---
+- launchApp:
+    clearState: true
+- assertVisible: "Connexion"
+- tapOn: "Pas encore de compte ? Créer un compte"
+- tapOn:
+    id: "sign-up-name"
+- inputText: "Camille"
+- tapOn:
+    id: "sign-up-email"
+- inputText: ${EMAIL}
+- tapOn:
+    id: "sign-up-password"
+- inputText: "correct horse battery"
+- tapOn:
+    id: "sign-up-submit"
+- assertVisible: "Bonjour Camille"
+- assertVisible: "Mon foyer"
+- tapOn:
+    id: "sign-out"
+- assertVisible: "Connexion"
+- tapOn:
+    id: "sign-in-email"
+- inputText: ${EMAIL}
+- tapOn:
+    id: "sign-in-password"
+- inputText: "correct horse battery"
+- tapOn:
+    id: "sign-in-submit"
+- assertVisible: "Bonjour Camille"

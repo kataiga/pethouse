@@ -1,3 +1,3 @@
-import { NotFoundScreen } from '@/features/welcome/not-found-screen';
+import { NotFoundScreen } from '@/features/shell/not-found-screen';
 
 export default NotFoundScreen;
