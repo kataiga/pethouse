@@ -1,29 +1,17 @@
 import { Link } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import {
-  StyleSheet, Text, View,
-} from 'react-native';
+import { AppText } from '@/components/ui/app-text';
+import { Screen } from '@/components/ui/screen';
 
 export function NotFoundScreen (): React.JSX.Element {
   const { t } = useTranslation();
 
   return (
-    <View style={styles.screen}>
-      <Text accessibilityRole="header" style={styles.title}>{t('notFound.title')}</Text>
-      <Link href="/">{t('notFound.back')}</Link>
-    </View>
+    <Screen style={{ justifyContent: 'center' }}>
+      <AppText accessibilityRole="header" variant="title">{t('notFound.title')}</AppText>
+      <Link href="/">
+        <AppText tone="lagon" variant="strong">{t('notFound.back')}</AppText>
+      </Link>
+    </Screen>
   );
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    padding: 24,
-    gap: 16,
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: '700',
-  },
-});

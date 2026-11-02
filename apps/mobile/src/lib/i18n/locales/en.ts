@@ -10,10 +10,17 @@ export const en: Catalogue<typeof fr> = {
     fr: 'Français',
     en: 'English',
   },
+  theme: {
+    label: 'Display',
+    dark: 'Night',
+    light: 'Day',
+  },
   welcome: {
+    eyebrow: 'Aquariums · terrariums · paludariums',
     title: 'Pethouse',
     tagline: 'Aquariums, terrariums and paludariums, looked after together.',
     api: {
+      label: 'Server',
       checking: 'Reaching the server…',
       ok: 'Server reachable',
       degraded: 'Server reachable, some services degraded',

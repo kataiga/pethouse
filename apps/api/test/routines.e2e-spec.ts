@@ -269,13 +269,14 @@ describe('Routines (e2e)', () => {
   it('re-plans pending occurrences on a new rule, keeps acted-on ones, and clears ahead once deactivated', async () => {
     const session = await registerAccount(app, { timezone: 'UTC' });
     const tankId = await createTank(session);
+    const start = `${localDate('UTC', 1)}T19:00`;
     const routine = await request(app.getHttpServer())
       .post(`/api/tanks/${tankId}/routines`)
       .set(bearer(session.accessToken))
       .send({
         name: 'Glass cleaning',
         rrule: 'FREQ=WEEKLY;BYHOUR=19;BYMINUTE=0',
-        dtstart: `${localDate('UTC', 1)}T19:00`,
+        dtstart: start,
       })
       .expect(201);
     const weekly = await occurrencesOf(session, tankId, routine.body.id);
@@ -286,13 +287,18 @@ describe('Routines (e2e)', () => {
       .set(bearer(session.accessToken))
       .expect(200);
 
+    const replannedAt = Date.now();
     await request(app.getHttpServer())
       .patch(`/api/tanks/${tankId}/routines/${routine.body.id}`)
       .set(bearer(session.accessToken))
       .send({ rrule: 'FREQ=DAILY;BYHOUR=19;BYMINUTE=0' })
       .expect(200);
     const daily = await occurrencesOf(session, tankId, routine.body.id);
-    expect(daily).toHaveLength(30);
+    // One per day at 19:00 from the start to 30 days after the re-plan: 29 or 30 depending on
+    // whether the suite runs before or after 19:00 UTC.
+    const expectedDaily = Math.floor((replannedAt + 30 * DAY_MS - Date.parse(`${start}:00Z`)) / DAY_MS) + 1;
+    expect(daily).toHaveLength(expectedDaily);
+    expect(new Set(daily.map((row) => row.scheduledFor.slice(11))).size).toBe(1);
     expect(daily.find((row) => row.id === weekly[0].id)?.status).toBe('DONE');
 
     const deactivated = await request(app.getHttpServer())
