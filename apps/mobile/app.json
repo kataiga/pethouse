@@ -36,7 +36,16 @@
       ],
       "react-native-edge-to-edge",
       "expo-font",
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Pethouse ouvre ta galerie pour ajouter des photos de tes bacs.",
+          "cameraPermission": "Pethouse utilise l’appareil photo pour prendre tes bacs en photo.",
+          "microphonePermission": false
+        }
+      ],
+      "@react-native-community/datetimepicker"
     ],
     "experiments": {
       "typedRoutes": true,

@@ -1,4 +1,8 @@
 import type { Schemas } from '@pethouse/api-client';
+import {
+  error, type Fields, fieldsOf, json,
+} from './fake-http';
+import { FakeTanks } from './fake-tanks';
 
 type AuthResponse = Schemas['AuthResponseDto'];
 
@@ -32,20 +36,6 @@ interface Invite {
 
 const NOW = '2026-11-02T08:00:00.000Z';
 
-function json (status: number, body?: unknown): Response {
-  return new Response(body === undefined ? null : JSON.stringify(body), {
-    status,
-    headers: { 'Content-Type': 'application/json' },
-  });
-}
-
-function error (status: number, message: string): Response {
-  return json(status, {
-    statusCode: status,
-    message,
-  });
-}
-
 /**
  * An in-memory Pethouse API for screen and session tests. It follows the real API's rules and
  * status codes: a default household per account, 404 for strangers, 403 for members acting as
@@ -60,6 +50,9 @@ export class FakeApi {
 
   /** Simulates a server or network outage. */
   offline = false;
+
+  /** Paths answered with a 500, to exercise error states one screen at a time. */
+  failing: RegExp | null = null;
 
   readonly accounts: Account[] = [];
 
@@ -76,15 +69,33 @@ export class FakeApi {
   /** Memberships get increasing join times, like the real ones. */
   private clock = Date.parse(NOW);
 
+  /** Tanks, photos, inhabitants and the catalogue, behind the same accounts and households. */
+  readonly tanks = new FakeTanks({
+    isMember: (householdId, userId) => this.households.some((household) => household.id === householdId
+      && household.members.some((member) => member.userId === userId)),
+    displayName: (userId) => this.accounts.find((account) => account.id === userId)?.displayName ?? '',
+    nextId: () => {
+      this.counter += 1;
+
+      return this.counter;
+    },
+  });
+
+  constructor () {
+    this.tanks.reset();
+  }
+
   /** Back to an empty server; tests call it first so no account leaks from one to the next. */
   reset (): void {
     this.requests.length = 0;
     this.offline = false;
+    this.failing = null;
     this.accounts.length = 0;
     this.households.length = 0;
     this.invites.length = 0;
     this.refreshTokens.clear();
     this.accessTokens.clear();
+    this.tanks.reset();
   }
 
   /** Seeds an account with its default household; returns a refresh token for it. */
@@ -142,10 +153,15 @@ export class FakeApi {
       throw new TypeError('Network request failed');
     }
 
-    return this.route(request.method, url.pathname, (body ?? {}) as Record<string, string | number>, request);
+    if (this.failing?.test(url.pathname)) {
+      return error(500, 'Internal server error');
+    }
+
+    return this.route(request.method, url, fieldsOf(body), request);
   };
 
-  private route (method: string, path: string, fields: Record<string, string | number>, request: Request): Response {
+  private route (method: string, url: URL, fields: Fields, request: Request): Response {
+    const path = url.pathname;
     const auth = this.routeAuth(method, path, fields);
 
     if (auth) {
@@ -183,6 +199,12 @@ export class FakeApi {
         .map((household) => this.householdView(household, account.id)));
     }
 
+    const tanks = this.tanks.route(method, path, url.searchParams, fields, account.id);
+
+    if (tanks) {
+      return tanks;
+    }
+
     const redeem = /^\/api\/invites\/([^/]+)\/redeem$/.exec(path);
 
     if (method === 'POST' && redeem) {
@@ -198,7 +220,7 @@ export class FakeApi {
     return this.routeHousehold(method, Number(match[1]), match[2] ?? '', fields, account);
   }
 
-  private routeAuth (method: string, path: string, fields: Record<string, string | number>): Response | null {
+  private routeAuth (method: string, path: string, fields: Fields): Response | null {
     if (method === 'POST' && path === '/api/auth/register') {
       if (this.accounts.some((account) => account.email === fields.email)) {
         return error(409, 'An account already exists for this email');
@@ -243,7 +265,7 @@ export class FakeApi {
     method: string,
     householdId: number,
     rest: string,
-    fields: Record<string, string | number>,
+    fields: Fields,
     account: Account,
   ): Response {
     const household = this.households.find((candidate) => candidate.id === householdId);
@@ -359,7 +381,7 @@ export class FakeApi {
       return json(204);
     }
 
-    return error(404, 'Not found');
+    return this.tanks.routeHousehold(method, householdId, rest, fields) ?? error(404, 'Not found');
   }
 
   private redeem (code: string, account: Account): Response {
@@ -387,7 +409,8 @@ export class FakeApi {
   private dropEmptyHouseholds (account: Account, joined: Household): void {
     const empty = this.households.filter((candidate) => candidate !== joined
       && candidate.members.length === 1
-      && candidate.members[0]?.userId === account.id);
+      && candidate.members[0]?.userId === account.id
+      && !this.tanks.hasTanks(candidate.id));
 
     for (const household of empty) {
       this.households.splice(this.households.indexOf(household), 1);
