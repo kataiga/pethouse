@@ -2,6 +2,8 @@
 export const fr = {
   common: {
     retry: 'Réessayer',
+    cancel: 'Annuler',
+    save: 'Enregistrer',
   },
   language: {
     label: 'Langue',
@@ -62,6 +64,89 @@ export const fr = {
       error: 'Impossible de charger tes foyers.',
     },
     signOut: 'Se déconnecter',
+  },
+  tabs: {
+    today: 'Aujourd’hui',
+    tanks: 'Bacs',
+    household: 'Foyer',
+    account: 'Compte',
+  },
+  today: {
+    eyebrow: 'Aujourd’hui',
+    soon: 'Tes tâches du jour et celles en retard apparaîtront ici avec les routines.',
+  },
+  tanks: {
+    title: 'Bacs',
+    soon: 'La liste de tes bacs arrive dans la prochaine version.',
+  },
+  household: {
+    eyebrow: 'Ton foyer',
+    timezone: 'Fuseau horaire : {{zone}}',
+    error: 'Impossible de charger ton foyer.',
+    none: 'Tu ne fais partie d’aucun foyer. Rejoins-en un avec une invitation.',
+    roles: {
+      owner: 'Propriétaire',
+      member: 'Membre',
+    },
+    rename: {
+      action: 'Renommer le foyer',
+      label: 'Nom du foyer',
+      required: 'Le foyer a besoin d’un nom.',
+    },
+    members: {
+      title: 'Membres',
+      error: 'Impossible de charger les membres.',
+      you: '{{name}} (toi)',
+      promote: 'Nommer propriétaire',
+      demote: 'Retirer le rôle de propriétaire',
+      remove: 'Retirer du foyer',
+      removeTitle: 'Retirer {{name}} du foyer ?',
+      removeBody: 'Cette personne ne verra plus les bacs ni les routines du foyer.',
+      leave: 'Quitter le foyer',
+      leaveTitle: 'Quitter le foyer ?',
+      leaveBody: 'Tu ne verras plus ses bacs ni ses routines. Il faudra une nouvelle invitation pour revenir.',
+    },
+    errors: {
+      lastOwner: 'Le foyer doit garder au moins un propriétaire. Nomme quelqu’un d’autre d’abord.',
+      forbidden: 'Seul un propriétaire peut faire ça.',
+      failed: 'Ça n’a pas marché. Vérifie ta connexion et réessaie.',
+    },
+    invite: {
+      action: 'Inviter quelqu’un',
+      title: 'Inviter',
+      explain: 'Un lien d’invitation est valable une semaine et peut servir à dix personnes.',
+      create: 'Créer un lien',
+      empty: 'Aucune invitation en cours.',
+      error: 'Impossible de charger les invitations.',
+      usage: '{{used}} sur {{max}} utilisations · jusqu’au {{date}}',
+      share: 'Partager',
+      revoke: 'Révoquer',
+      shareMessage: 'Rejoins le foyer « {{household}} » sur Pethouse : {{url}} (code {{code}})',
+    },
+    join: {
+      action: 'J’ai un code d’invitation',
+      title: 'Rejoindre un foyer',
+      explain: 'Colle le lien reçu ou tape le code d’invitation.',
+      label: 'Lien ou code',
+      invalid: 'Ce n’est ni un lien ni un code d’invitation.',
+      submit: 'Continuer',
+    },
+    redeem: {
+      title: 'Invitation',
+      heading: 'Rejoindre un foyer',
+      code: 'Code',
+      explain: 'Tu verras ses bacs et ses routines, et tu recevras ses rappels. Il deviendra le foyer affiché dans l’app.',
+      submit: 'Rejoindre',
+      errors: {
+        invalid: 'Cette invitation n’existe pas, a expiré ou a déjà servi.',
+        failed: 'Ça n’a pas marché. Vérifie ta connexion et réessaie.',
+      },
+    },
+  },
+  account: {
+    title: 'Compte',
+    error: 'Impossible de charger ton compte.',
+    saveFailed: 'Ça n’a pas été enregistré. Réessaie.',
   },
   notFound: {
     title: 'Cette page n’existe pas',

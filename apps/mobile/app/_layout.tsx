@@ -10,12 +10,37 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { AppProviders } from '@/app-providers';
+import { UnreachableScreen } from '@/features/auth/components/unreachable-screen';
+import { useSession } from '@/features/auth/hooks/session-context';
 import { useTheme } from '@/theme';
 
 void SplashScreen.preventAutoHideAsync();
 
-function AppShell (): React.JSX.Element {
+/**
+ * Keeps the native splash screen up until the session has resumed, so the first routed screen
+ * already knows whether the person is signed in: a deep link opened at launch then reaches its
+ * route, or travels through sign-in with its path intact, without a flash of a loading screen.
+ * `restoring` and `unreachable` only happen at launch, so both are handled here, before any
+ * navigator mounts: swapping a nested navigator out and back in confuses react-navigation.
+ */
+function AppShell (): React.JSX.Element | null {
   const { scheme, colors } = useTheme();
+  const session = useSession();
+  const restoring = session.status === 'restoring';
+
+  useEffect(() => {
+    if (!restoring) {
+      void SplashScreen.hideAsync();
+    }
+  }, [restoring]);
+
+  if (restoring) {
+    return null;
+  }
+
+  if (session.status === 'unreachable') {
+    return <UnreachableScreen />;
+  }
 
   return (
     <>
@@ -40,12 +65,7 @@ export default function RootLayout (): React.JSX.Element | null {
   });
   const ready = loaded || error !== null;
 
-  useEffect(() => {
-    if (ready) {
-      void SplashScreen.hideAsync();
-    }
-  }, [ready]);
-
+  // The splash screen stays until AppShell has a session to show.
   if (!ready) {
     return null;
   }

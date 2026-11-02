@@ -62,12 +62,12 @@ export class Session {
     };
   }
 
-  /** At launch, or after `unreachable`: resume from the stored refresh token, or start signed out. */
+  /**
+   * At launch, or as a retry from `unreachable`: resume from the stored refresh token, or start
+   * signed out. A retry stays `unreachable` until it has an answer; only the launch is
+   * `restoring`, so the app never tears its navigation down to show a loading screen again.
+   */
   async restore (): Promise<SessionState> {
-    if (this.state.status === 'unreachable') {
-      this.setState({ status: 'restoring' });
-    }
-
     const refreshToken = await this.store.read();
 
     if (refreshToken === null) {

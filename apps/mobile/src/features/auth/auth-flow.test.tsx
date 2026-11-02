@@ -1,65 +1,18 @@
 import {
   fireEvent, renderRouter, screen,
 } from 'expo-router/testing-library';
-import type { ApiClient } from '@pethouse/api-client';
 import { changeLanguage } from '@/lib/i18n';
 import {
   FakeApi, MemoryTokenStore,
 } from '@/test-support/fake-api';
-import type { Session } from './api/session';
 
 const mockFake = new FakeApi();
 const mockStore = new MemoryTokenStore();
 
-// The real generated clients, session and routes; only the network and the keychain are
-// replaced. The module is rebuilt for every test behind getters, so the routes, the middleware
-// and the session always share one fresh instance.
-jest.mock('@/lib/api/client', () => {
-  const { createApiClient: create } = jest.requireActual<typeof import('@pethouse/api-client')>(
-    '@pethouse/api-client',
-  );
-  const { authMiddleware } = jest.requireActual<typeof import('@/lib/api/auth-middleware')>(
-    '@/lib/api/auth-middleware',
-  );
-  const { Session: RealSession } = jest.requireActual<typeof import('./api/session')>('./api/session');
-  const build = (): { authApi: ApiClient;
-    api: ApiClient;
-    session: Session } => {
-    const authApi = create({
-      baseUrl: 'http://api.test',
-      fetch: (request: Request) => mockFake.fetch(request),
-    });
-    const session = new RealSession(authApi, mockStore);
-    const api = create({
-      baseUrl: 'http://api.test',
-      fetch: (request: Request) => mockFake.fetch(request),
-    });
-    api.use(authMiddleware(session));
-
-    return {
-      authApi,
-      api,
-      session,
-    };
-  };
-  let current = build();
-
-  return {
-    API_URL: 'http://api.test',
-    get authApi () {
-      return current.authApi;
-    },
-    get api () {
-      return current.api;
-    },
-    get session () {
-      return current.session;
-    },
-    mockRebuild: () => {
-      current = build();
-    },
-  };
-});
+// The real clients, session and routes; only the network and the keychain are replaced.
+jest.mock('@/lib/api/client', () => jest.requireActual<typeof import('@/test-support/mock-client')>(
+  '@/test-support/mock-client',
+).mockClientModule(mockFake, mockStore));
 
 // A cold CI runner transforms the real layouts and screens on the first navigation, which costs
 // about 1.5 s locally without a cache and several times that on CI; the flows themselves take
@@ -74,8 +27,7 @@ describe('Auth flow', () => {
   }, 60_000);
 
   beforeEach(async () => {
-    mockFake.offline = false;
-    mockFake.requests.length = 0;
+    mockFake.reset();
     mockStore.value = null;
     jest.requireMock<{ mockRebuild: () => void }>('@/lib/api/client').mockRebuild();
     await changeLanguage('fr');
@@ -94,6 +46,7 @@ describe('Auth flow', () => {
 
     expect(await screen.findByText('Bonjour Camille')).toBeTruthy();
     expect(screen).toHavePathname('/');
+    fireEvent.press(screen.getByText('Foyer'));
     expect(await screen.findByText('Mon foyer')).toBeTruthy();
     const households = mockFake.requests.find((request) => request.path === '/api/households');
     expect(households?.authorization).toMatch(/^Bearer access-/);
@@ -160,7 +113,8 @@ describe('Auth flow', () => {
 
     expect(await screen.findByText('Bonjour Camille')).toBeTruthy();
 
-    fireEvent.press(screen.getByTestId('sign-out'));
+    fireEvent.press(screen.getByText('Compte'));
+    fireEvent.press(await screen.findByTestId('sign-out'));
 
     expect(await screen.findByText('Connexion')).toBeTruthy();
     expect(screen).toHavePathname('/sign-in');

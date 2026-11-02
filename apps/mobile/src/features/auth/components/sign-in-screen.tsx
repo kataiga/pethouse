@@ -1,4 +1,6 @@
-import { Link } from 'expo-router';
+import {
+  Link, useLocalSearchParams,
+} from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -19,6 +21,8 @@ import { Preferences } from './preferences';
 
 export function SignInScreen (): React.JSX.Element {
   const { t } = useTranslation();
+  // Carried across sign-in and sign-up so a deep link survives either path.
+  const { next } = useLocalSearchParams<{ next?: string }>();
   const signIn = useSignIn();
   const [fields, setFields] = useState<SignInFields>({
     email: '',
@@ -68,7 +72,13 @@ export function SignInScreen (): React.JSX.Element {
           />
           <FormError error={signIn.error} />
           <Button label={t('auth.signIn.submit')} loading={signIn.isPending} onPress={submit} testID="sign-in-submit" />
-          <Link href="/sign-up" replace>
+          <Link
+            href={next ? {
+              pathname: '/sign-up',
+              params: { next },
+            } : '/sign-up'}
+            replace
+          >
             <AppText tone="lagon" variant="strong">{t('auth.signIn.toSignUp')}</AppText>
           </Link>
           <Preferences />

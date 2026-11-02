@@ -40,6 +40,7 @@
   "dependencies": {
     "@expo-google-fonts/figtree": "^0.4.1",
     "@expo/metro-runtime": "~4.0.0",
+    "@expo/vector-icons": "~14.0.4",
     "@pethouse/api-client": "*",
     "@react-navigation/native": "^7.0.12",
     "@tanstack/react-query": "5.104.2",
