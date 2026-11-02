@@ -5,18 +5,18 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "scheme": "pethouse",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.pethouse.app"
+      "bundleIdentifier": "fr.kataiga.pethouse"
     },
     "android": {
-      "package": "com.pethouse.app",
+      "package": "fr.kataiga.pethouse",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#0B1A1C"
       }
     },
     "web": {
@@ -30,15 +30,17 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#ffffff",
+          "backgroundColor": "#0B1A1C",
           "image": "./assets/splash-icon.png"
         }
       ],
-      "react-native-edge-to-edge"
+      "react-native-edge-to-edge",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true,
       "tsconfigPaths": true
-    }
+    },
+    "backgroundColor": "#0B1A1C"
   }
 }

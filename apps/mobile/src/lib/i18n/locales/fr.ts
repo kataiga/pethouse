@@ -8,10 +8,17 @@ export const fr = {
     fr: 'Français',
     en: 'English',
   },
+  theme: {
+    label: 'Affichage',
+    dark: 'Nuit',
+    light: 'Jour',
+  },
   welcome: {
+    eyebrow: 'Aquariums · terrariums · paludariums',
     title: 'Pethouse',
     tagline: 'Aquariums, terrariums et paludariums, entretenus à plusieurs.',
     api: {
+      label: 'Serveur',
       checking: 'Connexion au serveur…',
       ok: 'Serveur joignable',
       degraded: 'Serveur joignable, services dégradés',

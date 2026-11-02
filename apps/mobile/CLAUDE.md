@@ -129,7 +129,7 @@ Phase 5 scaffold is in place:
 
 - expo-router with `app/` routes, Metro configured for the workspace (`metro.config.js`), and
   `@pethouse/api-client` consumed from source.
-- `app.json` has `android.package` and `ios.bundleIdentifier` (`com.pethouse.app`) and the
+- `app.json` has `android.package` and `ios.bundleIdentifier` (`fr.kataiga.pethouse`) and the
   `pethouse` scheme; `eas.json` has `development`, `preview` and `production` profiles.
 - ESLint (flat config, same style rules as the API, no JSX string literals), Jest with
   `jest-expo` and React Native Testing Library, a first Maestro flow in `.maestro/`.
@@ -137,5 +137,10 @@ Phase 5 scaffold is in place:
   missing in English does not compile.
 - TanStack Query client and the generated API client in `src/lib/api/`.
 
-Still missing: design tokens and themed primitives (direction to validate first), the auth
-flow with `expo-secure-store`, `expo-notifications`, and every feature screen.
+- Design tokens in `src/theme/` (night water by default, day water on demand, Figtree, every
+  text pairing tested for WCAG AA) and the primitives in `src/components/ui/`: `AppText`,
+  `Screen`, `Surface`, `Button`, `Pill`, `SegmentedControl`. Screens take colours, sizes and
+  fonts from these only, never raw values.
+
+Still missing: the auth flow with `expo-secure-store`, `expo-notifications`, and every feature
+screen.

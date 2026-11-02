@@ -3,6 +3,7 @@ import {
 } from '@testing-library/react-native';
 import { AppProviders } from '@/app-providers';
 import { changeLanguage } from '@/lib/i18n';
+import { palettes } from '@/theme';
 import { WelcomeScreen } from './welcome-screen';
 
 const mockFetch = jest.fn<Promise<Response>, [Request]>();
@@ -86,11 +87,29 @@ describe('WelcomeScreen', () => {
 
     fireEvent.press(screen.getByTestId('language-en'));
 
+    expect(screen.getByTestId('language-en').props.accessibilityState).toMatchObject({ checked: true });
+
     expect(await screen.findByText('Aquariums, terrariums and paludariums, looked after together.')).toBeTruthy();
     expect(screen.getByText('Server reachable')).toBeTruthy();
 
     fireEvent.press(screen.getByTestId('language-fr'));
 
     expect(await screen.findByText('Aquariums, terrariums et paludariums, entretenus à plusieurs.')).toBeTruthy();
+  });
+
+  it('opens in night water and switches to day water', async () => {
+    mockFetch.mockResolvedValue(healthResponse(200, {
+      status: 'ok',
+      details: {},
+    }));
+    renderScreen();
+    await screen.findByText('Serveur joignable');
+
+    expect(screen.getByTestId('welcome-screen')).toHaveStyle({ backgroundColor: palettes.dark.background });
+    expect(screen.getByTestId('theme-dark').props.accessibilityState).toMatchObject({ checked: true });
+
+    fireEvent.press(screen.getByText('Jour'));
+
+    expect(screen.getByTestId('welcome-screen')).toHaveStyle({ backgroundColor: palettes.light.background });
   });
 });

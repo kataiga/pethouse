@@ -1,6 +1,6 @@
 # Smoke flow: the app starts in French, switches the whole screen to English and back.
 # Run against a dev or preview build on an emulator: `maestro test .maestro`.
-appId: com.pethouse.app
+appId: fr.kataiga.pethouse
 ---
 - launchApp:
     clearState: true
