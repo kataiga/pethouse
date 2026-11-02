@@ -82,6 +82,41 @@ describe('Invites (e2e)', () => {
     });
   });
 
+  it('joining drops the guest\'s untouched sign-up household, but not one they put a tank in', async () => {
+    const owner = await registerAccount(app);
+    const householdId = await ownHousehold(owner);
+    const newcomer = await registerAccount(app);
+    const keeper = await registerAccount(app);
+    const keeperHousehold = await ownHousehold(keeper);
+    await request(app.getHttpServer())
+      .post(`/api/households/${keeperHousehold}/tanks`)
+      .set(bearer(keeper.accessToken))
+      .send({
+        name: 'Nano',
+        tankType: 'AQUARIUM',
+      })
+      .expect(201);
+    const invite = await createInvite(owner, householdId);
+
+    for (const guest of [newcomer, keeper]) {
+      await request(app.getHttpServer())
+        .post(`/api/invites/${invite.code}/redeem`)
+        .set(bearer(guest.accessToken))
+        .expect(200);
+    }
+
+    const newcomerHouseholds = await request(app.getHttpServer())
+      .get('/api/households')
+      .set(bearer(newcomer.accessToken))
+      .expect(200);
+    expect(newcomerHouseholds.body.map((h: { id: number }) => h.id)).toEqual([householdId]);
+    const keeperHouseholds = await request(app.getHttpServer())
+      .get('/api/households')
+      .set(bearer(keeper.accessToken))
+      .expect(200);
+    expect(keeperHouseholds.body.map((h: { id: number }) => h.id)).toEqual([keeperHousehold, householdId]);
+  });
+
   it('redeeming twice is a no-op that does not consume a second use', async () => {
     const owner = await registerAccount(app);
     const guest = await registerAccount(app);

@@ -36,6 +36,8 @@ describe('generateInviteCode', () => {
 
 describe('InvitesService', () => {
   const em = {
+    count: jest.fn(),
+    nativeDelete: jest.fn(),
     flush: jest.fn(),
     persistAndFlush: jest.fn(),
     transactional: jest.fn(async <T>(work: () => Promise<T>): Promise<T> => work()),
@@ -50,12 +52,15 @@ describe('InvitesService', () => {
   const members = {
     create: jest.fn((data: Partial<HouseholdMember>) => Object.assign(new HouseholdMember(), data)),
     findMembership: jest.fn(),
+    findAllForUser: jest.fn(),
+    count: jest.fn(),
   };
   const user = Object.assign(new User(), { id: 3 });
   let service: InvitesService;
 
   beforeEach(() => {
     jest.clearAllMocks();
+    members.findAllForUser.mockResolvedValue([]);
     service = new InvitesService(
       invites as unknown as HouseholdInviteRepository,
       members as unknown as HouseholdMemberRepository,
@@ -112,6 +117,68 @@ describe('InvitesService', () => {
       expect(membership.role).toBe(HouseholdRole.MEMBER);
       expect(membership.household).toBe(invite.household);
       expect(em.persistAndFlush).toHaveBeenCalledWith(membership);
+    });
+
+    describe('the redeemer\'s other households', () => {
+      function membershipOf (householdId: number): HouseholdMember {
+        return Object.assign(new HouseholdMember(), { household: Object.assign(new Household(), { id: householdId }) });
+      }
+
+      /** Household id → [member count, tank count]. */
+      function arrange (contents: Record<number, [number, number]>): void {
+        invites.findByCode.mockResolvedValue(makeInvite());
+        members.findMembership.mockResolvedValue(null);
+        invites.consumeUse.mockResolvedValue(true);
+        members.findAllForUser.mockResolvedValue([10, ...Object.keys(contents).map(Number)].map(membershipOf));
+        members.count.mockImplementation(
+          ({ household }: { household: number }) => Promise.resolve(contents[household][0]),
+        );
+        em.count.mockImplementation(
+          (_entity: unknown, { household }: { household: number }) => Promise.resolve(contents[household][1]),
+        );
+      }
+
+      it('drops the ones holding nothing, after the membership is saved', async () => {
+        arrange({ 20: [1, 0] });
+
+        const membership = await service.redeem('code', user);
+
+        expect(em.nativeDelete).toHaveBeenCalledWith(Household, { id: { $in: [20] } });
+        expect(em.persistAndFlush.mock.invocationCallOrder[0])
+          .toBeLessThan(em.nativeDelete.mock.invocationCallOrder[0]);
+        expect(membership.household.id).toBe(10);
+      });
+
+      it('keeps one with a tank or another member, and never looks at the joined one', async () => {
+        arrange({
+          20: [1, 2],
+          30: [2, 0],
+          40: [1, 0],
+        });
+
+        await service.redeem('code', user);
+
+        expect(em.nativeDelete).toHaveBeenCalledWith(Household, { id: { $in: [40] } });
+        expect(members.count).not.toHaveBeenCalledWith({ household: 10 });
+      });
+
+      it('deletes nothing when every other household is in use', async () => {
+        arrange({ 20: [3, 0] });
+
+        await service.redeem('code', user);
+
+        expect(em.nativeDelete).not.toHaveBeenCalled();
+      });
+
+      it('leaves everything alone on a repeat redeem', async () => {
+        invites.findByCode.mockResolvedValue(makeInvite());
+        members.findMembership.mockResolvedValue(new HouseholdMember());
+
+        await service.redeem('code', user);
+
+        expect(members.findAllForUser).not.toHaveBeenCalled();
+        expect(em.nativeDelete).not.toHaveBeenCalled();
+      });
     });
 
     it('fails when the last use was taken concurrently', async () => {

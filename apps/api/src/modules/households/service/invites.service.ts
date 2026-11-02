@@ -3,6 +3,7 @@ import {
   Injectable, NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
+import { Tank } from '@modules/tanks/entity/tank.entity';
 import { User } from '@modules/users/entity/user.entity';
 import {
   CreateInviteDto, DEFAULT_INVITE_HOURS, DEFAULT_INVITE_USES,
@@ -74,6 +75,10 @@ export class InvitesService {
    * Makes the user a MEMBER of the invite's household. Redeeming while already a member is a
    * no-op that returns the existing membership, whatever the state of the invite: a double tap
    * on the link does no harm and consumes nothing.
+   *
+   * Joining also drops the user's other households that hold nothing — no tank, no other
+   * member. The one created at sign-up is the usual case: the app shows a single household, so
+   * an empty leftover would only linger out of sight.
    */
   async redeem (code: string, user: User): Promise<HouseholdMember> {
     const now = new Date();
@@ -106,8 +111,29 @@ export class InvitesService {
         role: HouseholdRole.MEMBER,
       });
       await em.persistAndFlush(membership);
+      await this.dropEmptyHouseholds(user, invite.household);
 
       return membership;
     });
+  }
+
+  private async dropEmptyHouseholds (user: User, joined: Household): Promise<void> {
+    const em = this.invites.getEntityManager();
+    const others = (await this.members.findAllForUser(user.id))
+      .map(({ household }) => household)
+      .filter((household) => household.id !== joined.id);
+    const verdicts = await Promise.all(others.map(async (household) => {
+      const [memberCount, tankCount] = await Promise.all([
+        this.members.count({ household: household.id }),
+        em.count(Tank, { household: household.id }),
+      ]);
+
+      return memberCount === 1 && tankCount === 0 ? household.id : null;
+    }));
+    const emptyIds = verdicts.filter((id): id is number => id !== null);
+
+    if (emptyIds.length > 0) {
+      await em.nativeDelete(Household, { id: { $in: emptyIds } });
+    }
   }
 }

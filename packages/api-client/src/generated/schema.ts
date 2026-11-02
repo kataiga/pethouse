@@ -157,7 +157,7 @@ export interface paths {
         put?: never;
         /**
          * Join the household behind an invite code as a member.
-         * @description Redeeming a code of a household the caller already belongs to is a no-op.
+         * @description Redeeming a code of a household the caller already belongs to is a no-op. Joining deletes the caller's other households that hold nothing (no tank, no other member), such as the one created at sign-up.
          */
         post: operations["InvitesController_redeem"];
         delete?: never;
