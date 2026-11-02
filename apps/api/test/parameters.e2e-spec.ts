@@ -160,6 +160,19 @@ describe('Parameters (e2e)', () => {
       minThreshold: 6.8,
       source: 'account',
     });
+    // Each layer is also exposed on its own, for an editor that changes one field of the deviation.
+    expect((await resolved(session, deviating)).get('tds')).toMatchObject({
+      account: {
+        enabled: false,
+        minThreshold: null,
+        maxThreshold: null,
+      },
+      override: {
+        enabled: true,
+        minThreshold: null,
+        maxThreshold: 250,
+      },
+    });
     expect((await resolved(session, plain)).get('tds')?.enabled).toBe(false);
     expect((await resolved(session, deviating)).get('tds')?.enabled).toBe(true);
 

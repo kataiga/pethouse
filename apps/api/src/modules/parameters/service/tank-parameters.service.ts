@@ -52,6 +52,16 @@ export class TankParametersService {
         maxThreshold: override?.maxThreshold ?? setting.maxThreshold,
         source: enabledFromTank !== null ? 'tank' : setting.customised ? 'account' : 'default',
         overridden: override !== undefined,
+        account: {
+          enabled: setting.enabled,
+          minThreshold: setting.minThreshold,
+          maxThreshold: setting.maxThreshold,
+        },
+        override: override ? {
+          enabled: override.enabled ?? null,
+          minThreshold: override.minThreshold ?? null,
+          maxThreshold: override.maxThreshold ?? null,
+        } : null,
         latest: latest.get(setting.definition.id) ?? null,
       };
     });
