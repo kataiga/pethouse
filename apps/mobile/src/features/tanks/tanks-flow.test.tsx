@@ -186,7 +186,7 @@ describe('Tanks', () => {
     fireEvent.press(screen.getByTestId('tank-actions'));
 
     expect(await screen.findByText('Bac gardé')).toBeTruthy();
-    await waitFor(() => expect(screen.queryByText('Ancien bac')).toBeNull());
+    await waitFor(() => expect(screen.queryByText('Ancien bac') === null).toBe(true));
     expect(screen).toHavePathname('/tanks');
     expect(mockFake.tanks.tanks.map((remaining) => remaining.name)).toEqual(['Bac gardé']);
   });
@@ -276,11 +276,11 @@ describe('Tanks', () => {
 
     fireEvent.press(await screen.findByTestId('group-INVERTEBRATE'));
     // The previous results stay up while the filtered ones load.
-    await waitFor(() => expect(screen.queryByText('Combattant')).toBeNull());
+    await waitFor(() => expect(screen.queryByText('Combattant') === null).toBe(true));
     expect(screen.getByText('Crevette red cherry')).toBeTruthy();
     fireEvent.press(screen.getByTestId('group-all'));
     fireEvent.changeText(screen.getByTestId('species-search'), 'néon');
-    await waitFor(() => expect(screen.queryByText('Combattant')).toBeNull());
+    await waitFor(() => expect(screen.queryByText('Combattant') === null).toBe(true));
     const neon = mockFake.tanks.species.find((species) => species.commonName === 'Néon bleu');
     fireEvent.press(screen.getByTestId(`species-${neon?.id ?? 0}`));
     fireEvent.changeText(screen.getByTestId('inhabitant-quantity'), '0');

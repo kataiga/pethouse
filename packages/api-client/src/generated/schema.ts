@@ -1456,6 +1456,20 @@ export interface components {
             /** @description Upserted one by one; definitions not listed are left as they are. */
             settings: components["schemas"]["ParameterSettingInputDto"][];
         };
+        AccountLayerDto: {
+            enabled: boolean;
+            /** @example 6.5 */
+            minThreshold: number | null;
+            /** @example 7.5 */
+            maxThreshold: number | null;
+        };
+        TankLayerDto: {
+            enabled: boolean | null;
+            /** @example 7 */
+            minThreshold: number | null;
+            /** @example null */
+            maxThreshold: number | null;
+        };
         LatestReadingDto: {
             /** @example 7.2 */
             value: number;
@@ -1479,6 +1493,10 @@ export interface components {
             source: "default" | "account" | "tank";
             /** @description True when the tank has an override row for this parameter. */
             overridden: boolean;
+            /** @description The account layer alone, so an editor can say what clearing a deviation falls back to. */
+            account: components["schemas"]["AccountLayerDto"];
+            /** @description The tank layer alone, as stored. PUT replaces it whole, so an editor starts from it. */
+            override: components["schemas"]["TankLayerDto"] | null;
             /** @description Most recent reading, so a card can show the value and compare it to the thresholds. */
             latest: components["schemas"]["LatestReadingDto"] | null;
         };

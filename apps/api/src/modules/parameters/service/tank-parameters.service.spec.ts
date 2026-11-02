@@ -99,6 +99,11 @@ describe('TankParametersService', () => {
         maxThreshold: 7.5,
         source: 'account',
         overridden: true,
+        override: {
+          enabled: null,
+          minThreshold: 6.8,
+          maxThreshold: null,
+        },
       }),
       expect.objectContaining({
         definition: tds,
@@ -107,6 +112,16 @@ describe('TankParametersService', () => {
         maxThreshold: 250,
         source: 'tank',
         overridden: true,
+        account: {
+          enabled: false,
+          minThreshold: null,
+          maxThreshold: null,
+        },
+        override: {
+          enabled: true,
+          minThreshold: null,
+          maxThreshold: 250,
+        },
       }),
     ]);
     expect(settingsService.effectiveFor).toHaveBeenCalledWith(user, TankType.AQUARIUM, [3]);
@@ -121,6 +136,7 @@ describe('TankParametersService', () => {
       enabled: false,
       source: 'default',
       overridden: false,
+      override: null,
     });
     expect(await service.enabledFor(tank, user)).toHaveLength(1);
   });

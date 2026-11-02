@@ -32,3 +32,20 @@ export function formatCalendarDate (calendarDate: string, language: string): str
 export function formatInstantDate (instant: string, language: string): string {
   return new Date(instant).toLocaleDateString(language, LONG_DATE);
 }
+
+/** An API timestamp with the time of day: « 2 novembre 2026 à 08:00 ». */
+export function formatInstantDateTime (instant: string, language: string): string {
+  return new Date(instant).toLocaleString(language, {
+    ...LONG_DATE,
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
+
+/** A short day for chart axes: « 2 nov. ». */
+export function formatShortDate (instant: number, language: string): string {
+  return new Date(instant).toLocaleDateString(language, {
+    day: 'numeric',
+    month: 'short',
+  });
+}

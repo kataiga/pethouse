@@ -10,6 +10,7 @@ import { AppText } from '@/components/ui/app-text';
 import { Button } from '@/components/ui/button';
 import { Screen } from '@/components/ui/screen';
 import { Surface } from '@/components/ui/surface';
+import { ParameterTiles } from '@/features/parameters/components/parameter-tiles';
 import {
   space, useTheme,
 } from '@/theme';
@@ -110,6 +111,7 @@ export function TankDetailScreen ({ tankId }: { tankId: number }): React.JSX.Ele
         {data ? (
           <>
             <TankSpecs tank={data} />
+            <ParameterTiles tankId={data.id} />
             <PhotoStrip tankId={data.id} />
             <InhabitantSection kind="animals" tankId={data.id} />
             <InhabitantSection kind="plants" tankId={data.id} />

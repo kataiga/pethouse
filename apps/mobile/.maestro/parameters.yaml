@@ -1,0 +1,74 @@
+# Record readings on a new tank, see an out-of-range value badge it, then tighten the account
+# range, against a running API. Run with
+# `maestro test .maestro/parameters.yaml -e EMAIL=someone-$(date +%s)@example.com`.
+appId: fr.kataiga.pethouse
+---
+- launchApp:
+    clearState: true
+- tapOn: "Pas encore de compte ? Créer un compte"
+- tapOn:
+    id: "sign-up-name"
+- inputText: "Camille"
+- tapOn:
+    id: "sign-up-email"
+- inputText: ${EMAIL}
+- tapOn:
+    id: "sign-up-password"
+- inputText: "correct horse battery"
+- tapOn:
+    id: "sign-up-submit"
+- assertVisible: "Bonjour Camille"
+- tapOn: "Bacs"
+- tapOn:
+    id: "tanks-add"
+- tapOn:
+    id: "tank-type-AQUARIUM"
+- tapOn:
+    id: "tank-create-next"
+- tapOn:
+    id: "tank-name"
+- inputText: "Salon"
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: "tank-create-submit"
+- tapOn:
+    id: "tank-create-submit"
+- scrollUntilVisible:
+    element:
+      id: "parameters-measure"
+- tapOn:
+    id: "parameters-measure"
+- tapOn:
+    id: "measure-ph"
+- inputText: "8,2"
+- assertVisible: "Hors plage"
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: "measure-submit"
+- tapOn:
+    id: "measure-submit"
+- assertVisible: "8,2"
+- tapOn:
+    id: "tile-ph"
+- assertVisible: "6,5 – 7,5"
+- assertVisible: "Relevés"
+- back
+- back
+- assertVisible:
+    id: ".*-alert"
+- tapOn: "Compte"
+- tapOn:
+    id: "account-parameters"
+- tapOn:
+    id: "setting-ph-max"
+- eraseText
+- inputText: "8,5"
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: "settings-save"
+- tapOn:
+    id: "settings-save"
+- assertVisible: "Réglages enregistrés."

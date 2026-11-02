@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -104,6 +105,12 @@ export function AccountScreen (): React.JSX.Element {
             value={scheme}
           />
         </View>
+        <Button
+          label={t('parameters.account.entry')}
+          onPress={() => router.push('/account/parameters')}
+          testID="account-parameters"
+          variant="soft"
+        />
         <Button
           label={t('home.signOut')}
           loading={signOut.isPending}

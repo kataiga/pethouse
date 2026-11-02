@@ -61,7 +61,7 @@ describe('Household', () => {
     await waitFor(() => expect(household.members.find((member) => member.userId === jordan.id)?.role).toBe('OWNER'));
 
     fireEvent.press(screen.getByTestId(`member-${jordan.id}-remove`));
-    await waitFor(() => expect(screen.queryByText('Jordan')).toBeNull());
+    await waitFor(() => expect(screen.queryByText('Jordan') === null).toBe(true));
     expect(household.members.map((member) => member.userId)).toEqual([mockFake.accountNamed('Camille').id]);
   });
 
