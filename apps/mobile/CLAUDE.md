@@ -148,6 +148,12 @@ Phase 5 scaffold is in place:
   every call outside `/api/auth/*`. Routes are split into `app/(public)` (sign-in, sign-up) and
   `app/(app)` (everything behind sign-in, home for now).
 - Tests render the real routes with `renderRouter` from `expo-router/testing-library` against
-  `src/test-support/fake-api.ts`, an in-memory API with the real status codes.
+  `src/test-support/fake-api.ts`, an in-memory API with the real status codes. Its tank half
+  lives in `fake-tanks.ts`, storage included: the `expo-file-system` mock hands each upload PUT
+  to `receiveUpload`, which checks the type and size the URL was bound to.
+- Households (`(tabs)/household`, invites, `/invite/<code>` deep link) and tanks (`(tabs)/tanks`,
+  `/tanks/new`, `/tanks/<id>` with photos and inhabitants) are in place. Photos are picked with
+  `expo-image-picker` and streamed to the pre-signed URL with `expo-file-system`; dates are
+  picked with `@react-native-community/datetimepicker`, mocked globally in `jest.setup.ts`.
 
-Still missing: `expo-notifications` and every feature screen.
+Still missing: `expo-notifications`, and the parameters, routines and notifications screens.

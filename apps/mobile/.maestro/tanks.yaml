@@ -1,0 +1,68 @@
+# Create a tank, add a fish from the catalogue and take it out again, against a running API with
+# the seeded catalogue. Run with `maestro test .maestro/tanks.yaml -e EMAIL=someone-$(date +%s)@example.com`.
+appId: fr.kataiga.pethouse
+---
+- launchApp:
+    clearState: true
+- tapOn: "Pas encore de compte ? Créer un compte"
+- tapOn:
+    id: "sign-up-name"
+- inputText: "Camille"
+- tapOn:
+    id: "sign-up-email"
+- inputText: ${EMAIL}
+- tapOn:
+    id: "sign-up-password"
+- inputText: "correct horse battery"
+- tapOn:
+    id: "sign-up-submit"
+- assertVisible: "Bonjour Camille"
+- tapOn: "Bacs"
+- assertVisible: "Ajoute ton premier bac pour suivre son entretien."
+- tapOn:
+    id: "tanks-add"
+- tapOn:
+    id: "tank-type-AQUARIUM"
+- tapOn: "Planté"
+- tapOn:
+    id: "tank-create-next"
+- tapOn:
+    id: "tank-name"
+- inputText: "Salon"
+- tapOn:
+    id: "tank-widthCm"
+- inputText: "100"
+- tapOn:
+    id: "tank-depthCm"
+- inputText: "30"
+- tapOn:
+    id: "tank-heightCm"
+- inputText: "40"
+- hideKeyboard
+- assertVisible: "Calculé à partir des dimensions, modifiable."
+- scrollUntilVisible:
+    element:
+      id: "tank-create-submit"
+- tapOn:
+    id: "tank-create-submit"
+- assertVisible: "Aquarium · Planté"
+- assertVisible: "120 L"
+- tapOn:
+    id: "animals-add"
+- tapOn:
+    id: "species-search"
+- inputText: "néon bleu"
+- tapOn: "Néon bleu"
+- tapOn:
+    id: "inhabitant-quantity"
+- eraseText
+- inputText: "12"
+- tapOn:
+    id: "inhabitant-submit"
+- assertVisible: "× 12"
+- tapOn: "Néon bleu"
+- tapOn: "Retirer du bac"
+- assertVisible: "Aucun animal pour l’instant."
+- tapOn:
+    id: "animals-show-removed"
+- assertVisible: "Néon bleu"

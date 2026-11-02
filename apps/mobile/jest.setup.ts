@@ -37,3 +37,30 @@ jest.mock('expo-font', () => ({
   isLoaded: () => true,
   loadAsync: () => Promise.resolve(),
 }));
+
+// The system date picker is native. Under Jest it renders a button that picks 15 January 2026.
+jest.mock('@react-native-community/datetimepicker', () => {
+  const { createElement } = jest.requireActual<typeof import('react')>('react');
+  const { Pressable } = jest.requireActual<typeof import('react-native')>('react-native');
+
+  return {
+    __esModule: true,
+    default: ({ onChange, testID }: { onChange?: (event: { type: 'set';
+      nativeEvent: { timestamp: number;
+        utcOffset: number } }, date?: Date) => void;
+    testID?: string }) => {
+      const date = new Date(2026, 0, 15);
+
+      return createElement(Pressable, {
+        testID,
+        onPress: () => onChange?.({
+          type: 'set',
+          nativeEvent: {
+            timestamp: date.getTime(),
+            utcOffset: 0,
+          },
+        }, date),
+      });
+    },
+  };
+});

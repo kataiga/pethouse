@@ -18,7 +18,9 @@ appId: fr.kataiga.pethouse
 - tapOn:
     id: "sign-up-submit"
 - assertVisible: "Bonjour Camille"
+- tapOn: "Foyer"
 - assertVisible: "Mon foyer"
+- tapOn: "Compte"
 - tapOn:
     id: "sign-out"
 - assertVisible: "Connexion"

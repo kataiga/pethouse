@@ -1343,8 +1343,9 @@ export interface components {
             /**
              * @description HTTP method to use on uploadUrl.
              * @example PUT
+             * @enum {string}
              */
-            method: string;
+            method: "PUT";
             /**
              * @description Pass it to POST /tanks/:tankId/photos once the upload succeeded.
              * @example tanks/42/0f8fad5b-d9cb-469f-a165-70867728950e.jpg
