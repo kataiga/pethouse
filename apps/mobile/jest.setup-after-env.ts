@@ -3,7 +3,7 @@ import '@testing-library/react-native/extend-expect';
 import { render } from '@testing-library/react-native';
 import { createElement } from 'react';
 import {
-  ActivityIndicator, Pressable, Text, View,
+  ActivityIndicator, KeyboardAvoidingView, Pressable, ScrollView, Text, TextInput, View,
 } from 'react-native';
 
 // The first render of a test file loads and transforms much of React Native and the test
@@ -17,6 +17,7 @@ beforeAll(() => {
     createElement(Text, null, 'warm-up'),
     createElement(Pressable),
     createElement(ActivityIndicator),
+    createElement(KeyboardAvoidingView, null, createElement(ScrollView, null, createElement(TextInput))),
   ));
   warmUp.unmount();
 }, 60_000);

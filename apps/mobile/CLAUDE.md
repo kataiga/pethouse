@@ -142,5 +142,12 @@ Phase 5 scaffold is in place:
   `Screen`, `Surface`, `Button`, `Pill`, `SegmentedControl`. Screens take colours, sizes and
   fonts from these only, never raw values.
 
-Still missing: the auth flow with `expo-secure-store`, `expo-notifications`, and every feature
-screen.
+- Auth: `src/features/auth/api/session.ts` owns the tokens (access token in memory, refresh
+  token in `expo-secure-store`, single-flight renewal before expiry, an `unreachable` state when
+  the server is out of reach at launch). `src/lib/api/auth-middleware.ts` attaches the token to
+  every call outside `/api/auth/*`. Routes are split into `app/(public)` (sign-in, sign-up) and
+  `app/(app)` (everything behind sign-in, home for now).
+- Tests render the real routes with `renderRouter` from `expo-router/testing-library` against
+  `src/test-support/fake-api.ts`, an in-memory API with the real status codes.
+
+Still missing: `expo-notifications` and every feature screen.

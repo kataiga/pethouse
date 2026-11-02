@@ -21,14 +21,16 @@ npm run lint --workspace @pethouse/mobile
 npm run typecheck --workspace @pethouse/mobile
 npm run test --workspace @pethouse/mobile
 npm run export:android --workspace @pethouse/mobile   # full Metro bundle, proves module resolution
-maestro test .maestro                                  # on an emulator with a build installed
+maestro test .maestro -e EMAIL=me-$(date +%s)@example.com   # on an emulator, API running
 ```
 
 ## Layout
 
 - `app/`: routes, thin, each one wires a feature screen to a URL.
 - `src/features/<feature>/`: screens, hooks and components per feature.
-- `src/lib/api/`: the generated client from `@pethouse/api-client` and the TanStack Query client.
+- `src/lib/api/`: the generated client from `@pethouse/api-client`, the auth middleware and the
+  TanStack Query client.
+- `app/(public)/` and `app/(app)/`: routes before and behind sign-in.
 - `src/lib/i18n/`: French reference catalogue, English catalogue typed against it.
 - `metro.config.js`: watches the repository root and resolves the hoisted `node_modules`, which
   is what lets the workspace package `@pethouse/api-client` load from source.
