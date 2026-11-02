@@ -121,6 +121,19 @@ export default [
     },
   },
   {
+    // Catalogues are prose: a sentence stays on one line however long it is.
+    files: ['src/lib/i18n/locales/**/*.ts'],
+    rules: {
+      '@stylistic/max-len': [
+        'error',
+        {
+          code: 120,
+          ignoreStrings: true,
+        },
+      ],
+    },
+  },
+  {
     // Node-side config files.
     files: ['*.config.js', 'metro.config.js'],
     languageOptions: {

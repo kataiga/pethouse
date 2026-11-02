@@ -54,7 +54,11 @@ describe('Session', () => {
     expect(store.value).not.toBeNull();
 
     fake.offline = false;
+    const seen: string[] = [];
+    session.subscribe((state) => seen.push(state.status));
     await expect(session.restore()).resolves.toMatchObject({ status: 'signedIn' });
+    // A retry never goes back through `restoring`.
+    expect(seen).toEqual(['signedIn']);
   });
 
   it('renews shortly before expiry, once for concurrent requests', async () => {
