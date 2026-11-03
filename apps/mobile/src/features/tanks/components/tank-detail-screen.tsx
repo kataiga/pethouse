@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Screen } from '@/components/ui/screen';
 import { Surface } from '@/components/ui/surface';
 import { ParameterTiles } from '@/features/parameters/components/parameter-tiles';
+import { RoutineSection } from '@/features/routines/components/routine-section';
 import {
   space, useTheme,
 } from '@/theme';
@@ -35,10 +36,12 @@ function TankActions ({ tank }: { tank: Tank }): React.JSX.Element {
       {
         text: t('tanks.detail.delete'),
         style: 'destructive',
-        onPress: () => remove.mutate(undefined, {
-          onSuccess: () => router.back(),
-          onError: () => Alert.alert(t('tanks.detail.deleteFailed')),
-        }),
+        // The header that holds this menu goes away with the tank: rely on the promise, not on
+        // per-call callbacks that an unmounted component never receives.
+        onPress: () => void remove.mutateAsync().then(
+          () => router.back(),
+          () => Alert.alert(t('tanks.detail.deleteFailed')),
+        ),
       },
     ]);
   };
@@ -112,6 +115,7 @@ export function TankDetailScreen ({ tankId }: { tankId: number }): React.JSX.Ele
           <>
             <TankSpecs tank={data} />
             <ParameterTiles tankId={data.id} />
+            <RoutineSection tankId={data.id} />
             <PhotoStrip tankId={data.id} />
             <InhabitantSection kind="animals" tankId={data.id} />
             <InhabitantSection kind="plants" tankId={data.id} />

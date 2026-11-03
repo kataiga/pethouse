@@ -1,7 +1,7 @@
 import {
   StyleSheet, Switch, View,
 } from 'react-native';
-import { AppText } from '@/components/ui/app-text';
+import { AppText } from './app-text';
 import {
   space, useTheme,
 } from '@/theme';

@@ -38,7 +38,10 @@ function EditForm ({ tank }: { tank: Tank }): React.JSX.Element {
     }
     setErrors({});
     // Every field is sent: a null clears what the person emptied.
-    update.mutate(result.fields, { onSuccess: () => router.back() });
+    update.mutate(result.fields, {
+      // Opened from a link, the form has nothing to go back to: land on the tank instead.
+      onSuccess: () => (router.canGoBack() ? router.back() : router.replace(`/tanks/${tank.id}`)),
+    });
   };
 
   return (

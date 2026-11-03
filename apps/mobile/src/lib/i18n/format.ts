@@ -49,3 +49,18 @@ export function formatShortDate (instant: number, language: string): string {
     month: 'short',
   });
 }
+
+/**
+ * An instant as the household lives it: « sam. 8 nov. à 10:00 » in its time zone, whatever the
+ * phone's zone. Routines are scheduled in the household's zone, so their times read in it too.
+ */
+export function formatInZone (instant: string, timeZone: string, language: string): string {
+  return new Date(instant).toLocaleString(language, {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone,
+  });
+}

@@ -17,7 +17,7 @@ import { rangeText } from '../range-text';
 import { thresholdText } from '../settings-form';
 import { space } from '@/theme';
 import { ThresholdFields } from './threshold-fields';
-import { Toggle } from './toggle';
+import { Toggle } from '@/components/ui/toggle';
 
 export interface OverrideRowProps {
   parameter: ResolvedParameter;

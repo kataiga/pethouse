@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Pressable, StyleSheet, View,
 } from 'react-native';
-import { AppText } from '@/components/ui/app-text';
+import { AppText } from './app-text';
 import {
   calendarDateOf, dateFromCalendar, formatCalendarDate,
 } from '@/lib/i18n/format';
@@ -17,14 +17,20 @@ export interface DateFieldProps {
   /** `YYYY-MM-DD`, or null when not set. */
   value: string | null;
   onChange: (value: string | null) => void;
+  /** Shown while no date is set. */
+  placeholder: string;
+  /** Offers to clear the date when given. */
+  clearLabel?: string;
+  minimumDate?: Date;
+  maximumDate?: Date;
   testID: string;
 }
 
-/** A calendar date picked with the system picker, never typed; it can be cleared. */
+/** A calendar date picked with the system picker, never typed. */
 export function DateField ({
-  label, value, onChange, testID,
+  label, value, onChange, placeholder, clearLabel, minimumDate, maximumDate, testID,
 }: DateFieldProps): React.JSX.Element {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const { colors } = useTheme();
   const [open, setOpen] = useState(false);
 
@@ -44,23 +50,24 @@ export function DateField ({
           testID={testID}
         >
           <AppText tone={value === null ? 'soft' : 'default'}>
-            {value === null ? t('tanks.form.startedAtPick') : formatCalendarDate(value, i18n.language)}
+            {value === null ? placeholder : formatCalendarDate(value, i18n.language)}
           </AppText>
         </Pressable>
-        {value !== null ? (
+        {value !== null && clearLabel !== undefined ? (
           <Pressable
             accessibilityRole="button"
             hitSlop={space.sm}
             onPress={() => onChange(null)}
             testID={`${testID}-clear`}
           >
-            <AppText tone="lagon" variant="strong">{t('tanks.form.startedAtClear')}</AppText>
+            <AppText tone="lagon" variant="strong">{clearLabel}</AppText>
           </Pressable>
         ) : null}
       </View>
       {open ? (
         <DateTimePicker
-          maximumDate={new Date()}
+          maximumDate={maximumDate}
+          minimumDate={minimumDate}
           mode="date"
           onChange={(event, date) => {
             setOpen(false);

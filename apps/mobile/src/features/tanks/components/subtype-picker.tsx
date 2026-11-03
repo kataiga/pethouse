@@ -14,7 +14,7 @@ import {
 } from '../hooks/use-subtypes';
 import type { TankType } from '../hooks/use-tanks';
 import { subtypeLabel } from '../labels';
-import { Chip } from './chip';
+import { Chip } from '@/components/ui/chip';
 
 export interface SubtypePickerProps {
   householdId: number;
