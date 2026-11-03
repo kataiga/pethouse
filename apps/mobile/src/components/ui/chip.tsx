@@ -1,7 +1,7 @@
 import {
   Pressable, StyleSheet,
 } from 'react-native';
-import { AppText } from '@/components/ui/app-text';
+import { AppText } from './app-text';
 import {
   radius, space, useTheme,
 } from '@/theme';

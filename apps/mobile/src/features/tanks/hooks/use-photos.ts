@@ -91,7 +91,11 @@ export function useDeletePhoto (tank: TankRef, photoId: number): UseMutationResu
     },
     onSuccess: () => Promise.all([
       queryClient.invalidateQueries({ queryKey: photosKey(tank.id) }),
-      queryClient.invalidateQueries({ queryKey: tankKey(tank.id) }),
+      // The tank itself only: its key prefixes every list under it (parameters, routines…).
+      queryClient.invalidateQueries({
+        queryKey: tankKey(tank.id),
+        exact: true,
+      }),
       queryClient.invalidateQueries({ queryKey: tanksKey(tank.householdId) }),
     ]),
   });

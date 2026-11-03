@@ -24,7 +24,7 @@ import {
   ANIMAL_GROUPS, type AnimalGroup, type SpeciesHit, useSpeciesSearch,
 } from '../hooks/use-species-search';
 import { parseQuantity } from '../quantity';
-import { Chip } from './chip';
+import { Chip } from '@/components/ui/chip';
 
 const SEARCH_DELAY_MS = 300;
 

@@ -165,4 +165,13 @@ Phase 5 scaffold is in place:
   never `toHaveLength` / `toBeNull` on elements: every failing poll pretty-prints the matched
   tree, which turned a sub-second test into ten seconds.
 
-Still missing: `expo-notifications`, and the routines and notifications screens.
+- Routines: a section on the tank, creation from a template or from scratch, detail (the
+  `pethouse://tanks/<id>/routines/<id>` deep link target) with Done / Skip, edit, tank history.
+  The RRULE editor works on the model in `src/features/routines/recurrence.ts`: what it cannot
+  represent is kept verbatim and shown read-only, never rewritten. Times read in the household's
+  zone (`formatInZone`). `fake-routines.ts` expands rules in UTC and reports `UTC` as the zone.
+- A mutation whose success removes the screen it was started from (deleting the thing shown)
+  navigates on `mutateAsync()`'s promise: per-call `onSuccess` callbacks never reach an
+  unmounted component.
+
+Still missing: `expo-notifications` and the in-app view of upcoming and overdue tasks.

@@ -3,6 +3,7 @@ import {
   error, type Fields, fieldsOf, json,
 } from './fake-http';
 import { FakeParameters } from './fake-parameters';
+import { FakeRoutines } from './fake-routines';
 import { FakeTanks } from './fake-tanks';
 
 type AuthResponse = Schemas['AuthResponseDto'];
@@ -95,9 +96,23 @@ export class FakeApi {
     },
   });
 
+  /** Routines of those tanks, their occurrences and history. */
+  readonly routines = new FakeRoutines({
+    tank: (tankId) => this.tanks.tanks.find((tank) => tank.id === tankId) ?? null,
+    isMember: (householdId, userId) => this.households.some((household) => household.id === householdId
+      && household.members.some((member) => member.userId === userId)),
+    displayName: (userId) => this.accounts.find((account) => account.id === userId)?.displayName ?? '',
+    nextId: () => {
+      this.counter += 1;
+
+      return this.counter;
+    },
+  });
+
   constructor () {
     this.tanks.reset();
     this.parameters.reset();
+    this.routines.reset();
   }
 
   /** Back to an empty server; tests call it first so no account leaks from one to the next. */
@@ -112,6 +127,7 @@ export class FakeApi {
     this.accessTokens.clear();
     this.tanks.reset();
     this.parameters.reset();
+    this.routines.reset();
   }
 
   /** Seeds an account with its default household; returns a refresh token for it. */
@@ -215,7 +231,8 @@ export class FakeApi {
         .map((household) => this.householdView(household, account.id)));
     }
 
-    const tanks = this.parameters.route(method, path, url.searchParams, fields, account.id)
+    const tanks = this.routines.route(method, path, url.searchParams, fields, account.id)
+      ?? this.parameters.route(method, path, url.searchParams, fields, account.id)
       ?? this.tanks.route(method, path, url.searchParams, fields, account.id);
 
     if (tanks) {

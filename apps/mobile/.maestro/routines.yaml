@@ -1,0 +1,58 @@
+# Create a routine from a template on a new tank, see its next occurrences, tick one off, pause
+# it, against a running API. Run with
+# `maestro test .maestro/routines.yaml -e EMAIL=someone-$(date +%s)@example.com`.
+appId: fr.kataiga.pethouse
+---
+- launchApp:
+    clearState: true
+- tapOn: "Pas encore de compte ? Créer un compte"
+- tapOn:
+    id: "sign-up-name"
+- inputText: "Camille"
+- tapOn:
+    id: "sign-up-email"
+- inputText: ${EMAIL}
+- tapOn:
+    id: "sign-up-password"
+- inputText: "correct horse battery"
+- tapOn:
+    id: "sign-up-submit"
+- assertVisible: "Bonjour Camille"
+- tapOn: "Bacs"
+- tapOn:
+    id: "tanks-add"
+- tapOn:
+    id: "tank-type-AQUARIUM"
+- tapOn:
+    id: "tank-create-next"
+- tapOn:
+    id: "tank-name"
+- inputText: "Salon"
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: "tank-create-submit"
+- tapOn:
+    id: "tank-create-submit"
+- scrollUntilVisible:
+    element:
+      id: "routines-add"
+- tapOn:
+    id: "routines-add"
+- tapOn: "Nourrissage"
+- assertVisible: "Tous les jours à 08:00"
+- assertVisible: "Prochaines échéances"
+- scrollUntilVisible:
+    element:
+      id: "routine-submit"
+- tapOn:
+    id: "routine-submit"
+- assertVisible: "Tous les jours à 08:00"
+- assertVisible: "Fait"
+- tapOn:
+    text: "Fait"
+    index: 0
+- assertVisible: "Fait par Camille.*"
+- tapOn:
+    id: "routine-active"
+- assertVisible: "En pause : plus d’échéance ni de rappel, l’historique reste."

@@ -9,7 +9,7 @@ import { space } from '@/theme';
 import {
   formatDecimal, suggestedVolume, TANK_LIMITS, type TankFormErrors, type TankFormValues,
 } from '../tank-form';
-import { DateField } from './date-field';
+import { DateField } from '@/components/ui/date-field';
 
 export interface TankDetailsFormProps {
   values: TankFormValues;
@@ -124,10 +124,13 @@ export function TankDetailsForm ({ values, errors, onChange }: TankDetailsFormPr
       />
       <DateField
         label={t('tanks.form.startedAt')}
+        clearLabel={t('tanks.form.startedAtClear')}
+        maximumDate={new Date()}
         onChange={(startedAt) => onChange({
           ...values,
           startedAt,
         })}
+        placeholder={t('tanks.form.startedAtPick')}
         testID="tank-started-at"
         value={values.startedAt}
       />

@@ -43,7 +43,9 @@ function PhotoDetail ({ tank, photo }: { tank: Tank;
       {
         text: t('tanks.photo.delete'),
         style: 'destructive',
-        onPress: () => remove.mutate(undefined, { onSuccess: () => router.back() }),
+        // The refreshed list drops this photo, which unmounts this view before a per-call
+        // onSuccess would run: the promise still settles.
+        onPress: () => void remove.mutateAsync().then(() => router.back(), () => undefined),
       },
     ]);
   };

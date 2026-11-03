@@ -10,7 +10,7 @@ import { definitionLabel } from '../labels';
 import type { ThresholdError } from '../range';
 import type { SettingDraft } from '../settings-form';
 import { ThresholdFields } from './threshold-fields';
-import { Toggle } from './toggle';
+import { Toggle } from '@/components/ui/toggle';
 
 export interface SettingRowProps {
   setting: Setting;

@@ -139,7 +139,7 @@ describe('Parameters', () => {
   it('changes the account settings for a tank type, sending only what changed', async () => {
     const { householdId } = signIn();
     const tank = mockFake.tanks.addTank(householdId, { name: 'Salon' });
-    renderRouter('./app', { initialUrl: '/account' });
+    const view = renderRouter('./app', { initialUrl: '/account' });
 
     fireEvent.press(await screen.findByTestId('account-parameters'));
     expect(await screen.findByTestId('setting-ph')).toBeTruthy();
@@ -180,6 +180,7 @@ describe('Parameters', () => {
 
     // The aquarium follows the account.
     mockFake.parameters.addMeasurement(tank.id, 'tds', 180, daysAgo(0), mockFake.accountNamed('Camille').id);
+    view.unmount();
     renderRouter('./app', { initialUrl: `/tanks/${tank.id}` });
     expect(await screen.findByText('180 ppm')).toBeTruthy();
   });
