@@ -758,6 +758,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/households/{householdId}/occurrences": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Occurrences of every active routine of the household in a time range, oldest first.
+         * @description What the app's Today view shows: overdue, due today and coming up, whatever the tank.
+         */
+        get: operations["HouseholdOccurrencesController_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/users/me/devices": {
         parameters: {
             query?: never;
@@ -1751,6 +1771,28 @@ export interface components {
             page: number;
             /** @example 20 */
             limit: number;
+        };
+        TankSummaryDto: {
+            /** @example 42 */
+            id: number;
+            /** @example Living room 120L */
+            name: string;
+        };
+        HouseholdOccurrenceResponseDto: {
+            /** @example 311 */
+            id: number;
+            routine: components["schemas"]["RoutineSummaryDto"];
+            /**
+             * @description UTC instant the occurrence is due.
+             * @example 2026-11-02T18:00:00.000Z
+             */
+            scheduledFor: string;
+            status: components["schemas"]["OccurrenceStatus"];
+            /** @description When it was done or skipped. */
+            completedAt: string | null;
+            /** @description Who did or skipped it. */
+            completedBy: components["schemas"]["UserSummaryDto"] | null;
+            tank: components["schemas"]["TankSummaryDto"];
         };
         /** @enum {string} */
         DevicePlatform: "ANDROID" | "IOS";
@@ -4552,6 +4594,58 @@ export interface operations {
             };
             /** @description The occurrence was done. */
             409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HouseholdOccurrencesController_list: {
+        parameters: {
+            query?: {
+                /** @description Defaults to 30 days ago. The range spans at most 92 days. */
+                from?: string;
+                /** @description Defaults to the end of the materialised window, 30 days ahead. */
+                to?: string;
+            };
+            header?: never;
+            path: {
+                /** @description Household id; 404 when the caller is not a member. */
+                householdId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HouseholdOccurrenceResponseDto"][];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unknown household, or the caller is not a member. */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
