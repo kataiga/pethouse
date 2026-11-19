@@ -15,6 +15,7 @@ describe('RoutineOccurrencesService', () => {
     insertMissing: jest.fn(),
     deletePendingFrom: jest.fn(),
     findForRoutine: jest.fn(),
+    findForHousehold: jest.fn(),
     findHistory: jest.fn(),
     getEntityManager: () => em,
   };
@@ -134,6 +135,23 @@ describe('RoutineOccurrencesService', () => {
         status: OccurrenceStatus.SKIPPED,
         completedBy: alex,
       });
+    });
+  });
+
+  describe('listForHousehold', () => {
+    it('applies the same range rules as a routine listing', async () => {
+      expect(() => service.listForHousehold(3, '2026-11-10T00:00:00Z', '2026-11-01T00:00:00Z'))
+        .toThrow(BadRequestException);
+      expect(() => service.listForHousehold(3, '2026-01-01T00:00:00Z', '2026-12-01T00:00:00Z'))
+        .toThrow(BadRequestException);
+
+      await service.listForHousehold(3, '2026-11-01T00:00:00Z', '2026-11-08T00:00:00Z');
+
+      expect(occurrences.findForHousehold).toHaveBeenCalledWith(
+        3,
+        new Date('2026-11-01T00:00:00Z'),
+        new Date('2026-11-08T00:00:00Z'),
+      );
     });
   });
 

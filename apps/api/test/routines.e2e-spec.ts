@@ -324,6 +324,72 @@ describe('Routines (e2e)', () => {
       .expect(404);
   });
 
+  it('lists the occurrences of every active routine of the household, with their tank', async () => {
+    const owner = await registerAccount(app);
+    const stranger = await registerAccount(app);
+    const householdId = await householdOf(owner);
+    const living = await createTank(owner);
+    const nano = await createTank(owner);
+    const routine = async (tankId: number, name: string, rrule: string): Promise<number> => {
+      const created = await request(app.getHttpServer())
+        .post(`/api/tanks/${tankId}/routines`)
+        .set(bearer(owner.accessToken))
+        .send({
+          name,
+          rrule,
+          dtstart: `${localDate('Europe/Paris', 0)}T08:00`,
+        })
+        .expect(201);
+
+      return created.body.id;
+    };
+    await routine(living, 'Feeding', 'FREQ=DAILY;BYHOUR=8;BYMINUTE=0');
+    await routine(nano, 'Water change', 'FREQ=WEEKLY;BYDAY=MO,TH;BYHOUR=10;BYMINUTE=0');
+    const paused = await routine(nano, 'Paused', 'FREQ=DAILY;BYHOUR=9;BYMINUTE=0');
+    await request(app.getHttpServer())
+      .patch(`/api/tanks/${nano}/routines/${paused}`)
+      .set(bearer(owner.accessToken))
+      .send({ isActive: false })
+      .expect(200);
+    const from = new Date(Date.now() - DAY_MS).toISOString();
+    const to = new Date(Date.now() + 7 * DAY_MS).toISOString();
+
+    const listed = await request(app.getHttpServer())
+      .get(`/api/households/${householdId}/occurrences`)
+      .query({
+        from,
+        to,
+      })
+      .set(bearer(owner.accessToken))
+      .expect(200);
+
+    const rows: { scheduledFor: string;
+      status: string;
+      routine: { name: string };
+      tank: { id: number } }[] = listed.body;
+    expect(new Set(rows.map((row) => row.routine.name))).toEqual(new Set(['Feeding', 'Water change']));
+    expect(rows.filter((row) => row.routine.name === 'Feeding').every((row) => row.tank.id === living)).toBe(true);
+    expect(rows.filter((row) => row.routine.name === 'Water change').every((row) => row.tank.id === nano)).toBe(true);
+    expect(rows.map((row) => row.scheduledFor)).toEqual([...rows.map((row) => row.scheduledFor)].sort());
+    expect(rows[0]).toMatchObject({
+      status: 'PENDING',
+      tank: expect.objectContaining({ name: 'Scheduled' }),
+    });
+
+    await request(app.getHttpServer())
+      .get(`/api/households/${householdId}/occurrences`)
+      .set(bearer(stranger.accessToken))
+      .expect(404);
+    await request(app.getHttpServer())
+      .get(`/api/households/${householdId}/occurrences`)
+      .query({
+        from: to,
+        to: from,
+      })
+      .set(bearer(owner.accessToken))
+      .expect(400);
+  });
+
   it('validates rules, starts, reminders and preview sizes', async () => {
     const session = await registerAccount(app);
     const tankId = await createTank(session);
