@@ -83,7 +83,7 @@ function Upcoming ({ tankId, routine }: { tankId: number;
   const { t } = useTranslation();
   const { colors } = useTheme();
   const occurrences = useOccurrences(tankId, routine.id);
-  const act = useActOnOccurrence(tankId);
+  const act = useActOnOccurrence();
   const now = Date.now();
   const open = occurrences.data?.filter((occurrence) => occurrence.status === 'PENDING'
     || occurrence.status === 'MISSED') ?? [];
@@ -111,6 +111,7 @@ function Upcoming ({ tankId, routine }: { tankId: number;
           occurrence={occurrence}
           onAct={(action) => act.mutate({
             occurrenceId: occurrence.id,
+            tankId,
             action,
           })}
           overdue={Date.parse(occurrence.scheduledFor) < now}

@@ -251,7 +251,7 @@ export class FakeApi {
       return error(404, 'Not found');
     }
 
-    return this.routeHousehold(method, Number(match[1]), match[2] ?? '', fields, account);
+    return this.routeHousehold(method, Number(match[1]), match[2] ?? '', fields, account, url.searchParams);
   }
 
   private routeAuth (method: string, path: string, fields: Fields): Response | null {
@@ -301,6 +301,7 @@ export class FakeApi {
     rest: string,
     fields: Fields,
     account: Account,
+    query: URLSearchParams,
   ): Response {
     const household = this.households.find((candidate) => candidate.id === householdId);
     const membership = household?.members.find((member) => member.userId === account.id);
@@ -417,6 +418,7 @@ export class FakeApi {
 
     return this.tanks.routeHousehold(method, householdId, rest, fields)
       ?? this.parameters.routeHousehold(method, householdId, rest, fields)
+      ?? this.routines.routeHousehold(method, householdId, rest, query)
       ?? error(404, 'Not found');
   }
 

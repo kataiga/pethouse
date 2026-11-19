@@ -5,7 +5,7 @@ import {
 import type { Schemas } from '@pethouse/api-client';
 import { api } from '@/lib/api/client';
 import {
-  historyKey, routineKey, routinesKey,
+  historyKey, routineKey, routinesKey, todayKeyPrefix,
 } from './keys';
 
 export type Occurrence = Schemas['OccurrenceResponseDto'];
@@ -88,11 +88,13 @@ export class OccurrenceError extends Error {
 
 export interface OccurrenceAction {
   occurrenceId: number;
+  /** The tank it belongs to, whose routines and history change with it. */
+  tankId: number;
   action: 'complete' | 'skip';
 }
 
 /** Done or skipped, from the app; the notification's "Done" button calls the same endpoint. */
-export function useActOnOccurrence (tankId: number): UseMutationResult<Occurrence, OccurrenceError, OccurrenceAction> {
+export function useActOnOccurrence (): UseMutationResult<Occurrence, OccurrenceError, OccurrenceAction> {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -108,9 +110,10 @@ export function useActOnOccurrence (tankId: number): UseMutationResult<Occurrenc
 
       return data;
     },
-    onSettled: () => Promise.all([
+    onSettled: (_data, _error, { tankId }) => Promise.all([
       queryClient.invalidateQueries({ queryKey: routinesKey(tankId) }),
       queryClient.invalidateQueries({ queryKey: historyKey(tankId) }),
+      queryClient.invalidateQueries({ queryKey: todayKeyPrefix }),
     ]),
   });
 }
