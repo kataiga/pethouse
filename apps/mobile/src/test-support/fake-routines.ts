@@ -50,7 +50,8 @@ type RoutineFields = Omit<FakeRoutine, 'id' | 'tankId' | 'createdBy'>;
 const FAR_AHEAD_MS = 800 * DAY_MS;
 
 export interface RoutineHost {
-  tank (tankId: number): { tankType: TankType;
+  tank (tankId: number): { name: string;
+    tankType: TankType;
     householdId: number } | null;
   isMember (householdId: number, userId: number): boolean;
   displayName (userId: number): string;
@@ -194,6 +195,33 @@ export class FakeRoutines {
     this.occurrences.push(occurrence);
 
     return occurrence;
+  }
+
+  /** `/occurrences` under a household the caller belongs to: the Today view. */
+  routeHousehold (method: string, householdId: number, rest: string, query: URLSearchParams): Response | null {
+    if (method !== 'GET' || rest !== '/occurrences') {
+      return null;
+    }
+
+    const from = Date.parse(query.get('from') ?? new Date(Date.now() - WINDOW_DAYS * DAY_MS).toISOString());
+    const to = Date.parse(query.get('to') ?? new Date(Date.now() + WINDOW_DAYS * DAY_MS).toISOString());
+    const rows = this.occurrences.flatMap((occurrence) => {
+      const routine = this.routines.find((candidate) => candidate.id === occurrence.routineId);
+      const tank = routine ? this.host.tank(routine.tankId) : null;
+      const time = Date.parse(occurrence.scheduledFor);
+
+      return routine && tank && routine.isActive && tank.householdId === householdId && time >= from && time <= to
+        ? [{
+          ...this.occurrenceView(occurrence),
+          tank: {
+            id: routine.tankId,
+            name: tank.name,
+          },
+        }]
+        : [];
+    });
+
+    return json(200, rows.sort((a, b) => a.scheduledFor.localeCompare(b.scheduledFor)));
   }
 
   route (method: string, path: string, query: URLSearchParams, fields: Fields, userId: number): Response | null {

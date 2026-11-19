@@ -64,3 +64,21 @@ export function formatInZone (instant: string, timeZone: string, language: strin
     timeZone,
   });
 }
+
+/** The time of day in the household's zone: « 08:00 ». */
+export function formatTimeInZone (instant: string, timeZone: string, language: string): string {
+  return new Date(instant).toLocaleTimeString(language, {
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone,
+  });
+}
+
+/** A calendar day as a heading: « jeudi 20 novembre ». */
+export function formatDayHeading (calendarDate: string, language: string): string {
+  return dateFromCalendar(calendarDate).toLocaleDateString(language, {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+  });
+}

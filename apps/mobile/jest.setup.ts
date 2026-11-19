@@ -64,3 +64,37 @@ jest.mock('@react-native-community/datetimepicker', () => {
     },
   };
 });
+
+// Notifications are native. Under Jest: nothing granted yet, no tap pending, and listeners that
+// tests can reach through `jest.requireMock('expo-notifications')`.
+jest.mock('expo-notifications', () => {
+  const subscription = (): { remove: jest.Mock } => ({ remove: jest.fn() });
+
+  return {
+    AndroidImportance: { HIGH: 4 },
+    PermissionStatus: {
+      GRANTED: 'granted',
+      DENIED: 'denied',
+      UNDETERMINED: 'undetermined',
+    },
+    DEFAULT_ACTION_IDENTIFIER: 'expo.modules.notifications.actions.DEFAULT',
+    setNotificationHandler: jest.fn(),
+    setNotificationChannelAsync: jest.fn(() => Promise.resolve(null)),
+    setNotificationCategoryAsync: jest.fn(() => Promise.resolve(null)),
+    getPermissionsAsync: jest.fn(() => Promise.resolve({
+      granted: false,
+      canAskAgain: true,
+    })),
+    requestPermissionsAsync: jest.fn(() => Promise.resolve({ granted: true })),
+    getExpoPushTokenAsync: jest.fn(() => Promise.resolve({
+      type: 'expo',
+      data: 'ExponentPushToken[jest]',
+    })),
+    addPushTokenListener: jest.fn(subscription),
+    addNotificationResponseReceivedListener: jest.fn(subscription),
+    getLastNotificationResponseAsync: jest.fn(() => Promise.resolve(null)),
+    dismissNotificationAsync: jest.fn(() => Promise.resolve()),
+  };
+});
+
+jest.mock('expo-device', () => ({ isDevice: true }));

@@ -174,4 +174,17 @@ Phase 5 scaffold is in place:
   navigates on `mutateAsync()`'s promise: per-call `onSuccess` callbacks never reach an
   unmounted component.
 
-Still missing: `expo-notifications` and the in-app view of upcoming and overdue tasks.
+- Today tab: open occurrences of the household (`GET /households/:id/occurrences`), grouped in
+  `today-groups.ts` into overdue, today and the next days in the household's zone.
+- Notifications: `src/lib/notifications/` holds the pure parts (`responses.ts` turns a tap into
+  open or complete, accepting only routine deep links; `registration.ts` never asks for the
+  permission on its own) and the native ones (`native-platform.ts`, `setup.ts` with the
+  `routines` channel and the `routine-occurrence` category). `NotificationBridge`, mounted with
+  the signed-in navigator, registers the device, reacts to taps in every launch state and
+  dedupes them; sign-out deletes the device first. `expo-notifications` and `expo-device` are
+  mocked globally in `jest.setup.ts`.
+- Push needs an EAS project (`extra.eas.projectId`, from `eas init`) and, on Android,
+  `google-services.json` next to `app.config.ts`, which adds it only when present. Without them
+  the app reports notifications as not configured instead of failing.
+
+Still missing: nothing from Phase 6. Delivery (Phase 7) and a pass on a real Android device.

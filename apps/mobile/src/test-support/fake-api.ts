@@ -62,6 +62,12 @@ export class FakeApi {
 
   readonly invites: Invite[] = [];
 
+  /** Push registrations: one per installation, keyed by its Expo token. */
+  readonly devices: { id: number;
+    userId: number;
+    expoPushToken: string;
+    platform: 'ANDROID' | 'IOS' }[] = [];
+
   private readonly refreshTokens = new Map<string, number>();
 
   private readonly accessTokens = new Map<string, number>();
@@ -123,6 +129,7 @@ export class FakeApi {
     this.accounts.length = 0;
     this.households.length = 0;
     this.invites.length = 0;
+    this.devices.length = 0;
     this.refreshTokens.clear();
     this.accessTokens.clear();
     this.tanks.reset();
@@ -207,6 +214,44 @@ export class FakeApi {
       return error(401, 'Unauthorized');
     }
 
+    if (path === '/api/users/me/devices' && method === 'PUT') {
+      const expoPushToken = String(fields.expoPushToken ?? '');
+      let device = this.devices.find((candidate) => candidate.expoPushToken === expoPushToken);
+
+      if (!device) {
+        this.counter += 1;
+        device = {
+          id: this.counter,
+          userId: account.id,
+          expoPushToken,
+          platform: fields.platform === 'IOS' ? 'IOS' : 'ANDROID',
+        };
+        this.devices.push(device);
+      }
+      device.userId = account.id;
+
+      return json(200, {
+        id: device.id,
+        expoPushToken: device.expoPushToken,
+        platform: device.platform,
+        lastSeenAt: NOW,
+      });
+    }
+
+    const device = /^\/api\/users\/me\/devices\/(\d+)$/.exec(path);
+
+    if (device && method === 'DELETE') {
+      const index = this.devices.findIndex((candidate) => candidate.id === Number(device[1])
+        && candidate.userId === account.id);
+
+      if (index === -1) {
+        return error(404, 'Device not found');
+      }
+      this.devices.splice(index, 1);
+
+      return json(204);
+    }
+
     if (path === '/api/users/me') {
       if (method === 'PATCH') {
         if (fields.displayName !== undefined) {
@@ -251,7 +296,7 @@ export class FakeApi {
       return error(404, 'Not found');
     }
 
-    return this.routeHousehold(method, Number(match[1]), match[2] ?? '', fields, account);
+    return this.routeHousehold(method, Number(match[1]), match[2] ?? '', fields, account, url.searchParams);
   }
 
   private routeAuth (method: string, path: string, fields: Fields): Response | null {
@@ -301,6 +346,7 @@ export class FakeApi {
     rest: string,
     fields: Fields,
     account: Account,
+    query: URLSearchParams,
   ): Response {
     const household = this.households.find((candidate) => candidate.id === householdId);
     const membership = household?.members.find((member) => member.userId === account.id);
@@ -417,6 +463,7 @@ export class FakeApi {
 
     return this.tanks.routeHousehold(method, householdId, rest, fields)
       ?? this.parameters.routeHousehold(method, householdId, rest, fields)
+      ?? this.routines.routeHousehold(method, householdId, rest, query)
       ?? error(404, 'Not found');
   }
 

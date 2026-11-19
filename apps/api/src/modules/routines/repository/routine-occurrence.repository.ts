@@ -48,6 +48,26 @@ export class RoutineOccurrenceRepository extends EntityRepository<RoutineOccurre
     });
   }
 
+  /** Occurrences of the household's active routines, with their routine and tank, oldest first. */
+  findForHousehold (householdId: number, from: Date, to: Date): Promise<RoutineOccurrence[]> {
+    return this.find({
+      routine: {
+        isActive: true,
+        tank: { household: householdId },
+      },
+      scheduledFor: {
+        $gte: from,
+        $lte: to,
+      },
+    }, {
+      populate: ['routine', 'routine.tank', 'completedBy'],
+      orderBy: {
+        scheduledFor: 'asc',
+        id: 'asc',
+      },
+    });
+  }
+
   /** Occurrences somebody acted on or that were missed, newest first. */
   findHistory (
     tankId: number,

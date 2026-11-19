@@ -20,6 +20,27 @@ const DEFAULT_LIST_DAYS = 30;
 
 const MAX_LIST_DAYS = 92;
 
+/** A listing window: past 30 days to the end of the planned window by default, 92 days at most. */
+function listRange (from?: string, to?: string): { start: Date;
+  end: Date } {
+  const now = Date.now();
+  const start = from === undefined ? new Date(now - DEFAULT_LIST_DAYS * DAY_MS) : new Date(from);
+  const end = to === undefined ? new Date(now + MATERIALISATION_WINDOW_DAYS * DAY_MS) : new Date(to);
+
+  if (start > end) {
+    throw new BadRequestException('from must be before to');
+  }
+
+  if (end.getTime() - start.getTime() > MAX_LIST_DAYS * DAY_MS) {
+    throw new BadRequestException(`The range cannot exceed ${MAX_LIST_DAYS} days`);
+  }
+
+  return {
+    start,
+    end,
+  };
+}
+
 @Injectable()
 export class RoutineOccurrencesService {
   constructor (
@@ -50,19 +71,16 @@ export class RoutineOccurrencesService {
   }
 
   listForRoutine (routine: Routine, from?: string, to?: string): Promise<RoutineOccurrence[]> {
-    const now = Date.now();
-    const start = from === undefined ? new Date(now - DEFAULT_LIST_DAYS * DAY_MS) : new Date(from);
-    const end = to === undefined ? new Date(now + MATERIALISATION_WINDOW_DAYS * DAY_MS) : new Date(to);
-
-    if (start > end) {
-      throw new BadRequestException('from must be before to');
-    }
-
-    if (end.getTime() - start.getTime() > MAX_LIST_DAYS * DAY_MS) {
-      throw new BadRequestException(`The range cannot exceed ${MAX_LIST_DAYS} days`);
-    }
+    const { start, end } = listRange(from, to);
 
     return this.occurrences.findForRoutine(routine.id, start, end);
+  }
+
+  /** Every active routine of the household at once, for the app's Today view. */
+  listForHousehold (householdId: number, from?: string, to?: string): Promise<RoutineOccurrence[]> {
+    const { start, end } = listRange(from, to);
+
+    return this.occurrences.findForHousehold(householdId, start, end);
   }
 
   async history (

@@ -7,3 +7,8 @@ export const routineKey = (tankId: number, routineId: number): readonly unknown[
 ];
 
 export const historyKey = (tankId: number): readonly unknown[] => ['tanks', tankId, 'routine-history'];
+
+/** Every household's Today list: an occurrence closed anywhere leaves it. */
+export const todayKeyPrefix = ['today'] as const;
+
+export const todayKey = (householdId: number): readonly unknown[] => [...todayKeyPrefix, householdId];

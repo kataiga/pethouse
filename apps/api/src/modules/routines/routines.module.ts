@@ -3,6 +3,7 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { OccurrenceAccessGuard } from '@core/routines/occurrence-access.guard';
 import { HouseholdsModule } from '@modules/households/households.module';
 import { TanksModule } from '@modules/tanks/tanks.module';
+import { HouseholdOccurrencesController } from './controller/household-occurrences.controller';
 import { RoutineHistoryController } from './controller/routine-history.controller';
 import { RoutineOccurrencesController } from './controller/routine-occurrences.controller';
 import { RoutineTemplatesController } from './controller/routine-templates.controller';
@@ -25,6 +26,7 @@ import { RoutinesService } from './service/routines.service';
     RoutinesController,
     RoutineHistoryController,
     RoutineOccurrencesController,
+    HouseholdOccurrencesController,
   ],
   providers: [
     RoutineTemplatesService,
