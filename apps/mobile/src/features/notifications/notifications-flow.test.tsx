@@ -110,7 +110,7 @@ describe('Notifications', () => {
     expect(Notifications.setNotificationCategoryAsync).toHaveBeenCalledWith('routine-occurrence', [{
       identifier: DONE_ACTION,
       buttonTitle: 'Fait',
-      options: { opensAppToForeground: false },
+      options: { opensAppToForeground: true },
     }]);
 
     // The system prompt answers « Allow ».
@@ -186,6 +186,20 @@ describe('Notifications', () => {
     // Still on the Today tab, which drops the closed task.
     expect(screen).toHavePathname('/');
     await waitFor(() => expect(screen.queryByTestId(`today-${occurrenceId}`) === null).toBe(true));
+  });
+
+  it('completes the occurrence when Done launched the app from a killed state', async () => {
+    const { tankId, routineId, occurrenceId } = seed();
+    const launch = response(DONE_ACTION, tankId, routineId, occurrenceId);
+    jest.mocked(Notifications.getLastNotificationResponseAsync)
+      .mockResolvedValueOnce(launch as Notifications.NotificationResponse);
+    renderRouter('./app', { initialUrl: '/' });
+
+    await waitFor(() => {
+      expect(Notifications.dismissNotificationAsync).toHaveBeenCalledWith(launch.notification.request.identifier);
+    });
+    expect(mockFake.routines.occurrences.find((occurrence) => occurrence.id === occurrenceId)?.status).toBe('DONE');
+    expect(await screen.findByText('Rien à faire pour l’instant.')).toBeTruthy();
   });
 
   it('warns when Done could not be recorded', async () => {

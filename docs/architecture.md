@@ -199,8 +199,10 @@ reminder; the unique key lets a retried job skip the devices it already reached.
 dead tokens. Skipping this is how push silently rots.
 
 The notification carries an **action button ("Done")** via an Expo notification category; the
-action handler calls `POST /routine-occurrences/:id/complete` so the task can be ticked off
-without opening the app.
+action handler calls `POST /routine-occurrences/:id/complete`. The button **brings the app to the
+foreground briefly**: on Android, expo-notifications hands an action response to JavaScript only
+while the app process is alive, so a "Done" that did not open the app would be silently lost when
+the app was killed. Opening it makes the completion reliable in every launch state.
 
 ### Out-of-range measurements
 

@@ -8,13 +8,13 @@ export const ROUTINE_CHANNEL = 'routines';
 export const DONE_ACTION = 'done';
 
 /**
- * Whether "Done" brings the app to the foreground. `docs/architecture.md` wants it ticked off
- * without opening the app; on Android, expo-notifications only hands that response to JavaScript
- * while the app process is alive (it is buffered in that process otherwise), so with the app
- * killed the tap can be lost. Kept `false`, as the architecture says, until that decision is
- * revisited; `NotificationBridge` handles a buffered response as soon as its listener attaches.
+ * "Done" brings the app to the foreground, briefly: on Android, expo-notifications hands an action
+ * response to JavaScript only while the app process is alive, so with the app killed a "Done"
+ * that stayed in the background would be lost without a word. Opened, the app receives the tap
+ * (at a cold start through `getLastNotificationResponseAsync`) and completes the occurrence.
+ * See `docs/architecture.md`, Push delivery.
  */
-export const DONE_OPENS_APP = false;
+export const DONE_OPENS_APP = true;
 
 /** What `expo-notifications` reports when the notification itself was tapped. */
 export const OPEN_ACTION = 'expo.modules.notifications.actions.DEFAULT';
