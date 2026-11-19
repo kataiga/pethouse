@@ -149,6 +149,7 @@ setup below are in place. No domain module exists yet; the first one lands in Ph
 - `discovery.warnWhenNoEntities` is `false` in `buildMikroOrmConfig()` only because no entity
   exists yet. **Remove it with the first entity** in Phase 1.
 - MikroORM metadata cache lives under the OS temp directory, never in the working tree.
-- Migrations in the runtime image are not solved yet: `@mikro-orm/cli` is a devDependency and
-  the image has no migration step. Decide the strategy in Phase 7 (init container, job, or
-  startup step) rather than ad hoc.
+- Migrations in the runtime image: `node dist/commands/migrate` (`npm run migrate` locally after a
+  build) applies pending migrations then refreshes the reference data, with the API's `DB_*`
+  variables and neither ts-node nor `@mikro-orm/cli`. The cluster runs it once per release, before
+  the new pods (a Job or a PreSync hook). Deployment, image and variables: `/docs/deployment.md`.
