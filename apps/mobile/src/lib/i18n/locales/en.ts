@@ -576,6 +576,27 @@ export const en: Catalogue<typeof fr> = {
       missed: 'Missed · due {{date}}',
     },
   },
+  notifications: {
+    channel: 'Routine reminders',
+    done: 'Done',
+    doneFailed: 'The task could not be marked as done. Try again from the app.',
+    banner: {
+      undetermined: 'Turn on notifications to get routine reminders, even with the app closed.',
+      enable: 'Turn on notifications',
+      denied: 'Notifications are off: you will not get routine reminders.',
+      openSettings: 'Open settings',
+    },
+    account: {
+      title: 'Notifications',
+      granted: 'On for this phone.',
+      undetermined: 'Not turned on yet.',
+      denied: 'Refused in the phone settings.',
+      unsupported: 'This phone cannot receive notifications.',
+      unconfigured: 'This build of the app is not set up for notifications yet.',
+      failed: 'Registration failed. It will be retried at the next launch.',
+      retry: 'Retry now',
+    },
+  },
   household: {
     eyebrow: 'Your household',
     timezone: 'Time zone: {{zone}}',

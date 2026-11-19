@@ -574,6 +574,27 @@ export const fr = {
       missed: 'Manqué · prévu le {{date}}',
     },
   },
+  notifications: {
+    channel: 'Rappels de routines',
+    done: 'Fait',
+    doneFailed: 'La tâche n’a pas pu être marquée comme faite. Réessaie depuis l’app.',
+    banner: {
+      undetermined: 'Active les notifications pour recevoir les rappels de routines, même app fermée.',
+      enable: 'Activer les notifications',
+      denied: 'Les notifications sont désactivées : tu ne recevras pas les rappels de routines.',
+      openSettings: 'Ouvrir les réglages',
+    },
+    account: {
+      title: 'Notifications',
+      granted: 'Activées sur ce téléphone.',
+      undetermined: 'Pas encore activées.',
+      denied: 'Refusées dans les réglages du téléphone.',
+      unsupported: 'Ce téléphone ne peut pas recevoir de notifications.',
+      unconfigured: 'Cette version de l’app n’est pas encore configurée pour recevoir des notifications.',
+      failed: 'L’enregistrement a échoué. Nouvel essai au prochain lancement.',
+      retry: 'Réessayer maintenant',
+    },
+  },
   household: {
     eyebrow: 'Ton foyer',
     timezone: 'Fuseau horaire : {{zone}}',

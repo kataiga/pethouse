@@ -62,6 +62,12 @@ export class FakeApi {
 
   readonly invites: Invite[] = [];
 
+  /** Push registrations: one per installation, keyed by its Expo token. */
+  readonly devices: { id: number;
+    userId: number;
+    expoPushToken: string;
+    platform: 'ANDROID' | 'IOS' }[] = [];
+
   private readonly refreshTokens = new Map<string, number>();
 
   private readonly accessTokens = new Map<string, number>();
@@ -123,6 +129,7 @@ export class FakeApi {
     this.accounts.length = 0;
     this.households.length = 0;
     this.invites.length = 0;
+    this.devices.length = 0;
     this.refreshTokens.clear();
     this.accessTokens.clear();
     this.tanks.reset();
@@ -205,6 +212,44 @@ export class FakeApi {
 
     if (!account) {
       return error(401, 'Unauthorized');
+    }
+
+    if (path === '/api/users/me/devices' && method === 'PUT') {
+      const expoPushToken = String(fields.expoPushToken ?? '');
+      let device = this.devices.find((candidate) => candidate.expoPushToken === expoPushToken);
+
+      if (!device) {
+        this.counter += 1;
+        device = {
+          id: this.counter,
+          userId: account.id,
+          expoPushToken,
+          platform: fields.platform === 'IOS' ? 'IOS' : 'ANDROID',
+        };
+        this.devices.push(device);
+      }
+      device.userId = account.id;
+
+      return json(200, {
+        id: device.id,
+        expoPushToken: device.expoPushToken,
+        platform: device.platform,
+        lastSeenAt: NOW,
+      });
+    }
+
+    const device = /^\/api\/users\/me\/devices\/(\d+)$/.exec(path);
+
+    if (device && method === 'DELETE') {
+      const index = this.devices.findIndex((candidate) => candidate.id === Number(device[1])
+        && candidate.userId === account.id);
+
+      if (index === -1) {
+        return error(404, 'Device not found');
+      }
+      this.devices.splice(index, 1);
+
+      return json(204);
     }
 
     if (path === '/api/users/me') {

@@ -1,0 +1,55 @@
+# The Today tab lists a new routine's next task and ticks it off; the notifications banner
+# offers to turn them on. Against a running API. Run with
+# `maestro test .maestro/today.yaml -e EMAIL=someone-$(date +%s)@example.com`.
+# Notification delivery itself (cold start, background, foreground, the Done button) is checked
+# by hand: see the pull request that added this flow.
+appId: fr.kataiga.pethouse
+---
+- launchApp:
+    clearState: true
+- tapOn: "Pas encore de compte ? Créer un compte"
+- tapOn:
+    id: "sign-up-name"
+- inputText: "Camille"
+- tapOn:
+    id: "sign-up-email"
+- inputText: ${EMAIL}
+- tapOn:
+    id: "sign-up-password"
+- inputText: "correct horse battery"
+- tapOn:
+    id: "sign-up-submit"
+- assertVisible: "Rien à faire pour l’instant."
+- assertVisible: "Activer les notifications"
+- tapOn: "Bacs"
+- tapOn:
+    id: "tanks-add"
+- tapOn:
+    id: "tank-type-AQUARIUM"
+- tapOn:
+    id: "tank-create-next"
+- tapOn:
+    id: "tank-name"
+- inputText: "Salon"
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: "tank-create-submit"
+- tapOn:
+    id: "tank-create-submit"
+- scrollUntilVisible:
+    element:
+      id: "routines-add"
+- tapOn:
+    id: "routines-add"
+- tapOn: "Nourrissage"
+- scrollUntilVisible:
+    element:
+      id: "routine-submit"
+- tapOn:
+    id: "routine-submit"
+- tapOn: "Aujourd’hui"
+- assertVisible: "Nourrissage"
+- tapOn:
+    text: "Fait"
+    index: 0

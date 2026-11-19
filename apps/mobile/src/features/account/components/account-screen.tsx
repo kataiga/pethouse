@@ -12,6 +12,7 @@ import { SegmentedControl } from '@/components/ui/segmented-control';
 import { Surface } from '@/components/ui/surface';
 import { TextField } from '@/components/ui/text-field';
 import { useSignOut } from '@/features/auth/hooks/use-auth';
+import { PushSettingsRow } from '@/features/notifications/components/push-settings-row';
 import { DISPLAY_NAME_MAX_LENGTH } from '@/features/auth/validation';
 import {
   type AppLanguage, changeLanguage, SUPPORTED_LANGUAGES,
@@ -105,6 +106,7 @@ export function AccountScreen (): React.JSX.Element {
             value={scheme}
           />
         </View>
+        <PushSettingsRow />
         <Button
           label={t('parameters.account.entry')}
           onPress={() => router.push('/account/parameters')}

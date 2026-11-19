@@ -4,6 +4,7 @@ import {
 import { SessionLoadingScreen } from '@/features/auth/components/session-loading-screen';
 import { UnreachableScreen } from '@/features/auth/components/unreachable-screen';
 import { useSession } from '@/features/auth/hooks/session-context';
+import { NotificationBridge } from '@/features/notifications/components/notification-bridge';
 import {
   fonts, useTheme,
 } from '@/theme';
@@ -28,17 +29,20 @@ export default function AppLayout (): React.JSX.Element {
       );
     case 'signedIn':
       return (
-        <Stack
-          screenOptions={{
-            headerStyle: { backgroundColor: colors.background },
-            headerTintColor: colors.ink,
-            headerTitleStyle: { fontFamily: fonts.bold },
-            headerShadowVisible: false,
-            contentStyle: { backgroundColor: colors.background },
-          }}
-        >
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        </Stack>
+        <>
+          <NotificationBridge />
+          <Stack
+            screenOptions={{
+              headerStyle: { backgroundColor: colors.background },
+              headerTintColor: colors.ink,
+              headerTitleStyle: { fontFamily: fonts.bold },
+              headerShadowVisible: false,
+              contentStyle: { backgroundColor: colors.background },
+            }}
+          >
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          </Stack>
+        </>
       );
   }
 }

@@ -8,6 +8,7 @@ import { Screen } from '@/components/ui/screen';
 import { Surface } from '@/components/ui/surface';
 import { useSession } from '@/features/auth/hooks/session-context';
 import { useCurrentHousehold } from '@/features/households/hooks/use-households';
+import { PushBanner } from '@/features/notifications/components/push-banner';
 import { useActOnOccurrence } from '@/features/routines/hooks/use-occurrences';
 import { formatDayHeading } from '@/lib/i18n/format';
 import {
@@ -160,6 +161,7 @@ export function TodayScreen (): React.JSX.Element {
           <AppText tone="lagon" variant="label">{t('today.eyebrow')}</AppText>
           <AppText accessibilityRole="header" variant="display">{t('home.greeting', { name })}</AppText>
         </View>
+        <PushBanner />
         {current.isPending ? <ActivityIndicator color={colors.lagon} size="large" /> : null}
         {current.isError ? (
           <Surface>

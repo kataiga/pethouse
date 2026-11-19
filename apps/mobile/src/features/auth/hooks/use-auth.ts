@@ -3,7 +3,13 @@ import {
 } from '@tanstack/react-query';
 import { getCalendars } from 'expo-localization';
 import { useTranslation } from 'react-i18next';
-import { authApi } from '@/lib/api/client';
+import { pushKey } from '@/features/notifications/hooks/use-push';
+import {
+  api, authApi,
+} from '@/lib/api/client';
+import {
+  type PushRegistration, unregisterDevice,
+} from '@/lib/notifications/registration';
 import type { AuthResponse } from '../api/session';
 import type {
   SignInFields, SignUpFields,
@@ -96,6 +102,8 @@ export function useSignOut (): UseMutationResult<void, Error, void> {
 
   return useMutation({
     mutationFn: async () => {
+      // While the access token still works: this phone stops getting the household's reminders.
+      await unregisterDevice(api, queryClient.getQueryData<PushRegistration>(pushKey)?.deviceId ?? null);
       await session.signOut();
       queryClient.clear();
     },
